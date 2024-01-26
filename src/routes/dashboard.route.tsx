@@ -1,4 +1,4 @@
-import { AppstoreOutlined, CodeSandboxOutlined, ShoppingCartOutlined } from "@ant-design/icons"
+import { AppstoreOutlined, CodeSandboxOutlined, ShoppingCartOutlined, LineChartOutlined } from "@ant-design/icons"
 import Dashboard from "../pages/dashboard/Dashboard"
 import Inventory from "../pages/inventory/Inventory"
 import SalesOrders from "../pages/sales/SalesOrders"
@@ -18,8 +18,14 @@ export const dashboardPaths = [
     },
     {
         name: 'Sales Orders',
-        path: 'inventory',
+        path: 'sales-orders',
         icon: <ShoppingCartOutlined />,
+        element: <SalesOrders />,
+    },
+    {
+        name: 'Reports',
+        path: 'reports',
+        icon: <LineChartOutlined />,
         element: <SalesOrders />,
     },
 ]
