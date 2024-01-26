@@ -8,16 +8,13 @@ const MainLayout = () => {
     <div>
       <Navbar />
       <Row>
-        <Col style={{border: '1px solid red'}} xs={24} sm={12} md={8} lg={6}>
+        <Col xs={0} sm={0} md={0} lg={4}>
           <LeftSidebar />
         </Col>
-        <Col style={{border: '1px solid red'}} xs={24} sm={12} md={8} lg={6}>
+        <Col xs={24} sm={12} md={8} lg={14}>
           <Outlet />
         </Col>
-        <Col style={{border: '1px solid red'}} xs={24} sm={12} md={8} lg={6}>
-          Col3
-        </Col>
-        <Col style={{border: '1px solid red'}} xs={24} sm={12} md={8} lg={6}>
+        <Col xs={24} sm={12} md={8} lg={6}>
           Col4
         </Col>
       </Row>

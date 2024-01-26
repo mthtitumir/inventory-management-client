@@ -1,6 +1,10 @@
+import SalesSummary from "../../components/layout/SalesSummary"
+
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <SalesSummary />
+    </div>
   )
 }
 

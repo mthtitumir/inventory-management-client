@@ -8,7 +8,7 @@ const sidebarItems = sidebarItemsGenerator(dashboardPaths);
 const LeftSidebar: React.FC = () => {
 
     return (
-        <div style={{width: '70%'}}>
+        <div style={{}}>
             <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} items={sidebarItems} />
         </div>
 
