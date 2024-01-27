@@ -2,7 +2,7 @@ import { baseApi } from "../../api/baseApi";
 
 const taskApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUserAllFlowers: builder.query({
+    getAllFlowers: builder.query({
       query: () => ({
         url: "/flowers",
         method: "GET",
@@ -11,4 +11,4 @@ const taskApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUserAllFlowersQuery } = taskApi;
+export const { useGetAllFlowersQuery } = taskApi;

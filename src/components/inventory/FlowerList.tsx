@@ -1,49 +1,58 @@
-import { Divider } from "antd"
+import { useAppDispatch } from "../../redux/hooks";
+import { setFlowers } from "../../redux/features/flower/flowerSlice";
+import { useGetAllFlowersQuery } from "../../redux/features/flower/flowerApi";
+import { TFlower } from "../../types";
+import { InfoCircleOutlined } from '@ant-design/icons';
+import MyModal from "../ui/MyModal";
+import { useState } from "react";
 
 const FlowerList = () => {
+    const dispatch = useAppDispatch();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [id, setId] = useState('');
+    const { data } = useGetAllFlowersQuery(undefined);
+    const flowers = data?.data;
+    dispatch(setFlowers(flowers));
+    // const handleOnchange = (data) => {
+    //     console.log(data);
+
+    // }
+    const handleInfoClick = (id: string) =>{
+        showModal();
+        setId(id);
+    }
+    const showModal = () => {
+        setIsModalOpen(true);
+      };
     return (
         <div>
+            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} ><div >Hello modal: {id}</div></MyModal>
             <table style={{ width: "100%" }}>
-                <thead>
-                    <tr style={{ textAlign: "left" }}>
+                <thead style={{ width: "100%", marginBottom: "10px", border: "1px solid rgba(5, 5, 5, 1) ", borderCollapse: "collapse" }}>
+                    <tr style={{ textAlign: "left", }}>
+                        <th></th>
+                        <th>Image</th>
                         <th>Flower Name</th>
                         <th>Quantity</th>
                         <th>Category</th>
                         <th>Fragrance</th>
                         <th>Size</th>
-                        <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <Divider style={{width: "100%"}} />
                 <tbody>
-                    <tr style={{ textAlign: "left" }}>
-                        <td>Name</td>
-                        <td>4</td>
-                        <td>Gerbras</td>
-                        <td>jasmine</td>
-                        <td>s</td>
-                        <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
-                        <td>:</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>4</td>
-                        <td>Gerbras</td>
-                        <td>jasmine</td>
-                        <td>s</td>
-                        <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
-                        <td>:</td>
-                    </tr>
-                    <tr>
-                        <td>Name</td>
-                        <td>4</td>
-                        <td>Gerbras</td>
-                        <td>jasmine</td>
-                        <td>s</td>
-                        <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
-                        <td>:</td>
-                    </tr>
+                    {
+                        flowers?.map((flower: TFlower) => <tr style={{ textAlign: "left" }}>
+                            <td><input type="checkbox" /></td>
+                            <td><img style={{ borderRadius: "3px" }} width={"40px"} src={flower?.image || "https://i.ibb.co/XZGDHvv/floral-vista-logo.png"} alt="" /></td>
+                            <td>{flower?.name || "no data"}</td>
+                            <td>{flower?.quantity || "no data"}</td>
+                            <td>{flower?.type || "no data"}</td>
+                            <td>{flower?.fragrance || "no data"}</td>
+                            <td>{flower?.size || "no data"}</td>
+                            <td><InfoCircleOutlined onClick={()=> handleInfoClick(flower?._id)} /></td>
+                        </tr>)
+                    }
                 </tbody>
             </table>
         </div>

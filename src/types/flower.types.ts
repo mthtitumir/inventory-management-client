@@ -17,6 +17,7 @@ type TFlowerCategoryType =
   | "Wholesale Mixes";
   
 export type TFlower = {
+  _id: string;
   seller: string;
   name: string;
   price: number;
