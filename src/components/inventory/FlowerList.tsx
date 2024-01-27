@@ -1,35 +1,46 @@
+import { Divider } from "antd"
+
 const FlowerList = () => {
     return (
         <div>
-            <table style={{width: "100%"}}>
+            <table style={{ width: "100%" }}>
                 <thead>
-                    <tr>
+                    <tr style={{ textAlign: "left" }}>
                         <th>Flower Name</th>
                         <th>Quantity</th>
                         <th>Category</th>
+                        <th>Fragrance</th>
+                        <th>Size</th>
                         <th>Image</th>
                         <th>Action</th>
                     </tr>
                 </thead>
+                <Divider style={{width: "100%"}} />
                 <tbody>
-                    <tr>
+                    <tr style={{ textAlign: "left" }}>
                         <td>Name</td>
                         <td>4</td>
-                        <td>Hello</td>
+                        <td>Gerbras</td>
+                        <td>jasmine</td>
+                        <td>s</td>
                         <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
                         <td>:</td>
                     </tr>
                     <tr>
                         <td>Name</td>
                         <td>4</td>
-                        <td>Hello</td>
+                        <td>Gerbras</td>
+                        <td>jasmine</td>
+                        <td>s</td>
                         <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
                         <td>:</td>
                     </tr>
                     <tr>
                         <td>Name</td>
                         <td>4</td>
-                        <td>Hello</td>
+                        <td>Gerbras</td>
+                        <td>jasmine</td>
+                        <td>s</td>
                         <td><img width={"40px"} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" alt="" /></td>
                         <td>:</td>
                     </tr>
