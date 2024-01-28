@@ -18,12 +18,9 @@ const FlowerList = () => {
 
     // }
     const handleInfoClick = (id: string) =>{
-        showModal();
+        setIsModalOpen(true);
         setId(id);
     }
-    const showModal = () => {
-        setIsModalOpen(true);
-      };
     return (
         <div>
             <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} ><div >Hello modal: {id}</div></MyModal>
