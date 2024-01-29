@@ -32,11 +32,12 @@ const DeleteEditPop = ({ id }: { id: string }) => {
                     // console.log();
                     toast.success(payload?.message);
                 })
-                .catch((error) => console.error('rejected', error));
-                // console.log(deleteData);
+                .catch((error) => {
+                    toast.error(error.message || "Something went wrong!")
+                });
             },
             onCancel() {
-                toast.error("Deletion canceled!")
+                toast.error("Delete canceled!")
             },
         });
     };

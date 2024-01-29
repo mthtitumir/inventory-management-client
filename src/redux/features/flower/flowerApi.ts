@@ -23,7 +23,7 @@ const taskApi = baseApi.injectEndpoints({
       })
     }), 
     updateFlower: builder.mutation({
-      query: ({flowerId, flowerUpdatedData}: {flowerId: string, flowerUpdatedData: Partial<TFlower>}) => ({
+      query: ({flowerId, flowerUpdatedData}: {flowerId: string , flowerUpdatedData: Partial<TFlower>}) => ({
         url: `/flowers/${flowerId}`,
         method: "PATCH",
         body: flowerUpdatedData

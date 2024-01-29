@@ -10,17 +10,18 @@ import {
 } from 'antd';
 import { flowerCategoryType, flowerFragrances, flowerSizes } from '../../constants/flower.constant';
 import toast from 'react-hot-toast';
-import { useAddFlowerMutation, useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
+import { useAddFlowerMutation, useGetSingleFlowerQuery, useUpdateFlowerMutation } from '../../redux/features/flower/flowerApi';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useAppSelector } from '../../redux/hooks';
-type DefaultValuesProps = { _id?: string; seller?: string; name?: string; price?: number; quantity?: number; color?: string; bloomDate?: string | undefined; style: string; arrangement: string; type?: string; size?: string; fragrance?: string; image?: string }
+import { FlowerDefaultValuesProps } from '../../types';
 
 const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, id: string | undefined, type: "add" | "update" }) => {
     const { data, isLoading } = useGetSingleFlowerQuery(id);
     const [addFlower] = useAddFlowerMutation();
+    const [updateFlower] = useUpdateFlowerMutation();
     const [imageUrl, setImageUrl] = useState('');
     const [isRequired, setIsRequired] = useState(true);
-    const [defaultValues, setDefaultValues] = useState<DefaultValuesProps>({ style: "fff", bloomDate: "2024-01-28", arrangement: "hello" });
+    const [defaultValues, setDefaultValues] = useState<FlowerDefaultValuesProps>({ style: "fff", bloomDate: "2024-01-28", arrangement: "hello" });
     const seller: TUser | null = useAppSelector(useCurrentUser);
 
     const uploadImage = async (event: any) => {
@@ -49,10 +50,6 @@ const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.D
             toast.dismiss(toastId);
         }
     };
-
-    //    console.log(id);
-    // console.log(addFlowerData);
-
     // const { name, price, quantity, color, bloomDate, style, arrangement, type, size, fragrance, image } = data?.data;
     const onfinish = (values: any) => {
         if (!id && type === "add") {
@@ -60,22 +57,27 @@ const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.D
             addFlower(newFlower).unwrap().then((payload) => {
                 toast.success(payload.message);
             }).catch((error) => {
-                toast.error(error.message)
+                toast.error(error.message || "Something went wrong!")
             })
         }
         if (id && type === "update") {
-            console.log("hello");
+            const updatedFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl };
+            updateFlower({ flowerId: id, flowerUpdatedData: updatedFlower }).unwrap().then((payload) => {
+                toast.success(payload.message);
+            }).catch((error) => {
+                toast.error(error.message || "Something went wrong!")
+            })
         }
-        console.log(values);
         setIsModalOpen(false);
     }
     useEffect(() => {
         if (id && data) {
             setDefaultValues(data?.data);
+            setImageUrl(data?.data?.image);
             setIsRequired(false);
         }
     }, [id, data]);
-    // console.log(defaultValues._id);
+    // console.log(defaultValues);
     // console.log(isLoading);
 
     return (

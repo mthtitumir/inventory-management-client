@@ -33,7 +33,7 @@ const FlowerList = () => {
                 </thead>
                 <tbody>
                     {
-                        flowers?.map((flower: TFlower) => <tr style={{ textAlign: "left" }}>
+                        flowers?.map((flower: TFlower) => <tr key={flower?._id} style={{ textAlign: "left" }}>
                             <td><input type="checkbox" /></td>
                             <td><img style={{ borderRadius: "3px" }} width={"40px"} src={flower?.image || "https://i.ibb.co/XZGDHvv/floral-vista-logo.png"} alt="" /></td>
                             <td>{flower?.name || "no data"}</td>
@@ -41,7 +41,7 @@ const FlowerList = () => {
                             <td>{flower?.type || "no data"}</td>
                             <td>{flower?.fragrance || "no data"}</td>
                             <td>{flower?.size || "no data"}</td>
-                            <td><MyPopover key={flower?._id} child1={<InfoCircleOutlined  onClick={()=> handleInfoClick(flower?._id)}/>} child2={<DeleteEditPop id={id} />} /></td>
+                            <td><MyPopover key={flower?._id} child1={<InfoCircleOutlined onClick={()=> handleInfoClick(flower?._id)}/>} child2={<DeleteEditPop id={id} />} /></td>
                         </tr>)
                     }
                 </tbody>
