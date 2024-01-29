@@ -1,7 +1,7 @@
 import { TFlower } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
-const taskApi = baseApi.injectEndpoints({
+const flowerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllFlowers: builder.query({
       query: () => ({
@@ -35,7 +35,14 @@ const taskApi = baseApi.injectEndpoints({
         method: "DELETE",
       })
     }), 
+    deleteBulkFlowers: builder.mutation({
+      query: (flowerIdArray: string[]) => ({
+        url: `/flowers/`,
+        method: "DELETE",
+        body: {flowerIdArray},
+      })
+    }), 
   }),
 });
 
-export const { useGetAllFlowersQuery, useGetSingleFlowerQuery, useAddFlowerMutation, useUpdateFlowerMutation, useDeleteFlowerMutation } = taskApi;
+export const { useGetAllFlowersQuery, useGetSingleFlowerQuery, useAddFlowerMutation, useUpdateFlowerMutation, useDeleteFlowerMutation, useDeleteBulkFlowersMutation } = flowerApi;
