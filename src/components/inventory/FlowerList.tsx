@@ -7,18 +7,20 @@ import { useState } from "react";
 import MyPopover from "../ui/MyPopover";
 import DeleteEditPop from "../ui/DeleteEditPop";
 import { flowerCategoryType, flowerFragrances, flowerPriceRange, flowerSizes } from "../../constants/flower.constant";
-import { Radio, RadioChangeEvent } from "antd";
+import { Radio, RadioChangeEvent, Spin } from "antd";
+import { filterState } from "./InventoryHeader";
 
 
 
-const FlowerList = () => {
+const FlowerList = ({filter, setFilter}: filterState) => {
     const dispatch = useAppDispatch();
     const [id, setId] = useState('');
     const [checkedValues, setCheckedValues] = useState<string[]>([]);
-    const [filter, setFilter] = useState({});
-    const { data } = useGetAllFlowersQuery(filter);
+    // const [filter, setFilter] = useState({});
+    const { data, isLoading } = useGetAllFlowersQuery(filter);
     const flexStyle = { border: '1px solid rgba(5, 5, 5, 0.06)', padding: "5px 8px" };
-    console.log(filter);
+    const flexStyle2: React.CSSProperties = { display: "flex", flexDirection: "column", gap: "1px" };
+    // console.log(filter);
 
     dispatch(setFlowers(data?.data));
     const flowers = useAppSelector(useFlowers);
@@ -54,29 +56,31 @@ const FlowerList = () => {
         setFilter({ ...filter, size: e.target.value });
     };
 
+    // filter popover components
+
     const SelectPriceRangeContent = (
-        <Radio.Group onChange={onPriceChange} style={{ display: "flex", flexDirection: "column", gap: "1px" }} size="small">
+        <Radio.Group onChange={onPriceChange} style={flexStyle2} size="small">
             {flowerPriceRange.map(price => <Radio.Button value={price}>{price}</Radio.Button>)}
         </Radio.Group>
     )
     const SelectCategoryTypeContent = (
-        <Radio.Group onChange={onTypeChange} style={{ display: "flex", flexDirection: "column", gap: "1px" }} size="small">
+        <Radio.Group onChange={onTypeChange} style={flexStyle2} size="small">
             {flowerCategoryType.map(type => <Radio.Button value={type}>{type.toUpperCase()}</Radio.Button>)}
         </Radio.Group>
     )
     const SelectFragranceContent = (
-        <Radio.Group onChange={onFragranceChange} style={{ display: "flex", flexDirection: "column", gap: "1px" }} size="small">
+        <Radio.Group onChange={onFragranceChange} style={flexStyle2} size="small">
             {flowerFragrances.map(frag => <Radio.Button value={frag}>{frag.toUpperCase()}</Radio.Button>)}
         </Radio.Group>
     )
     const SelectSizeContent = (
-        <Radio.Group onChange={onSizeChange} style={{ display: "flex", flexDirection: "column", gap: "1px" }} size="small">
+        <Radio.Group onChange={onSizeChange} style={flexStyle2} size="small">
             {flowerSizes.map(size => <Radio.Button value={size}>{size.toUpperCase()}</Radio.Button>)}
         </Radio.Group>
     )
     return (
         <div>
-            <table style={{ width: "100%" }}>
+            {isLoading? <Spin /> : <table style={{ width: "100%" }}>
                 <thead style={{ width: "100%", marginBottom: "10px", border: "1px solid rgba(5, 5, 5, 1) ", borderCollapse: "collapse" }}>
                     <tr style={{ textAlign: "left", border: '1px solid red' }}>
                         <th style={flexStyle}></th>
@@ -105,7 +109,7 @@ const FlowerList = () => {
                         </tr>)
                     }
                 </tbody>
-            </table>
+            </table>}
         </div>
     )
 }

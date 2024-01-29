@@ -1,15 +1,16 @@
-import { Button, Modal, Col, Row } from "antd"
+import { Button, Modal, Col, Row, Input } from "antd"
 const { confirm } = Modal;
-import { PlusCircleOutlined, DeleteFilled } from "@ant-design/icons"
-import { useState } from "react"
+import { PlusCircleOutlined, DeleteFilled, SearchOutlined } from "@ant-design/icons"
+import { ChangeEvent, useState } from "react"
 import MyModal from "../ui/MyModal";
 import AddUpdateFlower from "../form/AddUpdateFlower";
 import { useAppSelector } from "../../redux/hooks";
 import { setBulkDeleteIds, useBulkDeleteIds } from "../../redux/features/flower/flowerSlice";
 import { useDeleteBulkFlowersMutation } from "../../redux/features/flower/flowerApi";
 import toast from "react-hot-toast";
+export type filterState = {filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<Record<string, unknown>>>};
 
-const InventoryHeader = () => {
+const InventoryHeader = ({filter, setFilter}: filterState) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const bulkDeleteIds = useAppSelector(useBulkDeleteIds);
     const [deleteBulkFlowers] = useDeleteBulkFlowersMutation();
@@ -39,13 +40,15 @@ const InventoryHeader = () => {
             },
         });
     };
-    // const handleOpenModal = () => {
-    //     setIsModalOpen(true);
-    // }
+    const addSearchTerm = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value);
+        
+        setFilter({ ...filter, searchTerm: e.target.value });
+    };
     return (
         <Row align={"middle"} justify={"space-between"}>
             <Col><h2>Inventory</h2></Col>
-
+            <Col><Input onChange={(e)=>addSearchTerm(e)} style={{width: "500px"}} placeholder="Search Flower" prefix={<SearchOutlined />} /></Col>
             <Col >
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkDeleteIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />}>
