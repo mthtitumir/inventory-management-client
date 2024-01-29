@@ -8,6 +8,8 @@ const Inventory = () => {
       <InventoryHeader />
       <Divider />
       <FlowerList />
+      <Divider />
+      {/* <TestTable /> */}
     </div>
   )
 }

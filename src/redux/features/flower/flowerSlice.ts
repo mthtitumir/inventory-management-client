@@ -30,5 +30,5 @@ const flowerSlice = createSlice({
 
 export const { setFlowers, setBulkDeleteIds } = flowerSlice.actions;
 export default flowerSlice.reducer;
-export const useFlowers = (state: RootState) => state;
+export const useFlowers = (state: RootState) => state.flower.flowers;
 export const useBulkDeleteIds = (state: RootState) => state.flower.bulkDeleteIds;

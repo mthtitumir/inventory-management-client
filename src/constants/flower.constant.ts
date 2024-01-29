@@ -28,3 +28,7 @@ export const flowerFragrances = [
   "lily of the valley",
   "violet and peony",
 ];
+
+export const flowerPriceRange = [
+  "1-50", "50-100", "100-150"
+]

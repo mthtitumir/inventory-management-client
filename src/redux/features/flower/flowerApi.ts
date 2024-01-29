@@ -4,9 +4,10 @@ import { baseApi } from "../../api/baseApi";
 const flowerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllFlowers: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/flowers",
         method: "GET",
+        params,
       }),
     }),
     getSingleFlower: builder.query({
