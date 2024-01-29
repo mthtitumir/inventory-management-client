@@ -15,10 +15,10 @@ import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useAppSelector } from '../../redux/hooks';
 type DefaultValuesProps = { _id?: string; seller?: string; name?: string; price?: number; quantity?: number; color?: string; bloomDate?: string | undefined; style: string; arrangement: string; type?: string; size?: string; fragrance?: string; image?: string }
 
-const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,id: string | undefined }) => {
+const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, id: string | undefined, type: "add" | "update" }) => {
     const { data, isLoading } = useGetSingleFlowerQuery(id);
-    const [addFlower, { isLoading: isAddFlowerLoading, isError: isAddFlowerError, isSuccess: isAddFlowerSuccess }] = useAddFlowerMutation();
-     const [imageUrl, setImageUrl] = useState('');
+    const [addFlower] = useAddFlowerMutation();
+    const [imageUrl, setImageUrl] = useState('');
     const [isRequired, setIsRequired] = useState(true);
     const [defaultValues, setDefaultValues] = useState<DefaultValuesProps>({ style: "fff", bloomDate: "2024-01-28", arrangement: "hello" });
     const seller: TUser | null = useAppSelector(useCurrentUser);
@@ -50,20 +50,23 @@ const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatc
         }
     };
 
-//    console.log(id);
+    //    console.log(id);
     // console.log(addFlowerData);
 
     // const { name, price, quantity, color, bloomDate, style, arrangement, type, size, fragrance, image } = data?.data;
     const onfinish = (values: any) => {
-        if (!id) {
+        if (!id && type === "add") {
             const newFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, seller: seller?._id };
-            addFlower(newFlower);
-            isAddFlowerLoading && toast.loading("Flower Adding.......");
-            isAddFlowerError && toast.error("Flower Adding Error");
-            isAddFlowerSuccess && toast.success("Flower added successfully!")
-            // console.log(newFlower);
+            addFlower(newFlower).unwrap().then((payload) => {
+                toast.success(payload.message);
+            }).catch((error) => {
+                toast.error(error.message)
+            })
         }
-
+        if (id && type === "update") {
+            console.log("hello");
+        }
+        console.log(values);
         setIsModalOpen(false);
     }
     useEffect(() => {
@@ -72,13 +75,13 @@ const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatc
             setIsRequired(false);
         }
     }, [id, data]);
-    console.log(defaultValues._id);
+    // console.log(defaultValues._id);
     // console.log(isLoading);
-    
+
     return (
-        isLoading || isRequired ? <div style={{margin:"10px", textAlign: "center"}}><Spin /></div> :
+        isLoading || isRequired && type === "update" ? <div style={{ margin: "10px", textAlign: "center" }}><Spin /></div> :
             <>
-              <h2 style={{textAlign: "center", marginBottom: "10px"}}>{ id && data ? "Update Flower" : "Add New Flower"}</h2>
+                <h2 style={{ textAlign: "center", marginBottom: "10px" }}>{id && data ? "Update Flower" : "Add New Flower"}</h2>
                 <Form
                     // labelCol={{ span: 4 }}
                     // wrapperCol={{ span: 14 }}
@@ -86,7 +89,7 @@ const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatc
                     // style={{ maxWidth: 600 }}
                     initialValues={defaultValues}
                     onFinish={onfinish}
-                    style={{padding: "0", margin: "0"}}
+                    style={{ padding: "0", margin: "0" }}
                 >
                     <Form.Item name={"name"} label="Flower Name" rules={[{ required: isRequired, message: 'Please input your flower name!' }]}>
                         <Input defaultValue={defaultValues?.name} placeholder='Enter Flower Name' />
@@ -106,7 +109,7 @@ const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatc
                         <Input defaultValue={defaultValues?.color} placeholder='Enter color' />
                     </Form.Item>
                     <Form.Item name={"bloomDate"} label="Approximate bloom date">
-                        <Input defaultValue={defaultValues?.bloomDate} type={'date'|| "text"} placeholder='Enter date' />
+                        <Input defaultValue={defaultValues?.bloomDate} type={'date' || "text"} placeholder='Enter date' />
                     </Form.Item>
                     <Form.Item name={"style"} label="Flower Style">
                         <Input defaultValue={defaultValues?.style} placeholder='Style' />
@@ -135,7 +138,7 @@ const AddUpdateFlower = ({ setIsModalOpen, id }: { setIsModalOpen: React.Dispatc
                             }
                         </Select>
                     </Form.Item>
-                    <Form.Item style={{textAlign: "center"}}>
+                    <Form.Item style={{ textAlign: "center" }}>
                         <Button size='large' type="primary" htmlType="submit">
                             {id && data ? "Update Flower" : "Add Flower"}
                         </Button>

@@ -18,7 +18,7 @@ const InventoryHeader = () => {
                     Add New Flower
                 </Button>
             </Col>
-            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} /></MyModal>
+            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add"/></MyModal>
         </Row>
     )
 }

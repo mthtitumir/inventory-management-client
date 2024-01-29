@@ -9,8 +9,7 @@ import MyModal from './MyModal';
 
 const DeleteEditPop = ({ id }: { id: string }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [ updateFlower ] = useUpdateFlowerMutation();
-    const [deleteFlower, { data: deleteData  }] = useDeleteFlowerMutation();
+    const [deleteFlower] = useDeleteFlowerMutation();
 
     const handleOnClick = (actionType: string) => {
         if (actionType === "edit") {
@@ -31,7 +30,7 @@ const DeleteEditPop = ({ id }: { id: string }) => {
             onOk() {
                 deleteFlower(id).unwrap().then((payload) => {
                     // console.log();
-                    toast.success("Flower Deleted Successfully!")
+                    toast.success(payload?.message);
                 })
                 .catch((error) => console.error('rejected', error));
                 // console.log(deleteData);
@@ -41,12 +40,12 @@ const DeleteEditPop = ({ id }: { id: string }) => {
             },
         });
     };
-    
+
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <Button onClick={() => handleOnClick("edit")} icon={<EditOutlined />}> Edit</Button>
             <Button onClick={() => handleOnClick("delete")} style={{ borderColor: "pink", color: "red" }} icon={<DeleteOutlined style={{ color: "red" }} />}> Delete</Button>
-            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} children={<AddUpdateFlower key={id} id={id} setIsModalOpen={setIsModalOpen} />} />
+            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} children={<AddUpdateFlower key={id} id={id} setIsModalOpen={setIsModalOpen} type="update" />} />
         </div>
     )
 }
