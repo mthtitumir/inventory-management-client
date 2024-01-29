@@ -11,7 +11,6 @@ const Inventory = () => {
       <Divider />
       <FlowerList filter={filter} setFilter={setFilter} />
       <Divider />
-      {/* <TestTable /> */}
     </div>
   )
 }

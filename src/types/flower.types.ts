@@ -23,7 +23,7 @@ export type TFlower = {
   price: number;
   quantity: number;
   image: string;
-  bloomDate?: Date;
+  bloomDate?: string;
   color: string;
   type?: TFlowerCategoryType;
   size: 's' | 'm' | 'l' | 'xl' | 'xxl';

@@ -5,9 +5,9 @@ import { TFlower } from "../../types";
 import { MoreOutlined, FilterTwoTone } from '@ant-design/icons';
 import { useState } from "react";
 import MyPopover from "../ui/MyPopover";
-import DeleteEditPop from "../ui/DeleteEditPop";
+import MoreOptions from "../ui/MoreOptions";
 import { flowerCategoryType, flowerFragrances, flowerPriceRange, flowerSizes } from "../../constants/flower.constant";
-import { Radio, RadioChangeEvent, Spin } from "antd";
+import { Button, Radio, RadioChangeEvent, Spin } from "antd";
 import { filterState } from "./InventoryHeader";
 
 
@@ -105,7 +105,7 @@ const FlowerList = ({filter, setFilter}: filterState) => {
                             <td>{flower?.type || "no data"}</td>
                             <td>{flower?.fragrance || "no data"}</td>
                             <td>{flower?.size || "no data"}</td>
-                            <td><MyPopover key={flower?._id} child1={<MoreOutlined onClick={() => handleInfoClick(flower?._id)} />} child2={<DeleteEditPop id={id} />} /></td>
+                            <td><MyPopover key={flower?._id} child1={<Button size="small" icon ={<MoreOutlined />} onClick={() => handleInfoClick(flower?._id)}>Options</Button>} child2={<MoreOptions id={id} />} /></td>
                         </tr>)
                     }
                 </tbody>
