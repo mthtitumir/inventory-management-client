@@ -10,8 +10,6 @@ import { flowerCategoryType, flowerFragrances, flowerPriceRange, flowerSizes } f
 import { Button, Radio, RadioChangeEvent, Spin } from "antd";
 import { filterState } from "./InventoryHeader";
 
-
-
 const FlowerList = ({filter, setFilter}: filterState) => {
     const dispatch = useAppDispatch();
     const [id, setId] = useState('');

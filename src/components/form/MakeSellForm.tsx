@@ -1,26 +1,38 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
 import { Button, Col, Form, Input, Row, Spin } from 'antd';
+import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
+import toast from 'react-hot-toast';
 
 const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, product: string | undefined }) => {
     // console.log(product);
     const { data, isLoading } = useGetSingleFlowerQuery(product);
-    console.log(data);
-    
+    // console.log(data);
+    const [addSales] = useAddSalesMutation();
+
     const seller: TUser | null = useAppSelector(useCurrentUser);
     // console.log(data, isLoading);
-    const onFinish = (values: FormData) => {
-        console.log('Success:', {values, seller});
-        // const salesData = {};
-        //quantity must be a number
+    const onFinish = (values: any) => {
+        values.quantity = Number(values.quantity);
+        const salesData = {
+            ...values,
+            seller: seller?._id,
+            dateOfSale: new Date(),
+            product
+        };
+        addSales(salesData).unwrap().then((payload: any)=> {
+            toast.success(payload.message);           
+        }).catch((error: any)=>{
+            toast.error(error.message || "Something went wrong!")            
+        })
         setIsModalOpen(false);
     };
-    if(!data || isLoading){
+    if (!data || isLoading) {
         return <Spin />
     }
-
     const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
@@ -31,22 +43,24 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                 onFinish={onFinish}
             >
                 <Row style={{ margin: "20px 0" }}>
-                    <Col lg={8}>
+                    <Col sm={8} lg={8}>
                         <h4>Name: </h4><i>{name}</i>
                         <h4>Price: </h4> <i>{price}</i>
                         <h4>Available Quantity: </h4> <i>{quantity}</i>
                         <h4>Color: </h4> <i>{color}</i>
                     </Col>
-                    <Col lg={8}>
+                    <Col sm={8} lg={8}>
                         {arrangement && <><h4>Arrangement: </h4><i>{arrangement}</i></>}
                         <h4>Selected size: </h4> <i>{size}</i>
                         <h4>Fragrance profile: </h4> <i>{fragrance}</i>
                         <h4>Flower Category: </h4> <i>{type}</i>
                     </Col>
-                    <Col lg={8}>
+                    <Col sm={8} lg={8}>
                         <img style={{ width: "100%" }} src={image} alt="" />
                     </Col>
                 </Row>
+
+                {/* form start  */}
                 <Form.Item
                     style={{ marginBottom: "10px" }}
                     label="Buyer"
@@ -62,7 +76,7 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                     name="quantity"
                     rules={[{ required: true, message: 'Please input your product quantity!' }]}
                 >
-                    <Input />
+                    <Input type='number' />
                 </Form.Item>
 
                 <Form.Item style={{ marginBottom: "10px", textAlign: "center" }}>
