@@ -23,12 +23,16 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
             dateOfSale: new Date(),
             product
         };
-        addSales(salesData).unwrap().then((payload: any)=> {
-            toast.success(payload.message);           
-        }).catch((error: any)=>{
-            toast.error(error.message || "Something went wrong!")            
-        })
-        setIsModalOpen(false);
+        if (values.quantity > quantity || values.quantity === 0) {
+            toast.error("Available quantity exceeded!")
+        } else {
+            addSales(salesData).unwrap().then((payload: any) => {
+                toast.success(payload.message);
+            }).catch((error: any) => {
+                toast.error(error.message || "Something went wrong!")
+            })
+            setIsModalOpen(false);
+        }
     };
     if (!data || isLoading) {
         return <Spin />
