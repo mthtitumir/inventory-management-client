@@ -3,27 +3,21 @@ import { setFlowers } from "../../redux/features/flower/flowerSlice";
 import { useGetAllFlowersQuery } from "../../redux/features/flower/flowerApi";
 import { TFlower } from "../../types";
 import { InfoCircleOutlined } from '@ant-design/icons';
-import MyModal from "../ui/MyModal";
 import { useState } from "react";
+import MyPopover from "../ui/MyPopover";
+import DeleteEditPop from "../ui/DeleteEditPop";
 
 const FlowerList = () => {
     const dispatch = useAppDispatch();
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [id, setId] = useState('');
     const { data } = useGetAllFlowersQuery(undefined);
     const flowers = data?.data;
     dispatch(setFlowers(flowers));
-    // const handleOnchange = (data) => {
-    //     console.log(data);
-
-    // }
-    const handleInfoClick = (id: string) =>{
-        setIsModalOpen(true);
+    const handleInfoClick = (id: string) =>{      
         setId(id);
     }
     return (
         <div>
-            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} ><div >Hello modal: {id}</div></MyModal>
             <table style={{ width: "100%" }}>
                 <thead style={{ width: "100%", marginBottom: "10px", border: "1px solid rgba(5, 5, 5, 1) ", borderCollapse: "collapse" }}>
                     <tr style={{ textAlign: "left", }}>
@@ -47,7 +41,7 @@ const FlowerList = () => {
                             <td>{flower?.type || "no data"}</td>
                             <td>{flower?.fragrance || "no data"}</td>
                             <td>{flower?.size || "no data"}</td>
-                            <td><InfoCircleOutlined onClick={()=> handleInfoClick(flower?._id)} /></td>
+                            <td><MyPopover key={flower?._id} child1={<InfoCircleOutlined  onClick={()=> handleInfoClick(flower?._id)}/>} child2={<DeleteEditPop id={id} />} /></td>
                         </tr>)
                     }
                 </tbody>

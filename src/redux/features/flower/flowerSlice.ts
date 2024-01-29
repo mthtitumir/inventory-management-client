@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TFlower } from "../../../types";
+import { RootState } from "../../store";
 
 type TFlowerState = {
   flowers: null | TFlower[];
@@ -23,4 +24,4 @@ const flowerSlice = createSlice({
 
 export const { setFlowers } = flowerSlice.actions;
 export default flowerSlice.reducer;
-// export const useTasks = (state: RootState) => state.
+export const useFlowers = (state: RootState) => state;
