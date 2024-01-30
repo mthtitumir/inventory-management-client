@@ -5,6 +5,7 @@ import SalesTable from "../../components/sales/SalesTable";
 import Spinner from "../../components/ui/Spinner";
 import SalesOrderHeader from "../../components/sales/SalesOrderHeader";
 import { useState } from "react";
+import { Divider } from "antd";
 
 const SalesOrders = () => {
   const [filter, setFilter] = useState({});
@@ -15,6 +16,7 @@ const SalesOrders = () => {
   return (
     <div>
       <SalesOrderHeader filter={filter} setFilter={setFilter} />
+      <Divider />
       {!data || isLoading ? <Spinner /> : <SalesTable />}
     </div>
   )

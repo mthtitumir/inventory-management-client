@@ -8,9 +8,10 @@ import { useAppSelector } from "../../redux/hooks";
 import { setBulkDeleteIds, useBulkDeleteIds } from "../../redux/features/flower/flowerSlice";
 import { useDeleteBulkFlowersMutation } from "../../redux/features/flower/flowerApi";
 import toast from "react-hot-toast";
-export type filterState = {filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<Record<string, unknown>>>};
+import ResetFilter from "../ui/ResetFilter";
+export type filterState = { filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<Record<string, unknown>>> };
 
-const InventoryHeader = ({filter, setFilter}: filterState) => {
+const InventoryHeader = ({ filter, setFilter }: filterState) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const bulkDeleteIds = useAppSelector(useBulkDeleteIds);
     const [deleteBulkFlowers] = useDeleteBulkFlowersMutation();
@@ -42,13 +43,16 @@ const InventoryHeader = ({filter, setFilter}: filterState) => {
     };
     const addSearchTerm = (e: ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value);
-        
+
         setFilter({ ...filter, searchTerm: e.target.value });
     };
     return (
         <Row align={"middle"} justify={"space-between"}>
             <Col><h2>Inventory</h2></Col>
-            <Col><Input onChange={(e)=>addSearchTerm(e)} style={{width: "500px"}} placeholder="Search Flower" prefix={<SearchOutlined />} /></Col>
+            <Col>
+                <Input onChange={(e) => addSearchTerm(e)} style={{ width: "300px", marginRight: '5px' }} placeholder="Search Flower" prefix={<SearchOutlined />} />
+                <ResetFilter setFilter={setFilter} />
+            </Col>
             <Col >
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkDeleteIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />}>

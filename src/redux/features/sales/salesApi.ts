@@ -8,13 +8,15 @@ const salesApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: ["sales"]
     }),
     addSales: builder.mutation({
       query: (salesData) => ({
         url: `/sales`,
         method: "POST",
         body: salesData
-      })
+      }),
+      invalidatesTags: ["sales"]
     }), 
   }),
 });

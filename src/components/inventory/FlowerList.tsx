@@ -7,8 +7,9 @@ import { useState } from "react";
 import MyPopover from "../ui/MyPopover";
 import MoreOptions from "../ui/MoreOptions";
 import { flowerCategoryType, flowerFragrances, flowerPriceRange, flowerSizes } from "../../constants/flower.constant";
-import { Button, Radio, RadioChangeEvent, Spin } from "antd";
+import { Button, Radio, RadioChangeEvent } from "antd";
 import { filterState } from "./InventoryHeader";
+import Spinner from "../ui/Spinner";
 
 const FlowerList = ({filter, setFilter}: filterState) => {
     const dispatch = useAppDispatch();
@@ -77,7 +78,7 @@ const FlowerList = ({filter, setFilter}: filterState) => {
     )
     return (
         <div>
-            {isLoading? <Spin /> : <table style={{ width: "100%" }}>
+            {isLoading? <Spinner /> : <table style={{ width: "100%" }}>
                 <thead style={{ width: "100%", marginBottom: "10px", border: "1px solid rgba(5, 5, 5, 1) ", borderCollapse: "collapse" }}>
                     <tr style={{ textAlign: "left", border: '1px solid red' }}>
                         <th style={flexStyle}></th>

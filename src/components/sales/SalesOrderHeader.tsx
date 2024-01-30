@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, DatePicker, Button, Flex, Select } from "antd"
+import { Form, DatePicker, Flex, Select } from "antd"
 import { filterState } from "../inventory/InventoryHeader";
-import { RedoOutlined } from "@ant-design/icons"
+import ResetFilter from "../ui/ResetFilter";
 
 const { RangePicker } = DatePicker;
 
@@ -16,10 +16,8 @@ const SalesOrderHeader = ({ setFilter }: filterState) => {
         setFilter({ from, to });
     };
 
-    const resetFilter = () => {
-        setFilter({});
-    }
-    
+
+
     const handleSelect = (value: string) => {
         setFilter({ range: value });
     }
@@ -28,9 +26,7 @@ const SalesOrderHeader = ({ setFilter }: filterState) => {
         <Flex align={"center"} justify={"space-between"} style={{ marginBottom: "10px", }}>
             <Flex><h2>Sales Data</h2></Flex>
             <Flex align={"center"} justify={"space-between"} gap={8}>
-                <Button onClick={resetFilter} icon={<RedoOutlined />} size={"middle"} style={{ color: "orangered", borderColor: "orangered" }}>
-                    Reset
-                </Button>
+                <ResetFilter setFilter={setFilter} />
                 <Select
                     placeholder="Select Filter"
                     style={{ width: 120 }}

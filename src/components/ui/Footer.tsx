@@ -4,7 +4,7 @@ const { Footer } = Layout;
 const FooterC = () => {
     return (
         <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+            Flora Vista ©{new Date().getFullYear()} Created by M. T. H. Titumir
         </Footer>
     )
 }
