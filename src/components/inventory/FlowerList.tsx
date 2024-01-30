@@ -18,7 +18,6 @@ const FlowerList = ({filter, setFilter}: filterState) => {
     const { data, isLoading } = useGetAllFlowersQuery(filter);
     const flexStyle = { border: '1px solid rgba(5, 5, 5, 0.06)', padding: "5px 8px" };
     const flexStyle2: React.CSSProperties = { display: "flex", flexDirection: "column", gap: "1px" };
-    // console.log(filter);
 
     dispatch(setFlowers(data?.data));
     const flowers = useAppSelector(useFlowers);

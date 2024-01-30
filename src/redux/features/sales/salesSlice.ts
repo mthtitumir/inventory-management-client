@@ -3,7 +3,7 @@ import { RootState } from "../../store";
 import { TSales } from "../../../types";
 
 type TSalesState = {
-  sales: null | TSales[];
+  sales: [] | TSales[];
 };
 
 const initialState: TSalesState = {
