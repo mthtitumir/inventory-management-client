@@ -3,21 +3,21 @@ import { LineChartOutlined, CalendarOutlined, DollarOutlined, ShoppingOutlined }
 import { Card, Col, Row, Statistic } from 'antd';
 
 const SalesSummary: React.FC = () => (
-  <Row gutter={16}>
+  <Row gutter={20}>
     <Col xs={12} sm={12} md={12} lg={6}>
-      <Card bordered={false}>
+      <Card bordered={true}>
         <Statistic
-          title="Today's Sale"
+          title=<h4>Today's Sale</h4>
           value={11.28}
           precision={2}
-          valueStyle={{ color: 'gray' }}
-          prefix={<LineChartOutlined style={{backgroundColor: "blueviolet", }} />}
+          valueStyle={{ color: 'green' }}
+          prefix={<LineChartOutlined style={{color: "white", border: "1px solid gray", borderRadius: "50%", padding: "5px", backgroundColor: "blueviolet"}} />}
           suffix="k"
         />
       </Card>
     </Col>
     <Col xs={12} sm={12} md={12} lg={6}>
-      <Card bordered={false}>
+      <Card bordered={true}>
         <Statistic
           title="Yearly Total Sales"
           value={11.28}
@@ -29,7 +29,7 @@ const SalesSummary: React.FC = () => (
       </Card>
     </Col>
     <Col xs={12} sm={12} md={12} lg={6}>
-      <Card bordered={false}>
+      <Card bordered={true}>
         <Statistic
           title="Net Income"
           value={11.28}
@@ -41,7 +41,7 @@ const SalesSummary: React.FC = () => (
       </Card>
     </Col>
     <Col xs={12} sm={12} md={12} lg={6}>
-      <Card bordered={false}>
+      <Card bordered={true}>
         <Statistic
           title="Products"
           value={435}

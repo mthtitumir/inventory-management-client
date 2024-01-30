@@ -9,10 +9,9 @@ const SalesOrders = () => {
   const dispatch = useAppDispatch();
   dispatch(setSales(data?.data));
 
-
   return (
     <div>
-      {!isLoading ? <Spinner /> : <SalesTable />}
+      {!data || isLoading ? <Spinner /> : <SalesTable />}
     </div>
   )
 }
