@@ -7,7 +7,7 @@ import Login from "../pages/auth/Login";
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Navigate to='/dashboard' />,
+        element: <Navigate to='/inventory' />,
     },
     {
         path: '/',

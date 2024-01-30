@@ -30,6 +30,7 @@ const Login = () => {
 
     return (
         <Row justify="center" align="middle" style={{ height: "100vh" }}>
+            
             <Form
                 name="normal_login"
                 className="login-form"
@@ -37,6 +38,7 @@ const Login = () => {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
             >
+                <h3 style={{textAlign: "center", marginBottom: "15px"}}>Login Flora Vista</h3>
                 <Form.Item
                     name="email"
                     rules={[{ required: true, message: 'Please input your Email!' }]}
@@ -53,17 +55,10 @@ const Login = () => {
                         placeholder="Password"
                     />
                 </Form.Item>
-                <Form.Item>
-                    <a className="login-form-forgot" href="">
-                        Forgot password
-                    </a>
-                </Form.Item>
-
-                <Form.Item>
+                <Form.Item style={{textAlign: "center"}}>
                     <Button type="primary" htmlType="submit" style={{ margin: "0 auto" }} className="login-form-button">
                         Log in
-                    </Button> <br />
-                    Or <a href="">register now!</a>
+                    </Button>
                 </Form.Item>
             </Form>
         </Row>
