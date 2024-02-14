@@ -13,7 +13,7 @@ const Login = () => {
     const [login] = useLoginMutation();
     const onFinish = async (values: FormData) => {
         console.log('Received values of form: ', values);
-        const toastId = toast.loading('Logging in ...!')
+        const toastId = toast.loading('Logging in ...!');
         try {
             const res = await login(values).unwrap();
             // console.log(res);
