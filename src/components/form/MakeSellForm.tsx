@@ -83,6 +83,14 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                     <Input type='number' />
                 </Form.Item>
 
+                <Form.Item
+                    style={{ marginBottom: "10px" }}
+                    label="Coupon Code"
+                    name="discountCode"
+                >
+                    <Input type='text' />
+                </Form.Item>
+
                 <Form.Item style={{ marginBottom: "10px", textAlign: "center" }}>
                     <Button type="primary" htmlType="submit" size='large'>
                         Submit

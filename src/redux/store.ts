@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "./features/auth/authSlice";
 import flowerReducer from "./features/flower/flowerSlice";
 import salesReducer from "./features/sales/salesSlice";
+import discountReducer from "./features/discount/discountSlice";
 
 const persistConfig = {
   key: "auth",
@@ -26,6 +27,7 @@ export const store = configureStore({
     auth: persistedAuthReducer,
     flower: flowerReducer,
     sales: salesReducer,
+    discount: discountReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
