@@ -14,8 +14,8 @@ const discountApi = baseApi.injectEndpoints({
     }),
 
     getSingleDiscount: builder.query({
-      query: (discountId :string | undefined)=> ({
-        url: `/discounts/${discountId}`,
+      query: (discountCode :string | undefined)=> ({
+        url: `/discounts/${discountCode}`,
         method: "GET"
       })
     }),

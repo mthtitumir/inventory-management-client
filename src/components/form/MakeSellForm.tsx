@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React, { SetStateAction, useState } from 'react'
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
-import { Button, Col, Form, Input, Row, Spin } from 'antd';
+import { Button, Col, Divider, Form, Input, Row, Space, Spin } from 'antd';
 import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
 import toast from 'react-hot-toast';
+import { useGetSingleDiscountQuery } from '../../redux/features/discount/discountApi';
+import dayjs from 'dayjs';
 
 const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, product: string | undefined }) => {
-    // console.log(product);
+    const [subTotal, setSubTotal] = useState(0);
+    const [code, setCode] = useState(null);
+    const [discountCode, setDiscountCode] = useState(code);
+    const [discount, setDiscount] = useState(0);
     const { data, isLoading } = useGetSingleFlowerQuery(product);
-    // console.log(data);
+    const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
+    // console.log(discountData, isDiscountLoading);
     const [addSales] = useAddSalesMutation();
 
     const seller: TUser | null = useAppSelector(useCurrentUser);
@@ -23,17 +29,68 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
             dateOfSale: new Date(),
             product
         };
-        if (values.quantity > quantity || values.quantity === 0) {
-            toast.error("Available quantity exceeded!")
-        } else {
-            addSales(salesData).unwrap().then((payload: any) => {
-                toast.success(payload.message);
-            }).catch((error: any) => {
-                toast.error(error.message || "Something went wrong!")
-            })
-            setIsModalOpen(false);
-        }
+        // console.log(salesData);
+
+        // if (values.quantity > quantity || values.quantity === 0) {
+        //     toast.error("Available quantity exceeded!")
+        // } else {
+        //     addSales(salesData).unwrap().then((payload: any) => {
+        //         toast.success(payload.message);
+        //     }).catch((error: any) => {
+        //         toast.error(error.message || "Something went wrong!")
+        //     })
+        //     setIsModalOpen(false);
+        // }
     };
+    const handleDiscount = () => {
+        setDiscountCode(prevCode => {
+            console.log({prevCode,code});
+            
+            if (prevCode !== code) {
+                return code;
+            }
+            return prevCode;
+        });
+        // console.log(discountCode);
+        console.log({code, discountCode, data: discountData.data, isDiscountLoading});
+        
+        // if (discountData.data) {
+        //     const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid, limitPerCustomer } = discountData.data;
+        //     const currentTime = dayjs().format('HH:mm');
+        //     const timeToCheck = dayjs(currentTime, 'HH:mm');
+        //     const currentDate = dayjs();
+        //     const startD = dayjs(startDate);
+        //     const startT = dayjs(startTime, 'HH:mm');
+        //     const endD = dayjs(endDate);
+        //     const endT = dayjs(endTime, 'HH:mm');
+        //     const couponValidation = (startDate < endDate) && timeToCheck.isAfter(startT) && timeToCheck.isBefore(endT) && (currentDate > startD) && (currentDate < endD) && valid;
+        //     // console.log(couponValidation);
+        //     if (!couponValidation) {
+        //         toast.error("Invalid discount!");
+        //         setDiscount(0);
+        //     }
+        //     if (minOrderValue > 0 && minOrderValue > subTotal) {
+        //         setDiscount(0);
+        //         toast.error(`You have to spent an amount off ${minOrderValue}`);
+        //         console.log(discount);
+                
+        //     }
+        //     if (minOrderQuantity > 0 && minOrderQuantity > quantity) {
+        //         toast.error(`You have to order a number off ${minOrderQuantity} products!`);
+        //         setDiscount(0);
+        //     }
+        //     if (type === "amountOff") {
+        //         setDiscount(amountOff);
+        //     } else if (type === "percentOff") {
+        //         // console.log({subTotal, percentOff});                
+        //         setDiscount(subTotal * percentOff * 0.01);
+        //     } else {
+        //         toast.error('Discount not available!');
+        //     }
+        // } else {
+        //     toast.error("Invalid Discount!")
+        // }
+    }
     if (!data || isLoading) {
         return <Spin />
     }
@@ -67,9 +124,25 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                 {/* form start  */}
                 <Form.Item
                     style={{ marginBottom: "10px" }}
-                    label="Buyer"
-                    name="buyer"
+                    label="Buyer Name"
+                    name="buyerName"
                     rules={[{ required: true, message: 'Please input buyer name!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    style={{ marginBottom: "10px" }}
+                    label="Buyer Email"
+                    name="buyerEmail"
+                    rules={[{ required: true, message: 'Please input buyer email!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    style={{ marginBottom: "10px" }}
+                    label="Buyer Phone Number"
+                    name="buyerPhone"
+                    rules={[{ required: true, message: 'Please input buyer phone number!' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -80,20 +153,28 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                     name="quantity"
                     rules={[{ required: true, message: 'Please input your product quantity!' }]}
                 >
-                    <Input type='number' />
+                    <Input onChange={(e) => setSubTotal(Number(e.target.value) * price)} type='number' />
                 </Form.Item>
-
                 <Form.Item
                     style={{ marginBottom: "10px" }}
-                    label="Coupon Code"
+                    label="Discount Code"
                     name="discountCode"
                 >
-                    <Input type='text' />
+                    <Space.Compact>
+                        <Input onChange={(e) => setCode(e.target.value)} type='text' />
+                        <Button onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
+                    </Space.Compact>
                 </Form.Item>
+                <Divider>Bill</Divider>
+                <div style={{ textAlign: "center", marginBottom: "10px" }}>
+                    <p>SubTotal = ${subTotal.toFixed(2)}</p>
+                    <p>Discount = ${discount.toFixed(2)}</p>
+                    <p>Total  = ${(subTotal - discount).toFixed(2)}</p>
+                </div>
 
                 <Form.Item style={{ marginBottom: "10px", textAlign: "center" }}>
                     <Button type="primary" htmlType="submit" size='large'>
-                        Submit
+                        Sale
                     </Button>
                 </Form.Item>
             </Form>

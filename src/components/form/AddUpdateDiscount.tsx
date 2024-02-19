@@ -17,7 +17,7 @@ import { TDiscount } from '../../types';
 
 const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, id: string | undefined, type: "add" | "update" }) => {
     const [isRequired, setIsRequired] = useState(true);
-    const [defaultValues, setDefaultValues] = useState<Partial<TDiscount>>({ startTime: dayjs('00:00', "HH:mm"), endTime: dayjs('11:59', "HH:mm"), percentOff: 0, amountOff: 0, minOrderValue: 0, limitPerCustomer: 1 });
+    const [defaultValues, setDefaultValues] = useState<Partial<TDiscount>>({ startTime: dayjs('00:00', "HH:mm"), endTime: dayjs('11:59', "HH:mm"), percentOff: 0, amountOff: 0, minOrderValue: 0, minOrderQuantity: 0, limitPerCustomer: 1 });
     const { data, isLoading } = useGetSingleDiscountQuery(id);
     const [addDiscount] = useAddDiscountMutation();
 
@@ -29,15 +29,13 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
         // console.log({ startDate, endDate, startTime, endTime });
 
         if (!id && type === "add") {
-            const newDiscount = { ...values, startDate, endDate, startTime, endTime, percentOff: Number(values?.percentOff), amountOff: Number(values?.amountOff), minOrderValue: Number(values?.minOrderValue), limitPerCustomer: Number(values?.limitPerCustomer) };
+            const newDiscount = { ...values, startDate, endDate, startTime, endTime, percentOff: Number(values?.percentOff), amountOff: Number(values?.amountOff), minOrderValue: Number(values?.minOrderValue), minOrderQuantity: Number(values?.minOrderQuantity), limitPerCustomer: Number(values?.limitPerCustomer) };
             addDiscount(newDiscount).unwrap().then((payload: any) => {
                 toast.success(payload.message);
             }).catch((error: any) => {
                 console.log(error);
                 toast.error(error.message || "Discount adding failed!")
             })
-            console.log(newDiscount);
-
         }
         // if (id && type === "update") {
         //     const updatedFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl };
@@ -49,7 +47,6 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
         // }
         setIsModalOpen(false);
     }
-
     useEffect(() => {
         if (id && data) {
             // sanitize the dates // startDate: dayjs('2024-02-01T00:00:00.000+00:00', 'YYYY/MM/DD'),
@@ -111,13 +108,16 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
                                 </Form.Item>
                             </Space>
                             <Space>
-                                <Form.Item name={"minOrderValue"} label="Minimum Order">
+                                <Form.Item name={"minOrderValue"} label="Minimum Value">
                                     <Input type="number" placeholder='Minimum Order Value' />
                                 </Form.Item>
-                                <Form.Item name={"limitPerCustomer"} label="Limit">
-                                    <Input type="number" placeholder='Limit Per Customer' />
+                                <Form.Item name={"minOrderQuantity"} label="Minimum Quantity">
+                                    <Input type="number" placeholder='Minimum Order Quantity' />
                                 </Form.Item>
                             </Space>
+                            <Form.Item name={"limitPerCustomer"} label="Limit Per Customer" rules={[{ required: isRequired, message: 'Please enter limit!' }]}>
+                                <Input type="number" placeholder='Limit Per Customer' />
+                            </Form.Item>
                             <Form.Item style={{ textAlign: "center" }}>
                                 <Button size='large' type="primary" htmlType="submit">
                                     {!id && !data && "Add Discount"}{type === "update" && "Update Discount"}
