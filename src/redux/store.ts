@@ -12,6 +12,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./features/auth/authSlice";
+import companyReducer from "./features/company/companySlice";
 import flowerReducer from "./features/flower/flowerSlice";
 import salesReducer from "./features/sales/salesSlice";
 import discountReducer from "./features/discount/discountSlice";
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: persistedAuthReducer,
+    company: companyReducer,
     flower: flowerReducer,
     sales: salesReducer,
     discount: discountReducer,
