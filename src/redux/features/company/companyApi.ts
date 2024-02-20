@@ -3,22 +3,38 @@ import { baseApi } from "../../api/baseApi";
 
 const companyApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+
+    addCompany: builder.mutation({
+      query: (payload) => ({
+        url: `/companies`,
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["company"],
+    }),
+
     getMyCompany: builder.query({
-      query: (discountCode :string | undefined)=> ({
+      query: (discountCode: string | undefined) => ({
         url: `/companies/${discountCode}`,
-        method: "GET"
-      })
+        method: "GET",
+      }),
     }),
 
     updateCompany: builder.mutation({
-      query: ({companyId, companyUpdatedData}: {companyId: string , companyUpdatedData: Partial<TCompany>}) => ({
+      query: ({
+        companyId,
+        companyUpdatedData,
+      }: {
+        companyId: string;
+        companyUpdatedData: Partial<TCompany>;
+      }) => ({
         url: `/companies/${companyId}`,
         method: "PATCH",
-        body: companyUpdatedData
+        body: companyUpdatedData,
       }),
-      invalidatesTags: ["company"]
+      invalidatesTags: ["company"],
     }),
   }),
 });
 
-export const { useGetMyCompanyQuery, useUpdateCompanyMutation } = companyApi;
+export const { useAddCompanyMutation, useGetMyCompanyQuery, useUpdateCompanyMutation } = companyApi;

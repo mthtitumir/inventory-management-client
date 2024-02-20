@@ -13,8 +13,7 @@ const companySlice = createSlice({
   initialState,
   reducers: {
     setCompany: (state, action) => {
-      const { company } = action.payload;
-      state.company = company;
+      state.company = action.payload;
     },
     companyLogout: (state) => {
       state.company = null;

@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Divider, Flex, Form, Input, Row, Space, Upload } from 'antd';
+import { Avatar, Button, Col, Divider, Flex, Form, Input, Row, Space } from 'antd';
 import toast from 'react-hot-toast';
 import { useAppDispatch } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import { useRegisterMutation } from '../../redux/features/auth/authApi';
 import { TUser, setUser } from '../../redux/features/auth/authSlice';
 import { verifyToken } from '../../utils/verifyToken';
 import regBg from '../../assets/images/register-bg.svg'
@@ -13,30 +12,36 @@ import { HiOutlineBuildingOffice2, HiOutlineFlag } from "react-icons/hi2";
 import { RiChatQuoteLine } from "react-icons/ri";
 import { MdDriveFileRenameOutline, MdOutlinePhoneInTalk, MdOutlineLocationOn, MdMyLocation } from "react-icons/md";
 import { LiaMedalSolid, LiaCitySolid } from "react-icons/lia";
+import { useAddCompanyMutation } from '../../redux/features/company/companyApi';
+import { useLoginMutation } from '../../redux/features/auth/authApi';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [register] = useRegisterMutation();
+  const [addCompany] = useAddCompanyMutation();
+  const [login] = useLoginMutation();
   const onFinish = async (values: any) => {
     console.log('Received values of form: ', values);
     const { companyName, companyEmail, companyPhoneNo, companyLicense, country, provinceOrState, ZIP, detailedAddress, name, email, password } = values;
     const companyData = { name:companyName, email: companyEmail, phoneNo:companyPhoneNo, companyLicenseNumber:companyLicense, address: {country, provinceOrState, ZIP, detailedAddress} };
     const adminData = { name, email, password };
-    // const toastId = toast.loading('Registering Inventory...');
+    const toastId = toast.loading('Registering Inventory...');
     const data = { companyData, adminData };
-    console.log(data);
-    // try {
-    //   const res = await register(data).unwrap();
-    //   console.log(res);
-    //   // const user = verifyToken(res.data.accessToken) as TUser;
-
-    //   // dispatch(setUser({ user, token: res.data.accessToken }))
-    //   // toast.success("Registered successfully!", { id: toastId, duration: 2000 });
-    //   // navigate(`/dashboard`);
-    // } catch (error) {
-    //   toast.error("Something went wrong!", { id: toastId, duration: 2000 });
-    // }
+    // console.log(data);
+    try {
+      const res = await addCompany(data).unwrap();
+      // dispatch(setCompany(res?.data));
+      // console.log(res);
+      if(res.data && res.data._id){
+        const resLogin = await login({email, password}).unwrap();
+        const user = verifyToken(resLogin.data.accessToken) as TUser;
+        dispatch(setUser({ user, token: res.data.accessToken }))
+        navigate(`/dashboard`);
+        toast.success("Registered successfully!", { id: toastId, duration: 2000 });
+      }
+    } catch (error) {
+      toast.error("Registration failed!", { id: toastId, duration: 2000 });
+    }
   };
 
   return (
@@ -111,7 +116,7 @@ const Register = () => {
           <Space>
             <Form.Item
               name="country"
-              rules={[{ required: true, message: 'Please input Country!' }]}
+              rules={[{ required: true, message: 'Please i. country!' }]}
             >
               <Input prefix={<HiOutlineFlag />} placeholder="Country" />
             </Form.Item>
@@ -187,7 +192,7 @@ const Register = () => {
             <Input.Password prefix={<LockOutlined />} placeholder='Confirm Password' />
           </Form.Item>
           <Form.Item style={{ textAlign: "center" }}>
-            <Button size='large' type="primary" htmlType="submit" style={{ margin: "0 auto", width: "100%" }} >
+            <Button size='large' type="primary" htmlType="submit" style={{ margin: "0 auto", width: "100%", backgroundImage: "linear-gradient(319deg, #ff1493 0%, #0000ff 37%, #ff8c00 100%)" }} >
               Register
             </Button>
           </Form.Item>

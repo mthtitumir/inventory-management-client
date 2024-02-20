@@ -19,7 +19,6 @@ const Login = () => {
             // console.log(res);
             
             const user = verifyToken(res.data.accessToken) as TUser;
-
             dispatch(setUser({ user, token: res.data.accessToken }))
             toast.success("Logged in successfully!", { id: toastId, duration: 2000 })
             navigate(`/dashboard`);
