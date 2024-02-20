@@ -5,10 +5,9 @@ const discountApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllDiscounts: builder.query({
-      query: (params) => ({
-        url: "/discounts",
+      query: (companyId) => ({
+        url: `/discounts/${companyId}`,
         method: "GET",
-        params,
       }),
       providesTags: ["discount"]
     }),

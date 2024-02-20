@@ -14,12 +14,17 @@ import Spinner from '../ui/Spinner';
 import dayjs from 'dayjs';
 import { useAddDiscountMutation, useGetSingleDiscountQuery } from '../../redux/features/discount/discountApi';
 import { TDiscount } from '../../types';
+import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
+import { useAppSelector } from '../../redux/hooks';
 
 const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, id: string | undefined, type: "add" | "update" }) => {
     const [isRequired, setIsRequired] = useState(true);
     const [defaultValues, setDefaultValues] = useState<Partial<TDiscount>>({ startTime: dayjs('00:00', "HH:mm"), endTime: dayjs('11:59', "HH:mm"), percentOff: 0, amountOff: 0, minOrderValue: 0, minOrderQuantity: 0, limitPerCustomer: 1 });
     const { data, isLoading } = useGetSingleDiscountQuery(id);
+    console.log(id, data);
+    
     const [addDiscount] = useAddDiscountMutation();
+    const seller: TUser | null = useAppSelector(useCurrentUser);
 
     const onfinish = (values: any) => {
         const startDate = values?.startDate?.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
@@ -29,7 +34,7 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
         // console.log({ startDate, endDate, startTime, endTime });
 
         if (!id && type === "add") {
-            const newDiscount = { ...values, startDate, endDate, startTime, endTime, percentOff: Number(values?.percentOff), amountOff: Number(values?.amountOff), minOrderValue: Number(values?.minOrderValue), minOrderQuantity: Number(values?.minOrderQuantity), limitPerCustomer: Number(values?.limitPerCustomer) };
+            const newDiscount = { ...values, startDate, endDate, startTime, endTime, percentOff: Number(values?.percentOff), amountOff: Number(values?.amountOff), minOrderValue: Number(values?.minOrderValue), minOrderQuantity: Number(values?.minOrderQuantity), limitPerCustomer: Number(values?.limitPerCustomer), company: seller?.company };
             addDiscount(newDiscount).unwrap().then((payload: any) => {
                 toast.success(payload.message);
             }).catch((error: any) => {
@@ -62,7 +67,7 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
             <>
                 {(type === "update") && (!id || !data || isRequired) ? <Spinner /> :
                     <>
-                        <h2 style={{ textAlign: "center", marginBottom: "10px" }}>{!id && !data && "Add New Discount"}{type === "update" && "Update Discount"}</h2>
+                        <h2 style={{ textAlign: "center", margin: "10px 0" }}>{!id && !data && "Add New Discount"}{type === "update" && "Update Discount"}</h2>
                         <Form
                             layout="horizontal"
                             initialValues={defaultValues}
@@ -120,7 +125,7 @@ const AddUpdateDiscount = ({ setIsModalOpen, id, type }: { setIsModalOpen: React
                             </Form.Item>
                             <Form.Item style={{ textAlign: "center" }}>
                                 <Button size='large' type="primary" htmlType="submit">
-                                    {!id && !data && "Add Discount"}{type === "update" && "Update Discount"}
+                                    {!id && !data.data && "Add Discount"}{type === "update" && "Update Discount"}
                                 </Button>
                             </Form.Item>
                         </Form>
