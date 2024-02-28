@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfigProvider, Menu } from 'antd';
 import { sidebarItemsGenerator } from '../../utils/SidebarItemsGenerator';
 import { dashboardPaths } from '../../routes/dashboard.route';
+import { LogoNameContent } from '../ui/Navbar';
 
 const sidebarItems = sidebarItemsGenerator(dashboardPaths);
 
@@ -19,9 +20,10 @@ const LeftSidebar: React.FC = () => {
                   },
             }}
         >
-            <div>
+            {/* <div>
                 <h3 style={{ padding: "5px 24px", color: "white" }}>Flora Vista</h3>
-            </div>
+            </div> */}
+            {LogoNameContent}
             <Menu style={{ backgroundImage: "" }} theme="dark" mode="inline" defaultSelectedKeys={['1']} items={sidebarItems} />
         </ConfigProvider>
 

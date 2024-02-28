@@ -3,6 +3,7 @@ import Dashboard from "../pages/dashboard/Dashboard"
 import Inventory from "../pages/inventory/Inventory"
 import SalesOrders from "../pages/sales/SalesOrders"
 import MakeSellForm from "../components/form/MakeSellForm"
+import InventorySettings from "../components/inventory/InventorySettings"
 
 export const dashboardPaths = [
     {
@@ -16,6 +17,10 @@ export const dashboardPaths = [
         path: 'inventory',
         icon: <CodeSandboxOutlined />,
         element: <Inventory />,
+    },
+    {
+        path: 'inventory/settings',
+        element: <InventorySettings />,
     },
     {
         name: 'Sales Orders',

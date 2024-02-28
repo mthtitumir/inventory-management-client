@@ -9,9 +9,9 @@ const Dashboard = () => {
     <div>
       <DashboardHeader />
       <Divider />
-      <SalesSummary />
+      {/* <SalesSummary /> */}
       <Divider />
-      <SalesHistoryChart />
+      {/* <SalesHistoryChart /> */}
       <SalesOrder />
     </div>
   )

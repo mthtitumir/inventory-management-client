@@ -10,7 +10,7 @@ const DashboardHeader = () => {
     const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
     return (
         <>
-            <Row gutter={16}>
+            <Row>
                 <Col>
                     <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />} size="large">
                         Add Flower
