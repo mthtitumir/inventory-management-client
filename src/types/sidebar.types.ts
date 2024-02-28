@@ -13,7 +13,7 @@ export type TSidebarRoute = {
 }
 
 export type TUserPath = {
-    name: string,
+    name?: string,
     path?: string,
     icon?: ReactNode,
     element?: ReactNode,

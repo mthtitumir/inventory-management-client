@@ -2,6 +2,7 @@ import { AppstoreOutlined, CodeSandboxOutlined, ShoppingCartOutlined, LineChartO
 import Dashboard from "../pages/dashboard/Dashboard"
 import Inventory from "../pages/inventory/Inventory"
 import SalesOrders from "../pages/sales/SalesOrders"
+import MakeSellForm from "../components/form/MakeSellForm"
 
 export const dashboardPaths = [
     {
@@ -27,5 +28,9 @@ export const dashboardPaths = [
         path: 'reports',
         icon: <LineChartOutlined />,
         element: <SalesOrders />,
+    },
+    {
+        path: 'sell/:product',
+        element: <MakeSellForm />,
     },
 ]

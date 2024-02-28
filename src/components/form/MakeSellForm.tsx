@@ -1,27 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react'
+import { Button, Col, Divider, Form, Input, Row, Space } from 'antd';
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
-import { Button, Col, Divider, Form, Input, Row, Space, Spin } from 'antd';
-import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
-import toast from 'react-hot-toast';
 import { useGetAllDiscountsQuery } from '../../redux/features/discount/discountApi';
+import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
+import { useAddBuyerMutation } from '../../redux/features/buyer/buyerApi';
+import toast from 'react-hot-toast';
 import { TDiscount } from '../../types';
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
+import Spinner from '../ui/Spinner';
 
-const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, product: string | undefined }) => {
+const MakeSellForm = () => {
+    // const product= useParams();
+    const { product } = useParams();
     const [subTotal, setSubTotal] = useState(0);
-    const [code, setCode] = useState(null);
+    const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
     const seller: TUser | null = useAppSelector(useCurrentUser);
     const { data, isLoading } = useGetSingleFlowerQuery(product);
-    const { data: discountsData, isLoading: isDiscountsDataLoading } = useGetAllDiscountsQuery(seller?.company);
+    const { data: discountsData } = useGetAllDiscountsQuery(seller?.company);
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
-    // console.log({company: seller?.company, discountsData, isDiscountsDataLoading});
+    // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading
     const [addSales] = useAddSalesMutation();
+    const [addBuyer] = useAddBuyerMutation();
     const discounts = discountsData?.data;
+
     // console.log(discounts);
 
 
@@ -70,7 +77,7 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
             const endD = dayjs(endDate);
             const endT = dayjs(endTime, 'HH:mm');
             const couponValidation = (startDate < endDate) && timeToCheck.isAfter(startT) && timeToCheck.isBefore(endT) && (currentDate > startD) && (currentDate < endD) && valid;
-            console.log({couponValidation});
+            console.log({ couponValidation });
             if (!couponValidation) {
                 setDiscount(0);
                 toast.error("Invalid discount!");
@@ -104,15 +111,16 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
         setDiscount(0);
     }
     if (!data || isLoading) {
-        return <Spin />
+        return <Spinner />
     }
     const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
-            <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Selling Form</h2>
+            <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Checkout</h2>
             <Form
                 // style={{ maxWidth: 600 }}
                 // initialValues={{ remember: true }}
+                
                 onFinish={onFinish}
             >
                 <Row style={{ margin: "20px 0" }}>
@@ -134,30 +142,33 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                 </Row>
 
                 {/* form start  */}
-                <Form.Item
-                    style={{ marginBottom: "10px" }}
-                    label="Buyer Name"
-                    name="buyerName"
-                    rules={[{ required: true, message: 'Please input buyer name!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    style={{ marginBottom: "10px" }}
-                    label="Buyer Email"
-                    name="buyerEmail"
-                    rules={[{ required: true, message: 'Please input buyer email!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    style={{ marginBottom: "10px" }}
-                    label="Buyer Phone Number"
-                    name="buyerPhone"
-                    rules={[{ required: true, message: 'Please input buyer phone number!' }]}
-                >
-                    <Input />
-                </Form.Item>
+                <Divider>Buyer Information</Divider>
+                <Space style={{width: "100%"}}>
+                    <Form.Item
+                        style={{ marginBottom: "10px" }}
+                        // label="Buyer Name"
+                        name="buyerName"
+                        rules={[{ required: true, message: 'Please input buyer name!' }]}
+                    >
+                        <Input placeholder={"Buyer Name"} />
+                    </Form.Item>
+                    <Form.Item
+                        style={{ marginBottom: "10px" }}
+                        // label="Buyer Email"
+                        name="buyerEmail"
+                        rules={[{ required: true, message: 'Please input buyer email!' }]}
+                    >
+                        <Input placeholder={"Buyer Email"} />
+                    </Form.Item>
+                    <Form.Item
+                        style={{ marginBottom: "10px" }}
+                        // label="Buyer Phone Number"
+                        name="buyerPhone"
+                        rules={[{ required: true, message: 'Please input buyer phone number!' }]}
+                    >
+                        <Input placeholder={"Buyer Phone"} />
+                    </Form.Item>
+                </Space>
 
                 <Form.Item
                     style={{ marginBottom: "10px" }}
@@ -165,7 +176,7 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                     name="quantity"
                     rules={[{ required: true, message: 'Please input your product quantity!' }]}
                 >
-                    <Input onChange={(e) => onQuantityChange(e)} type='number' />
+                    <Input onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
                 </Form.Item>
                 <Form.Item
                     style={{ marginBottom: "10px" }}
@@ -173,7 +184,7 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
                     name="discountCode"
                 >
                     <Space.Compact>
-                        <Input onChange={(e) => setCode(e.target.value)} type='text' />
+                        <Input onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
                         <Button onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
                     </Space.Compact>
                 </Form.Item>
@@ -195,3 +206,7 @@ const MakeSellForm = ({ setIsModalOpen, product }: { setIsModalOpen: React.Dispa
 }
 
 export default MakeSellForm
+
+
+
+// { setIsModalOpen, product }: { setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>, product?: string | undefined }

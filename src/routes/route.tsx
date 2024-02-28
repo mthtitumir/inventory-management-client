@@ -4,6 +4,7 @@ import { routeGenerator } from "../utils/routeGenerator";
 import { dashboardPaths } from "./dashboard.route";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <MainLayout />,
+        element: <PrivateRoute><MainLayout /></PrivateRoute>,
         children: routeGenerator(dashboardPaths),
     },
     {
