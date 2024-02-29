@@ -3,6 +3,7 @@ import InventorySummaryCard from "./InventorySummaryCard"
 import SalesUpdateCard from "./SalesUpdateCard"
 import FlowerStockCard from "./FlowerStockCard"
 import BestSellingCard from "./BestSellingCard"
+import PurchasedUpdateCard from "./PurchasedUpdateCard"
 
 const DashboardOverview = () => {
     return (
@@ -21,6 +22,14 @@ const DashboardOverview = () => {
                 </Flex>
                 <Flex>
                     <BestSellingCard />
+                </Flex>
+            </Flex>
+            <Flex gap={30}>
+                <Flex>
+                    <PurchasedUpdateCard />
+                </Flex>
+                <Flex>
+                    <PurchasedUpdateCard />
                 </Flex>
             </Flex>
         </Flex>
