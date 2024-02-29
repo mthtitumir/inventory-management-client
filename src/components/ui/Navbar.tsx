@@ -7,7 +7,6 @@ import LeftSidebar from "../layout/LeftSidebar";
 import SearchBox from "./SearchBox";
 import { mainBg } from "../layout/MainLayout";
 import { Link } from "react-router-dom";
-// import SearchBox from "./SearchBox";
 export const LogoNameContent = (
     <Flex align="center" justify="center" gap={5}>
         <img style={{ width: "40px" }} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" />
