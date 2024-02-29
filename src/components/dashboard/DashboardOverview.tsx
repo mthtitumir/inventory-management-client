@@ -4,6 +4,7 @@ import SalesUpdateCard from "./SalesUpdateCard"
 import FlowerStockCard from "./FlowerStockCard"
 import BestSellingCard from "./BestSellingCard"
 import PurchasedUpdateCard from "./PurchasedUpdateCard"
+import SalesOrderCard from "./SalesOrderCard"
 
 const DashboardOverview = () => {
     return (
@@ -29,7 +30,7 @@ const DashboardOverview = () => {
                     <PurchasedUpdateCard />
                 </Flex>
                 <Flex>
-                    <PurchasedUpdateCard />
+                    <SalesOrderCard />
                 </Flex>
             </Flex>
         </Flex>

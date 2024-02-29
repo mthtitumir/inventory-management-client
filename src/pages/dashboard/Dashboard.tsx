@@ -1,4 +1,4 @@
-import { Avatar, ConfigProvider, Flex, Tabs } from "antd"
+import { Avatar, Flex, Tabs } from "antd"
 import { UserOutlined } from '@ant-design/icons';
 import { useState } from "react";
 import MyModal from "../../components/ui/MyModal";
@@ -40,20 +40,7 @@ const Dashboard = () => {
         </Flex>
       </Flex>
       <Flex gap={12} style={{ padding: "0 20px", fontSize: "20px" }}>
-        <ConfigProvider
-          theme={{
-            components: {
-              Tabs: {
-                itemSelectedColor: "#800000",
-                itemHoverColor: "#800000",
-                inkBarColor: "#800000",
-              },
-            },
-          }}
-        >
-
-          <Tabs style={{ width: "100%" }} defaultActiveKey="1" items={items} />
-        </ConfigProvider>
+        <Tabs style={{ width: "100%" }} defaultActiveKey="1" items={items} />
         {/* <Col>
                     <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />} size="large">
                         Add Flower

@@ -14,6 +14,16 @@ const MainLayout = () => {
           colorPrimaryHover: "#800000",
 
         },
+        components: {
+          Input: {
+            activeShadow: "0 0 0 2px rgba(5, 145, 255, 0.1)"
+          },
+          Tabs: {
+            itemSelectedColor: "#800000",
+            itemHoverColor: "#800000",
+            inkBarColor: "#800000",
+          },
+        }
       }}
     >
       <div>
