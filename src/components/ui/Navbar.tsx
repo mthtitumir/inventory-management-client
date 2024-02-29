@@ -32,8 +32,8 @@ const Navbar = () => {
                     <PlusOutlined style={{ outline: "white", backgroundImage: mainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />
                 </Flex>
                 <Flex align="center" gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff" }}>
-                    <UserAddOutlined />
-                    <IoMdNotificationsOutline />
+                    <UserAddOutlined size={20}  />
+                    <IoMdNotificationsOutline size={20} />
                     <Link to={'/inventory/settings'} style={{ color: "black" }}><SettingOutlined /></Link>
                 </Flex>
                 <Flex align="center" gap={8}>
