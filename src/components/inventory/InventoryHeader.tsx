@@ -45,7 +45,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
         setFilter({ ...filter, searchTerm: e.target.value });
     };
     return (
-        <Flex align={"center"} justify={"space-between"} style={{borderBottom: "1px solid lightblue", paddingBottom: '10px'}}>
+        <Flex align={"center"} justify={"space-between"} style={{borderBottom: "1px solid lightblue", paddingBottom: '10px', marginTop: "10px"}}>
             <Col>
                 <h2>Inventory</h2>
             </Col>

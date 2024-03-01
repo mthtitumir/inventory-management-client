@@ -9,6 +9,7 @@ export type TSidebarRoute = {
     key: string,
     label: ReactNode,
     children?: TSidebarRoute[],
+    icon?: ReactNode,
     element?: ReactNode,
 }
 

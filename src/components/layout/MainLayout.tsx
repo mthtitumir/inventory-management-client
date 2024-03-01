@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom"
 import FooterC from "../ui/Footer"
 
 export const mainBg = "linear-gradient(-60deg, #f8002f 10%, #000c14 100%)";
+export const negMainBg = "linear-gradient(60deg, #f8002f 10%, #000c14 100%)";
 const MainLayout = () => {
   return (
     <ConfigProvider
