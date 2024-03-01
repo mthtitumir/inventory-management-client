@@ -56,7 +56,7 @@ const MoreOptions = ({ id }: { id: string }) => {
 
     return (
         !id ? <Spinner /> : <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            <Link to={`/sell/${id}`}><Button style={{ borderColor: "green", color: "green", width: "100%" }} icon={<ShoppingCartOutlined />}> Sell</Button></Link>
+            <Link to={`/inventory/sell/${id}`}><Button style={{ borderColor: "green", color: "green", width: "100%" }} icon={<ShoppingCartOutlined />}> Sell</Button></Link>
             {/* <Button onClick={() => handleOnClick("sell")} style={{ borderColor: "green", color: "green" }} icon={<ShoppingCartOutlined />}> Sell</Button> */}
             <Button onClick={() => handleOnClick("edit")} icon={<EditOutlined />}> Edit</Button>
             <Button onClick={() => handleOnClick("variant")} icon={<CopyOutlined />}> Make Variant</Button>

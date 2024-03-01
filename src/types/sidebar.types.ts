@@ -1,15 +1,15 @@
 import { ReactNode } from "react"
 
 export type TRoute = {
-    path: string,
-    element: ReactNode,
+    path?: string,
+    element?: ReactNode,
 }
 
 export type TSidebarRoute = {
     key: string,
-    icon?: ReactNode,
     label: ReactNode,
-    children?: TSidebarRoute[]
+    children?: TSidebarRoute[],
+    element?: ReactNode,
 }
 
 export type TUserPath = {

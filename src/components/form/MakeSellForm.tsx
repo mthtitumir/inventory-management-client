@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Col, Divider, Form, Input, Row, Space } from 'antd';
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
@@ -16,6 +16,8 @@ import Spinner from '../ui/Spinner';
 const MakeSellForm = () => {
     // const product= useParams();
     const { product } = useParams();
+    console.log({product, 19: "from 19"});
+    
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);

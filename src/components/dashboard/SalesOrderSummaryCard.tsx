@@ -2,7 +2,7 @@ import { Flex, Select } from "antd"
 import { testStyle } from "../../styles/dasboard.styles"
 import { IoIosArrowDown } from "react-icons/io"
 import { filterOptions } from "../../constants"
-import { CartesianGrid, LineChart, XAxis, YAxis, Tooltip, Line } from "recharts"
+import { LineChart, XAxis, YAxis, Tooltip, Line } from "recharts"
 
 const SalesOrderSummaryCard = () => {
     const data = [
