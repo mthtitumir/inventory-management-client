@@ -1,20 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Flex, Form, Input, Button } from 'antd';
 import AddHeader from "../ui/AddHeader"
 import { useAppSelector } from '../../redux/hooks';
 import { useCurrentUser } from '../../redux/features/auth/authSlice';
+import { useAddTradingPartnerMutation } from '../../redux/features/buyer/tradingPartnerApi';
+import toast from 'react-hot-toast';
 
 const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
   const user = useAppSelector(useCurrentUser);
+  const [addTradingPartner] = useAddTradingPartnerMutation();
   // console.log(user);
-  
+
   const onFinish = (values: { [s: string]: unknown; } | ArrayLike<unknown>) => {
-    // Handle form submission logic here
     const filteredValues = Object.fromEntries(
       Object.entries(values).filter(([, value]) => value !== undefined)
     );
-    const partnerData = {...filteredValues, partnerOf: user?.company, type: type.toLowerCase()}
-    console.log('Received values:', partnerData);
+    const partnerData = { ...filteredValues, partnerOf: user?.company, type: type.toLowerCase() }
+    // console.log('Received values:', partnerData);
+    addTradingPartner(partnerData).unwrap().then((payload: any) => {
+      console.log(payload);
+      
+      toast.success(payload.message);
+    }).catch((error: any) => {
+      toast.error(error.message || "Something went wrong!");
+    })
   };
   return (
     <div style={{ padding: "0" }}>
@@ -23,13 +33,13 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
         <Form
           layout='vertical'
           onFinish={onFinish}
-          style={{width: "100%", padding: "20px"}}
+          style={{ width: "100%", padding: "20px" }}
         >
           <Flex gap={10} justify='space-between'>
             <Form.Item
               label="Name"
               name="name"
-              style={{width: "100%"}}
+              style={{ width: "100%" }}
               rules={[{ required: true, message: 'Please enter your name!' }]}
             >
               <Input />
@@ -38,7 +48,7 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
             <Form.Item
               label="Email"
               name="email"
-              style={{width: "100%"}}
+              style={{ width: "100%" }}
               rules={[{ required: true, type: 'email', message: 'Please enter a valid email!' }]}
             >
               <Input />
@@ -46,7 +56,7 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
 
             <Form.Item
               label="Phone Number"
-              style={{width: "100%"}}
+              style={{ width: "100%" }}
               name="phoneNumber"
               rules={[{ required: true, message: 'Please enter your phone number!' }]}
             >

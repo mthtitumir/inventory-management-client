@@ -12,7 +12,7 @@ import AddTradingPartner from "../components/form/AddTradingPartner"
 export const dashboardPaths = [
     {
         name: 'Dashboard',
-        path: 'dashboard',
+        path: '/',
         icon: <BiHome />,
         element: <Dashboard />,
     },
