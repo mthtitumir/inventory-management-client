@@ -6,7 +6,6 @@ import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
 import { useGetAllDiscountsQuery } from '../../redux/features/discount/discountApi';
 import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
-import { useAddBuyerMutation } from '../../redux/features/buyer/buyerApi';
 import toast from 'react-hot-toast';
 import { TDiscount } from '../../types';
 import dayjs from 'dayjs';
@@ -28,7 +27,6 @@ const MakeSellForm = () => {
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
     // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading
     const [addSales] = useAddSalesMutation();
-    const [addBuyer] = useAddBuyerMutation();
     const discounts = discountsData?.data;
 
     // console.log(discounts);

@@ -16,6 +16,7 @@ import companyReducer from "./features/company/companySlice";
 import flowerReducer from "./features/flower/flowerSlice";
 import salesReducer from "./features/sales/salesSlice";
 import discountReducer from "./features/discount/discountSlice";
+// import tradingPartnerReducer from "./features/discount/tradingPartnerSlice";
 
 const persistConfig = {
   key: "auth",
@@ -30,6 +31,7 @@ export const store = configureStore({
     flower: flowerReducer,
     sales: salesReducer,
     discount: discountReducer,
+    // tradingPartner: tradingPartnerReducer
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

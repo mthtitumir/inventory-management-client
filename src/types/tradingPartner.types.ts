@@ -1,16 +1,16 @@
-export type TBuyer = {
+export type TTradingPartner = {
     _id: string
     name: string
     email: string
     phoneNumber: string
-    customerOf: string
+    partnerOf: string
     jobTitle: string
     website: string
     note: string
     address: string
     city: string
-    state: string
-    postalCode: string
+    province: string
+    zip: string
     country: string
     discountUsed: Array<string>
     coinsEarned: number
