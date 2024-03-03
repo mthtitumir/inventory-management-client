@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import toast from "react-hot-toast";
 
-export const uploadImage = async (event: any) => {
-    // console.log(event.target.files[0]);
-    if (!event.target.files[0]) return;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const uploadImage = async (file: any) => {
     const formData = new FormData();
-    formData.append("image", event.target.files[0]);
+    formData.append("image", file);
     const toastId = toast.loading("Image uploading...");
     try {
         const res = await fetch(
@@ -15,15 +13,24 @@ export const uploadImage = async (event: any) => {
                 body: formData,
             }
         );
-        if (!res.ok) throw new Error("Failed to upload image");
-
+        if (!res.ok) {
+            const errorData = await res.json();
+            console.error("ImgBB API Error:", errorData);
+            throw new Error("Failed to upload image");
+        }
         const data = await res.json();
-        // console.log(data);
+        console.log(data);
+        // setImageUrl(data?.data?.display_url);
+        const url = data?.data?.display_url;
         toast.dismiss(toastId);
         toast.success("Image uploaded successfully!");
-        return (data?.data?.display_url);
-    } catch (error) {
+        return url;
+    } catch (error: any) {
+        console.error("Image upload error:", error.message);
         toast.error("Image not uploaded!");
         toast.dismiss(toastId);
+        return;
     }
+
+
 };
