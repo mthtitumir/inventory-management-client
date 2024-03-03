@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Modal, Col, Input, Flex } from "antd"
 const { confirm } = Modal;
 import { PlusCircleOutlined, DeleteFilled, SearchOutlined } from "@ant-design/icons"
-import { ChangeEvent, useState } from "react"
-import MyModal from "../ui/MyModal";
-import AddUpdateFlower from "../form/AddUpdateFlower";
+import { ChangeEvent } from "react"
 import { useAppSelector } from "../../redux/hooks";
 import { setBulkDeleteIds, useBulkDeleteIds } from "../../redux/features/flower/flowerSlice";
 import { useDeleteBulkFlowersMutation } from "../../redux/features/flower/flowerApi";
@@ -13,7 +12,7 @@ import { Link } from "react-router-dom";
 export type filterState = { filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<object | Record<string, unknown>>> };
 
 const InventoryHeader = ({ filter, setFilter }: filterState) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
     const bulkDeleteIds = useAppSelector(useBulkDeleteIds);
     const [deleteBulkFlowers] = useDeleteBulkFlowersMutation();
 
@@ -30,7 +29,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                deleteBulkFlowers(bulkDeleteIds).unwrap().then((payload) => {
+                deleteBulkFlowers(bulkDeleteIds).unwrap().then((payload: any) => {
                     toast.success(payload.message);
                     setBulkDeleteIds([]);
                 }).catch((error) => {
@@ -46,7 +45,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
         setFilter({ ...filter, searchTerm: e.target.value });
     };
     return (
-        <Flex align={"center"} justify={"space-between"} style={{borderBottom: "1px solid lightblue", paddingBottom: '10px', marginTop: "10px"}}>
+        <Flex align={"center"} justify={"space-between"} style={{ borderBottom: "1px solid lightblue", paddingBottom: '10px', marginTop: "10px" }}>
             <Col>
                 <h2>Inventory</h2>
             </Col>
@@ -57,12 +56,12 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
             <Col>
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkDeleteIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Link to={"/inventory/items/add-item"}>
-                <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />}>
-                    Add New Flower
-                </Button>
+                    <Button type="primary" icon={<PlusCircleOutlined />}>
+                        Add New Flower
+                    </Button>
                 </Link>
             </Col>
-            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add" /></MyModal>
+            {/* <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add" /></MyModal> */}
         </Flex>
     )
 }

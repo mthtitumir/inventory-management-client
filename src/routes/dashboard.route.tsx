@@ -28,15 +28,15 @@ export const dashboardPaths = [
             },
             {
                 path: 'inventory/items/add-item',
-                element: <AddUpdateFlower id={undefined} type="add" setIsModalOpen={""} />,
+                element: <AddUpdateFlower type="add" />,
             },
             {
                 path: 'inventory/items/edit-item/:itemId',
-                element: <AddUpdateFlower id={undefined} type="update" setIsModalOpen={""} />,
+                element: <AddUpdateFlower type="update" />,
             },
             {
                 path: 'inventory/items/make-item-variant/:itemId',
-                element: <AddUpdateFlower id={undefined} type="variant" setIsModalOpen={""} />,
+                element: <AddUpdateFlower type="variant" />,
             },
             {
                 path: 'inventory/items/sell-item/:itemId',

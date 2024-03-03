@@ -1,9 +1,5 @@
 import { Avatar, Flex, Tabs } from "antd"
 import { UserOutlined } from '@ant-design/icons';
-import { useState } from "react";
-import MyModal from "../../components/ui/MyModal";
-import AddUpdateFlower from "../../components/form/AddUpdateFlower";
-import AddUpdateDiscount from "../../components/form/AddUpdateDiscount";
 import DashboardOverview from "../../components/dashboard/DashboardOverview";
 const items = [
   {
@@ -28,8 +24,6 @@ const items = [
   },
 ];
 const Dashboard = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
   return (
     <>
       <Flex align="center" gap={20} style={{ marginBottom: "", padding: "25px 20px" }}>
@@ -57,8 +51,8 @@ const Dashboard = () => {
                     </Button>
                 </Col> */}
       </Flex>
-      <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add" /></MyModal>
-      <MyModal isModalOpen={isDiscountModalOpen} setIsModalOpen={setIsDiscountModalOpen}><AddUpdateDiscount setIsModalOpen={setIsDiscountModalOpen} id={undefined} type="add" /></MyModal>
+      {/* <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower type="add" /></MyModal>
+      <MyModal isModalOpen={isDiscountModalOpen} setIsModalOpen={setIsDiscountModalOpen}><AddUpdateDiscount type="add" /></MyModal> */}
     </>
   )
 }

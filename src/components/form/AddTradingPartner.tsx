@@ -20,15 +20,15 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
     // console.log('Received values:', partnerData);
     addTradingPartner(partnerData).unwrap().then((payload: any) => {
       console.log(payload);
-      
+
       toast.success(payload.message);
     }).catch((error: any) => {
       toast.error(error.message || "Something went wrong!");
     })
   };
   return (
-    <div style={{ padding: "0" }}>
-      <AddHeader type={type} />
+    <div>
+      <AddHeader text={type === "Buyer" ? "New Buyer" : "New Supplier"} />
       <Flex justify='center' align='center'>
         <Form
           layout='vertical'

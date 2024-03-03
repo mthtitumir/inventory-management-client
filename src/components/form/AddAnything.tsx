@@ -6,7 +6,7 @@ const AddAnything = () => {
   return (
     <Flex gap={10}>
       <Flex vertical gap={5} style={{ borderRight: "1px solid #e6f4ff", paddingRight: "10px" }}>
-        <Button icon={<PlusOutlined />}>Add Flower</Button>
+        <Link to={"/inventory/items/add-item"}><Button icon={<PlusOutlined />}>Add Flower</Button></Link>
         <Link to={"/purchases/suppliers/add-new-supplier"}><Button icon={<PlusOutlined />}>Add Supplier</Button></Link>
       </Flex>
       <Flex vertical gap={5}>
