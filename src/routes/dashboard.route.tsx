@@ -5,8 +5,9 @@ import SalesOrders from "../pages/sales/SalesOrders"
 import MakeSellForm from "../components/form/MakeSellForm"
 import InventorySettings from "../components/inventory/InventorySettings"
 import { IoStorefrontOutline } from "react-icons/io5";
-import { BiHome, BiPurchaseTag  } from "react-icons/bi";
+import { BiHome, BiPurchaseTag } from "react-icons/bi";
 import { ImStatsBars } from "react-icons/im";
+import AddTradingPartner from "../components/form/AddTradingPartner"
 
 export const dashboardPaths = [
     {
@@ -28,15 +29,14 @@ export const dashboardPaths = [
                 path: 'inventory/sell/:product',
                 element: <MakeSellForm />,
             },
+            {
+                path: 'inventory/settings',
+                element: <InventorySettings />,
+            },
         ]
     },
     {
-        path: 'inventory/settings',
-        element: <InventorySettings />,
-    },
-    {
         name: 'Sales',
-        // path: 'sales-orders',
         icon: <ShoppingCartOutlined />,
         children: [
             {
@@ -45,10 +45,14 @@ export const dashboardPaths = [
                 element: <SalesOrders />,
             },
             {
-                name: 'Customers',
-                path: 'sales/customers',
+                name: 'Buyers',
+                path: 'sales/buyers',
                 element: <SalesOrders />,
-            }
+            },
+            {
+                path: 'sales/buyers/add-new-buyer',
+                element: <AddTradingPartner type="Buyer" />,
+            },
         ]
     },
     {
@@ -58,13 +62,17 @@ export const dashboardPaths = [
         children: [
             {
                 name: 'Orders',
-                path: 'purchase/orders',
+                path: 'purchases/orders',
                 element: <SalesOrders />,
             },
             {
-                name: 'Customers',
-                path: 'purchase/suppliers',
+                name: 'Suppliers',
+                path: 'purchases/suppliers',
                 element: <SalesOrders />,
+            },
+            {
+                path: 'purchases/suppliers/add-new-supplier',
+                element: <AddTradingPartner type="Supplier" />,
             },
         ]
     },

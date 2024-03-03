@@ -24,6 +24,9 @@ const MainLayout = () => {
             itemHoverColor: "#800000",
             inkBarColor: "#800000",
           },
+          Form: {
+            itemMarginBottom: 16
+          }
         }
       }}
     >

@@ -1,5 +1,5 @@
 import { Avatar, Flex } from "antd";
-import { MenuOutlined, PlusOutlined, CloseOutlined, UserAddOutlined, SettingOutlined } from '@ant-design/icons';
+import { MenuOutlined, PlusOutlined, UserAddOutlined, SettingOutlined } from '@ant-design/icons';
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useState } from "react";
 import MyDrawer from "./MyDrawer";
@@ -18,17 +18,16 @@ export const LogoNameContent = (
 )
 
 const Navbar = () => {
-    const closePopIcon = (<PlusOutlined style={{ outline: "white", backgroundImage: mainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
-    const openPopIcon = (<CloseOutlined style={{ outline: "white", backgroundImage: negMainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
+    // const openPopIcon = (<CloseOutlined style={{ outline: "white", backgroundImage: negMainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+    const openPopIcon = (<PlusOutlined style={{ outline: "white", backgroundImage: isPopoverOpen ? mainBg: negMainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
     const showDrawer = () => {
         setIsDrawerOpen(true);
     };
     const handleAddOnClick = () => {
         setIsPopoverOpen(!isPopoverOpen);
-    }
-    console.log(isPopoverOpen);        
+    }       
     return (
         <Flex style={{ padding: "0 20px", marginBottom: "", borderBottom: '1px solid #e6f4ff', backgroundColor: "#FFFDD0" }} align={"center"} justify={"space-between"}>
             {/* {LogoNameContent} */}
@@ -39,7 +38,7 @@ const Navbar = () => {
                 <Flex align="center" gap={8}>
                     <p>Demo Company</p>
                     <div onClick={handleAddOnClick}>
-                        <MyPopover child1={isPopoverOpen ? openPopIcon : closePopIcon} child2={<AddAnything />} />
+                        <MyPopover child1={openPopIcon} child2={<AddAnything />} />
                     </div>
 
                 </Flex>
