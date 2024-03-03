@@ -9,6 +9,7 @@ import { setBulkDeleteIds, useBulkDeleteIds } from "../../redux/features/flower/
 import { useDeleteBulkFlowersMutation } from "../../redux/features/flower/flowerApi";
 import toast from "react-hot-toast";
 import ResetFilter from "../ui/ResetFilter";
+import { Link } from "react-router-dom";
 export type filterState = { filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<object | Record<string, unknown>>> };
 
 const InventoryHeader = ({ filter, setFilter }: filterState) => {
@@ -55,9 +56,11 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
             </Flex>
             <Col>
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkDeleteIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
+                <Link to={"/inventory/items/add-item"}>
                 <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />}>
                     Add New Flower
                 </Button>
+                </Link>
             </Col>
             <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add" /></MyModal>
         </Flex>

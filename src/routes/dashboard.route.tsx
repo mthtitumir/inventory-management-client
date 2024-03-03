@@ -8,6 +8,7 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import { BiHome, BiPurchaseTag } from "react-icons/bi";
 import { ImStatsBars } from "react-icons/im";
 import AddTradingPartner from "../components/form/AddTradingPartner"
+import AddUpdateFlower from "../components/form/AddUpdateFlower"
 
 export const dashboardPaths = [
     {
@@ -26,7 +27,19 @@ export const dashboardPaths = [
                 element: <Inventory />,
             },
             {
-                path: 'inventory/sell/:product',
+                path: 'inventory/items/add-item',
+                element: <AddUpdateFlower id={undefined} type="add" setIsModalOpen={""} />,
+            },
+            {
+                path: 'inventory/items/edit-item/:itemId',
+                element: <AddUpdateFlower id={undefined} type="update" setIsModalOpen={""} />,
+            },
+            {
+                path: 'inventory/items/make-item-variant/:itemId',
+                element: <AddUpdateFlower id={undefined} type="variant" setIsModalOpen={""} />,
+            },
+            {
+                path: 'inventory/items/sell-item/:itemId',
                 element: <MakeSellForm />,
             },
             {

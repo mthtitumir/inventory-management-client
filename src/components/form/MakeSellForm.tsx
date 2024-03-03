@@ -14,15 +14,15 @@ import Spinner from '../ui/Spinner';
 
 const MakeSellForm = () => {
     // const product= useParams();
-    const { product } = useParams();
-    console.log({product, 19: "from 19"});
+    const { itemId } = useParams();
+    console.log({itemId, 19: "from 19"});
     
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
     const seller: TUser | null = useAppSelector(useCurrentUser);
-    const { data, isLoading } = useGetSingleFlowerQuery(product);
+    const { data, isLoading } = useGetSingleFlowerQuery(itemId);
     const { data: discountsData } = useGetAllDiscountsQuery(seller?.company);
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
     // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading

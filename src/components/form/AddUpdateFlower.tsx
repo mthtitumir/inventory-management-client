@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import {
     Button,
+    Flex,
     Form,
     Input,
     Select,
@@ -14,15 +15,19 @@ import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { FlowerDefaultValuesProps } from '../../types';
 import Spinner from '../ui/Spinner';
+import { useParams } from 'react-router-dom';
 
-const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>, id: string | undefined, type: "add" | "update" | "variant" }) => {
-    const { data, isLoading } = useGetSingleFlowerQuery(id);
+const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>> | "", id: string | undefined, type: "add" | "update" | "variant" }) => {
+    const {itemId} = useParams();
+    const { data, isLoading } = useGetSingleFlowerQuery(itemId);
     const [addFlower] = useAddFlowerMutation();
     const [updateFlower] = useUpdateFlowerMutation();
     const [imageUrl, setImageUrl] = useState('');
     const [isRequired, setIsRequired] = useState(true);
     const [defaultValues, setDefaultValues] = useState<FlowerDefaultValuesProps>({ style: "fff", bloomDate: "2024-01-28", arrangement: "hello" });
     const seller: TUser | null = useAppSelector(useCurrentUser);
+    console.log({itemId});
+    
 
     const uploadImage = async (event: any) => {
         // console.log(event.target.files[0]);
@@ -76,25 +81,25 @@ const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.D
                 toast.error(error.message || "Something went wrong!")
             })
         }
-        setIsModalOpen(false);
+        // setIsModalOpen(false);
     }
     useEffect(() => {
-        if (id && data) {
-            console.log(id);
+        if (itemId && data) {
+            console.log(itemId);
 
             setDefaultValues(data?.data);
             setImageUrl(data?.data?.image);
             setIsRequired(false);
         }
-    }, [id, data, type, setIsModalOpen]);
-    console.log(defaultValues);
-    // console.log(isLoading);
+    }, [itemId, data, type, setIsModalOpen]);
+    // console.log(defaultValues);
+    console.log({isLoading, isRequired});
 
     return (
         isLoading || isRequired && type === ("update" || "variant") ? <Spinner /> :
             <>
-                {(type === "update" || type === "variant") && (!id || !data || isRequired) ? <Spinner /> :
-                    <>
+                {(type === "update" || type === "variant") && (!itemId || !data || isRequired) ? <Spinner /> :
+                    <Flex vertical style={{padding: "20px"}}>
                         <h2 style={{ textAlign: "center", marginBottom: "10px" }}>{!id && !data && "Add New Flower"}{type === "update" && "Update Flower"}{type === "variant" && "Make Variant"}</h2>
                         <Form
                             layout="horizontal"
@@ -155,7 +160,7 @@ const AddUpdateFlower = ({ setIsModalOpen, id, type }: { setIsModalOpen: React.D
                                 </Button>
                             </Form.Item>
                         </Form>
-                    </>}
+                    </Flex>}
             </>
     );
 };
