@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import {
@@ -22,17 +23,26 @@ import Spinner from '../ui/Spinner';
 import { useParams } from 'react-router-dom';
 import AddHeader from '../ui/AddHeader';
 import { uploadImage } from '../../utils/uploadImage';
+import { BsCloudUpload } from "react-icons/bs";
+import { useGetAllTradingPartnerQuery } from '../../redux/features/buyer/tradingPartnerApi';
+import { transformedArrayToSelectOptions } from '../../utils/transformArrayToSelectOptions';
 
 const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
+    const [searchTerm, setSearchTerm] = useState('');
     const { itemId } = useParams();
     const { data, isLoading } = useGetSingleFlowerQuery(itemId, { skip: !itemId });
+    const { data: supplierData } = useGetAllTradingPartnerQuery({ searchTerm, type: "supplier", select: "name _id email" });
+    // console.log(supplierData);
+    // console.log(type);
+    
     const [addFlower] = useAddFlowerMutation();
     const [updateFlower] = useUpdateFlowerMutation();
     const [imageUrl, setImageUrl] = useState('');
     const [isRequired, setIsRequired] = useState(true);
     const [defaultValues, setDefaultValues] = useState<FlowerDefaultValuesProps>({ style: "Compact", bloomDate: "2024-01-28", arrangement: "Loose and Wild" });
-    const seller: TUser | null = useAppSelector(useCurrentUser);
-    console.log({ imageUrl });
+    const user: TUser | null = useAppSelector(useCurrentUser);
+    const selectSupplierOptions = transformedArrayToSelectOptions(supplierData?.data);
+    // console.log(selectSupplierOptions);
 
     const props: UploadProps = {
         name: 'file',
@@ -45,15 +55,19 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
             const url = await uploadImage(info.file);
             setImageUrl(url);
         },
-        maxCount: 1
+        maxCount: 1,
     };
-
+    const onSupplierSearch = (value: string) => {
+        console.log(value);
+        setSearchTerm(value);
+    }
     // const { name, price, quantity, color, bloomDate, style, arrangement, type, size, fragrance, image } = data?.data;
     const onfinish = (values: any) => {
         if (!itemId && type === "add") {
-            const newFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, seller: seller?._id };
+            const newFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, entryBy: user?._id, company: user?.company };
             addFlower(newFlower).unwrap().then((payload: any) => {
                 toast.success(payload.message);
+                console.log(payload);                
             }).catch((error: any) => {
                 toast.error(error.message || "Something went wrong!")
             })
@@ -67,7 +81,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
             })
         }
         if (itemId && type === "variant") {
-            const newFlowerVariant = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, seller: seller?._id };
+            const newFlowerVariant = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, entryBy: user?._id, company: user?.company };
             addFlower(newFlowerVariant).unwrap().then((payload: any) => {
                 toast.success(`New variant of this ${payload.message}`);
             }).catch((error: any) => {
@@ -116,21 +130,30 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
                                         </Form.Item>
                                     </Flex>
                                     <Form.Item style={{ width: "100%" }} label="Upload picture" rules={[{ required: isRequired, message: 'Please upload your flower photo!' }]} >
-                                        {/* <Upload>
-                                            <Input type='file' onChange={(e)=>uploadImage(e)} placeholder='Picture' />
-                                        </Upload> */}
                                         <Upload
-                                            // listType='picture-card'
                                             {...props}
-                                        // onChange={ (info) => uploadImage(info) }
                                         >
-                                            {/* <Button icon={<UploadOutlined />} disabled={imageUrl !== ''}> */}
-                                            Upload
-                                            {/* </Button> */}
+                                            <Button type="link" style={{ outline: "none" }} icon={<BsCloudUpload />}>Upload</Button>
                                         </Upload>
                                     </Form.Item>
                                     <Form.Item style={{ width: "100%" }} name={"quantity"} label="Available quantity" rules={[{ required: isRequired, message: 'Please input your flower quantity!' }]} >
                                         <Input type='number' placeholder='Enter quantity' />
+                                    </Form.Item>
+                                    <Form.Item style={{ width: "100%" }} name={"supplier"} label="Select or Add Supplier" rules={[{ required: isRequired, message: 'Please input supplier data!' }]} >
+                                        <Select
+                                            // showSearch
+                                            placeholder="Select a person"
+                                            optionFilterProp="children"
+                                            value={searchTerm}
+                                            // onChange={onChange}
+                                            onSearch={onSupplierSearch}
+                                            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                            filterSort={(optionA, optionB) =>
+                                                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                            }
+                                            options={selectSupplierOptions}
+                                        />
+
                                     </Form.Item>
                                     <Form.Item style={{ width: "100%" }} name={"color"} label="Color of the Flower" rules={[{ required: isRequired, message: 'Please input your flower color!' }]}>
                                         <Input placeholder='Enter color' />
