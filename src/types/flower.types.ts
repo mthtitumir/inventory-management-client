@@ -40,4 +40,4 @@ export type TFlower = {
     | 'violet and peony';
 };
 
-export type FlowerDefaultValuesProps = { _id?: string; seller?: string; name?: string; price?: number; quantity?: number; color?: string; bloomDate?: string | undefined; style: string; arrangement: string; type?: string; size?: string; fragrance?: string; image?: string }
+export type FlowerDefaultValuesProps = { _id?: string; seller?: string; name?: string; price?: number; quantity?: number; color?: string; bloomDate?: string | undefined; style: string; arrangement: string; type?: string; size?: string; fragrance?: string; image?: string, supplier?:string }

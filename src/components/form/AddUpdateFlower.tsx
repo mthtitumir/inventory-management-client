@@ -145,6 +145,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
                                             placeholder="Select a person"
                                             optionFilterProp="children"
                                             value={searchTerm}
+                                            defaultValue={defaultValues.supplier}
                                             // onChange={onChange}
                                             onSearch={onSupplierSearch}
                                             filterOption={(input, option) => (option?.label ?? '').includes(input)}
