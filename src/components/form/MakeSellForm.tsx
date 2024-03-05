@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
-import { Button, Col, Divider, Form, Input, Row, Space } from 'antd';
+import { Button, Col, Flex, Form, Input, Row, Space } from 'antd';
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
@@ -11,12 +11,14 @@ import { TDiscount } from '../../types';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import Spinner from '../ui/Spinner';
+import AddHeader from '../ui/AddHeader';
+import MyDivider from '../ui/MyDivider';
 
 const MakeSellForm = () => {
     // const product= useParams();
     const { itemId } = useParams();
-    console.log({itemId, 19: "from 19"});
-    
+    console.log({ itemId, 19: "from 19" });
+
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
@@ -113,17 +115,130 @@ const MakeSellForm = () => {
     if (!data || isLoading) {
         return <Spinner />
     }
-    const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
+    const { image, name, price, quantity, color, size } = data.data;
+    // const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
-            <h2 style={{ textAlign: "center", marginBottom: "10px" }}>Checkout</h2>
+            <AddHeader text='Checkout' />
             <Form
-                // style={{ maxWidth: 600 }}
-                // initialValues={{ remember: true }}
-                
+                layout='vertical'
                 onFinish={onFinish}
+                style={{ padding: "0 20px" }}
             >
-                <Row style={{ margin: "20px 0" }}>
+                {/* columns of the table  */}
+                <Row style={{ borderBottom: "1px solid #ebeaf2" }}>
+                    <Col span={10} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                            <h4>Info</h4>
+                        </Flex>
+                    </Col>
+                    <Col span={4} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                            <h4>Price</h4>
+                        </Flex>
+                    </Col>
+                    <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex justify='center' align='center' style={{ height: "100%" }}>
+                            <h4>Quantity</h4>
+                        </Flex>
+                    </Col>
+                    <Col span={5} style={{ padding: "8px 0" }}>
+                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                            <h4>Total</h4>
+                        </Flex>
+                    </Col>
+                </Row>
+                {/* product list  */}
+                <Row style={{ borderBottom: "1px solid #ebeaf2" }}>
+                    <Col span={10} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex style={{ padding: "5px" }} gap={3} align='center' >
+                            <img style={{ width: "30%" }} src={image} alt="" />
+                            <Flex vertical>
+                                <h4>Name: <i>{name}</i></h4>
+                                <h4>Size: <i>{size}</i></h4>
+                                <h4>Color: <i>{color}</i></h4>
+                            </Flex>
+                        </Flex>
+                    </Col>
+                    <Col span={4} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                            <h4>${price}</h4>
+                        </Flex>
+                    </Col>
+                    <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                        <Flex justify='center' align='center' style={{ height: "100%" }}>
+                            <Input style={{ width: "80%" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
+                        </Flex>
+                    </Col>
+                    <Col span={5} style={{ padding: "8px 0" }}>
+                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                            <h4>${subTotal}</h4>
+                        </Flex>
+                    </Col>
+                </Row>
+                {/* billing and count  */}
+                <Row>
+                    {/* blank left box  */}
+                    <Col span={12} style={{ borderRight: "1px solid #ebeaf2" }}>
+                        <Row style={{ padding: "20px" }}>
+                            <h4>Customer Info : </h4>
+                        </Row>
+                    </Col>
+                    {/* right side main box  */}
+                    <Col span={12} style={{ padding: "20px" }}>
+                        <Row >
+                            <Col span={12} style={{ textAlign: "left" }}>
+                                <h4>SubTotal:</h4>
+                                <h4>Discount (Using Coupon):</h4>
+                                <h4>Discount (Using Points):</h4>
+                                <h4>Total:</h4>
+                            </Col>
+                            <Col span={12} style={{ textAlign: "right" }}>
+                                <h4>${subTotal.toFixed(2)}</h4>
+                                <h4>${discount.toFixed(2)}</h4>
+                                <h4>$0</h4>
+                                <h4>${(subTotal - discount).toFixed(2)}</h4>
+                            </Col>
+                        </Row>
+                        <MyDivider />
+                        {/* coupon apply box  */}
+                        <Flex justify='center' align='center' >
+                            <Form.Item
+                                style={{ marginBottom: "10px", width: "100%" }}
+                                name="discountCode"
+                            >
+                                <h4 style={{ marginBottom: "5px" }}>Apply promo code or discount code if have</h4>
+                                <Space.Compact style={{ width: "100%" }}>
+                                    <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
+                                    <Button style={{ borderRadius: "1px" }} onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
+                                </Space.Compact>
+                            </Form.Item>
+                        </Flex>
+                        {/* submit button  */}
+                        <Flex>
+                            <Form.Item style={{ marginBottom: "10px", textAlign: "center", width: "100%" }}>
+                                <Button style={{ width: "100%" }} type="primary" htmlType="submit" size='large'>
+                                    Make Sales
+                                </Button>
+                            </Form.Item>
+                        </Flex>
+                    </Col>
+                </Row>
+            </Form>
+        </div>
+    )
+}
+
+export default MakeSellForm
+
+
+
+// { setIsModalOpen, product }: { setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>, product?: string | undefined }
+
+
+
+
+{/* <Row style={{ margin: "20px 0" }}>
                     <Col sm={8} lg={8}>
                         <h4>Name: </h4><i>{name}</i>
                         <h4>Price: </h4> <i>{price}</i>
@@ -139,74 +254,4 @@ const MakeSellForm = () => {
                     <Col sm={8} lg={8}>
                         <img style={{ width: "100%" }} src={image} alt="" />
                     </Col>
-                </Row>
-
-                {/* form start  */}
-                <Divider>Buyer Information</Divider>
-                <Space style={{width: "100%"}}>
-                    <Form.Item
-                        style={{ marginBottom: "10px" }}
-                        // label="Buyer Name"
-                        name="buyerName"
-                        rules={[{ required: true, message: 'Please input buyer name!' }]}
-                    >
-                        <Input placeholder={"Buyer Name"} />
-                    </Form.Item>
-                    <Form.Item
-                        style={{ marginBottom: "10px" }}
-                        // label="Buyer Email"
-                        name="buyerEmail"
-                        rules={[{ required: true, message: 'Please input buyer email!' }]}
-                    >
-                        <Input placeholder={"Buyer Email"} />
-                    </Form.Item>
-                    <Form.Item
-                        style={{ marginBottom: "10px" }}
-                        // label="Buyer Phone Number"
-                        name="buyerPhone"
-                        rules={[{ required: true, message: 'Please input buyer phone number!' }]}
-                    >
-                        <Input placeholder={"Buyer Phone"} />
-                    </Form.Item>
-                </Space>
-
-                <Form.Item
-                    style={{ marginBottom: "10px" }}
-                    label="Product Quantity"
-                    name="quantity"
-                    rules={[{ required: true, message: 'Please input your product quantity!' }]}
-                >
-                    <Input onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
-                </Form.Item>
-                <Form.Item
-                    style={{ marginBottom: "10px" }}
-                    label="Discount Code"
-                    name="discountCode"
-                >
-                    <Space.Compact>
-                        <Input onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
-                        <Button onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
-                    </Space.Compact>
-                </Form.Item>
-                <Divider>Bill</Divider>
-                <div style={{ textAlign: "center", marginBottom: "10px" }}>
-                    <p>SubTotal = ${subTotal.toFixed(2)}</p>
-                    <p>Discount = ${discount.toFixed(2)}</p>
-                    <p>Total  = ${(subTotal - discount).toFixed(2)}</p>
-                </div>
-
-                <Form.Item style={{ marginBottom: "10px", textAlign: "center" }}>
-                    <Button type="primary" htmlType="submit" size='large'>
-                        Sale
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
-    )
-}
-
-export default MakeSellForm
-
-
-
-// { setIsModalOpen, product }: { setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>, product?: string | undefined }
+                </Row> */}
