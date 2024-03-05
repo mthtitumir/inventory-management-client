@@ -234,41 +234,44 @@ const MakeSellForm = () => {
                     </Col>
                     {/* right side billing box  */}
                     <Col span={12} style={{ padding: "20px" }}>
-                        <Row >
-                            <Col span={12} style={{ textAlign: "left" }}>
-                                <h4>SubTotal :</h4>
-                                <h4>Discount (Using Coupon):</h4>
-                                <h4>Discount (Using Points):</h4>
-                                <h4>Total:</h4>
-                            </Col>
-                            <Col span={12} style={{ textAlign: "right" }}>
-                                <h4>${subTotal.toFixed(2)}</h4>
-                                <h4>${discount.toFixed(2)}</h4>
-                                <h4>$0</h4>
-                                <h4>${(subTotal - discount).toFixed(2)}</h4>
-                            </Col>
-                        </Row>
-                        <MyDivider />
-                        {/* coupon apply box  */}
-                        <Flex justify='center' align='center' >
-                            <Form.Item
-                                style={{ marginBottom: "10px", width: "100%" }}
-                                name="discountCode"
-                            >
-                                <h4 style={{ marginBottom: "5px" }}>Apply promo code or discount code if have</h4>
-                                <Space.Compact style={{ width: "100%" }}>
-                                    <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
-                                    <Button style={{ borderRadius: "1px" }} onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
-                                </Space.Compact>
-                            </Form.Item>
-                        </Flex>
-                        {/* submit button  */}
-                        <Flex>
-                            <Form.Item style={{ marginBottom: "10px", textAlign: "center", width: "100%" }}>
-                                <Button style={{ width: "100%" }} type="primary" htmlType="submit" size='large'>
-                                    Make Sales
-                                </Button>
-                            </Form.Item>
+                        <Flex vertical gap={12}>
+                            <h4>Billing Info : </h4>
+                            <Row >
+                                <Col span={12} style={{ textAlign: "left" }}>
+                                    <h4>SubTotal :</h4>
+                                    <h4>Discount (Using Coupon):</h4>
+                                    <h4>Discount (Using Points):</h4>
+                                    <h4>Total:</h4>
+                                </Col>
+                                <Col span={12} style={{ textAlign: "right" }}>
+                                    <h4>${subTotal.toFixed(2)}</h4>
+                                    <h4>${discount.toFixed(2)}</h4>
+                                    <h4>$0</h4>
+                                    <h4>${(subTotal - discount).toFixed(2)}</h4>
+                                </Col>
+                            </Row>
+                            <MyDivider />
+                            {/* coupon apply box  */}
+                            <Flex justify='center' align='center' >
+                                <Form.Item
+                                    style={{ marginBottom: "10px", width: "100%" }}
+                                    name="discountCode"
+                                >
+                                    <h4 style={{ marginBottom: "5px" }}>Apply promo code or discount code if have</h4>
+                                    <Space.Compact style={{ width: "100%" }}>
+                                        <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
+                                        <Button style={{ borderRadius: "1px" }} onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
+                                    </Space.Compact>
+                                </Form.Item>
+                            </Flex>
+                            {/* submit button  */}
+                            <Flex>
+                                <Form.Item style={{ marginBottom: "10px", textAlign: "center", width: "100%" }}>
+                                    <Button style={{ width: "100%" }} type="primary" htmlType="submit" size='large'>
+                                        Make Sales
+                                    </Button>
+                                </Form.Item>
+                            </Flex>
                         </Flex>
                     </Col>
                 </Row>
@@ -306,4 +309,3 @@ export default MakeSellForm
 
 
 
-                

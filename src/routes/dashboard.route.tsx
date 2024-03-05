@@ -9,6 +9,7 @@ import { BiHome, BiPurchaseTag } from "react-icons/bi";
 import { ImStatsBars } from "react-icons/im";
 import AddTradingPartner from "../components/form/AddTradingPartner"
 import AddUpdateFlower from "../components/form/AddUpdateFlower"
+import Carts from "../components/sales/Carts"
 
 export const dashboardPaths = [
     {
@@ -61,6 +62,11 @@ export const dashboardPaths = [
                 name: 'Buyers',
                 path: 'sales/buyers',
                 element: <SalesOrders />,
+            },
+            {
+                name: 'Carts',
+                path: 'sales/carts',
+                element: <Carts />,
             },
             {
                 path: 'sales/buyers/add-new-buyer',
