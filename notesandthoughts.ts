@@ -10,3 +10,12 @@
  * 8. In number 3 if the staff wants to make sales instantly for an customer, he will select buy option, then it will arrive at checkout page directly, and things will be happening as described 6 & 7.
  * 
  */
+
+/**
+ * now as I am not doing the cart part, I just want to do the checkout part, so as the customer id doesn't come from the cart page, i have to select the customer name directly in checkout page. 
+ * this also necessary if i want to apply direct buy method instead of adding in carts 
+ */
+
+/**
+ * if there is no buyer or supplier, then don't make mistake to add one with a modal;
+ */

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react'
-import { Button, Col, Flex, Form, Input, Row, Space } from 'antd';
+import { SetStateAction, useState } from 'react'
+import { Avatar, Button, Col, Flex, Form, Input, Row, Select, Space } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
@@ -13,27 +14,32 @@ import { useParams } from 'react-router-dom';
 import Spinner from '../ui/Spinner';
 import AddHeader from '../ui/AddHeader';
 import MyDivider from '../ui/MyDivider';
+import { useGetAllTradingPartnerQuery, useGetSingleTradingPartnerQuery } from '../../redux/features/buyer/tradingPartnerApi';
+import { transformedArrayToSelectOptions } from '../../utils/transformArrayToSelectOptions';
 
 const MakeSellForm = () => {
     // const product= useParams();
     const { itemId } = useParams();
-    console.log({ itemId, 19: "from 19" });
+    // console.log({ itemId, 19: "from 19" });
 
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
+    const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
     const seller: TUser | null = useAppSelector(useCurrentUser);
     const { data, isLoading } = useGetSingleFlowerQuery(itemId);
     const { data: discountsData } = useGetAllDiscountsQuery(seller?.company);
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
     // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading
     const [addSales] = useAddSalesMutation();
+    const { data: buyersData } = useGetAllTradingPartnerQuery({ type: "buyer", select: "name _id email" });
+    const { data: singleBuyerData, isLoading: isSingleBuyerDataLoading } = useGetSingleTradingPartnerQuery(buyerId, { skip: !buyerId });
+    const selectSupplierOptions = transformedArrayToSelectOptions(buyersData?.data);
     const discounts = discountsData?.data;
+    const buyer = singleBuyerData?.data;
 
-    // console.log(discounts);
-
-
+    console.log(singleBuyerData);
     // console.log(data, isLoading);
     const onFinish = (values: any) => {
         values.quantity = Number(values.quantity);
@@ -57,6 +63,7 @@ const MakeSellForm = () => {
         // }
     };
     const handleDiscount = () => {
+        // first of all check if this customer already reached the maximum redeem time
         // setDiscountCode(prevCode => {
         //     console.log({prevCode,code});
 
@@ -112,6 +119,10 @@ const MakeSellForm = () => {
         setSubTotal(Number(e.target.value) * price);
         setDiscount(0);
     }
+    const onBuyerSelect = (value: string | undefined) => {
+        // console.log(value);
+        setBuyerId(value);
+    }
     if (!data || isLoading) {
         return <Spinner />
     }
@@ -152,7 +163,7 @@ const MakeSellForm = () => {
                 <Row style={{ borderBottom: "1px solid #ebeaf2" }}>
                     <Col span={10} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
                         <Flex style={{ padding: "5px" }} gap={3} align='center' >
-                            <img style={{ width: "30%" }} src={image} alt="" />
+                            <img style={{ width: "25%" }} src={image} alt="" />
                             <Flex vertical>
                                 <h4>Name: <i>{name}</i></h4>
                                 <h4>Size: <i>{size}</i></h4>
@@ -167,7 +178,7 @@ const MakeSellForm = () => {
                     </Col>
                     <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
                         <Flex justify='center' align='center' style={{ height: "100%" }}>
-                            <Input style={{ width: "80%" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
+                            <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
                         </Flex>
                     </Col>
                     <Col span={5} style={{ padding: "8px 0" }}>
@@ -176,19 +187,56 @@ const MakeSellForm = () => {
                         </Flex>
                     </Col>
                 </Row>
-                {/* billing and count  */}
+                {/* customer info and billing  */}
                 <Row>
-                    {/* blank left box  */}
-                    <Col span={12} style={{ borderRight: "1px solid #ebeaf2" }}>
-                        <Row style={{ padding: "20px" }}>
+                    {/* left side customer info box box  */}
+                    <Col span={12} style={{ borderRight: "1px solid #ebeaf2", padding: "20px" }}>
+                        <Flex vertical gap={12}>
                             <h4>Customer Info : </h4>
-                        </Row>
+                            <Form.Item style={{ width: "100%" }} name={"buyer"} rules={[{ required: true, message: 'Please select buyer name data!' }]} >
+                                <Select
+                                    // showSearch
+                                    placeholder="Select a buyer"
+                                    // optionFilterProp="children"
+                                    style={{ width: "100%", borderRadius: "2px" }}
+                                    onSelect={onBuyerSelect}
+                                    // value={searchTerm}
+                                    // defaultValue={defaultValues.supplier}
+                                    // onChange={onChange}
+                                    // onSearch={onSupplierSearch}
+                                    // filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                    // filterSort={(optionA, optionB) =>
+                                    //     (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                    // }
+                                    options={selectSupplierOptions}
+                                />
+                            </Form.Item>
+                            {/* buyer information  */}
+                            {singleBuyerData && (
+                                (isSingleBuyerDataLoading) ?
+                                    <Spinner /> :
+                                    <Flex gap={10} align='center'>
+                                        {/* <img src={buyer?.profilePicture ? buyer?.profilePicture : ""} alt="" /> */}
+                                        <Flex vertical gap={5} style={{ borderRight: "1px solid #ebeaf2", paddingRight: "10px" }} justify='center' align='center'>
+                                            <Avatar shape='square' size={72} icon={<UserOutlined />} src={buyer?.profilePicture} />
+                                            <Button style={{ width: "100%", backgroundImage: "linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))", color: "white" }} size='small' >Diamond</Button>
+                                        </Flex>
+                                        <Flex vertical gap={1}>
+                                            <h4>Name : {buyer?.name}</h4>
+                                            <h4>Email : {buyer?.email}</h4>
+                                            <h4>Phone Number : {buyer?.phoneNumber}</h4>
+                                            <h4>Coins : {buyer?.coinsEarned}</h4>
+                                        </Flex>
+                                    </Flex>
+                            )}
+                        </Flex>
+
                     </Col>
-                    {/* right side main box  */}
+                    {/* right side billing box  */}
                     <Col span={12} style={{ padding: "20px" }}>
                         <Row >
                             <Col span={12} style={{ textAlign: "left" }}>
-                                <h4>SubTotal:</h4>
+                                <h4>SubTotal :</h4>
                                 <h4>Discount (Using Coupon):</h4>
                                 <h4>Discount (Using Points):</h4>
                                 <h4>Total:</h4>
@@ -225,7 +273,7 @@ const MakeSellForm = () => {
                     </Col>
                 </Row>
             </Form>
-        </div>
+        </div >
     )
 }
 
@@ -255,3 +303,7 @@ export default MakeSellForm
                         <img style={{ width: "100%" }} src={image} alt="" />
                     </Col>
                 </Row> */}
+
+
+
+                
