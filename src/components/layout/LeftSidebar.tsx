@@ -23,14 +23,16 @@ const LeftSidebar: React.FC = () => {
                 },
             }}
         >
-            {/* <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
-            {/* <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
-            {/* <div>
+            <div style={{position: "fixed", height: "100%"}}>
+                {/* <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
+                {/* <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
+                {/* <div>
                 <h3 style={{ padding: "5px 24px", color: "white" }}>Flora Vista</h3>
             </div> */}
-            {LogoNameContent}
-            <Menu style={{ backgroundImage: "" }} theme="dark" mode="inline" defaultSelectedKeys={['1']} items={sidebarItems} />
-            {/* </Sider> */}
+                {LogoNameContent}
+                <Menu style={{ backgroundImage: "" }} theme="dark" mode="inline" defaultSelectedKeys={['1']} items={sidebarItems} />
+                {/* </Sider> */}
+            </div>
         </ConfigProvider>
 
     );

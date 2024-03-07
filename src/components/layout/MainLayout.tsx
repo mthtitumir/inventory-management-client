@@ -31,8 +31,8 @@ const MainLayout = () => {
       }}
     >
       <div>
-        {/* <Navbar /> */}
-        <Row style={{ minHeight: "100vh" }}>
+        {/* <Navbar /> height: "100vh" */}
+        <Row style={{  }}>
           <Col xs={0} sm={0} md={0} lg={3} style={{ padding: "", backgroundColor: "#f8002f", backgroundImage: "linear-gradient(-60deg, #f8002f 10%, #000c14 100%)" }}>
             <LeftSidebar />
           </Col>

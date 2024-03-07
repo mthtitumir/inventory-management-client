@@ -19,3 +19,9 @@
 /**
  * if there is no buyer or supplier, then don't make mistake to add one with a modal;
  */
+
+
+/**
+ * Search functionality
+ * 1. when a user select 'customer' and input some keywords, then the keywords instantly will go to the correspondent link with the input word, then in the component, redux will call and api with this input word; 
+ */

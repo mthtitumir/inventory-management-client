@@ -57,10 +57,10 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
         },
         maxCount: 1,
     };
-    const onSupplierSearch = (value: string) => {
-        console.log(value);
-        setSearchTerm(value);
-    }
+    // const onSupplierSearch = (value: string) => {
+    //     console.log(value);
+    //     setSearchTerm(value);
+    // }
     // const { name, price, quantity, color, bloomDate, style, arrangement, type, size, fragrance, image } = data?.data;
     const onfinish = (values: any) => {
         if (!itemId && type === "add") {
@@ -147,7 +147,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
                                             value={searchTerm}
                                             defaultValue={defaultValues.supplier}
                                             // onChange={onChange}
-                                            onSearch={onSupplierSearch}
+                                            // onSearch={onSupplierSearch}
                                             filterOption={(input, option) => (option?.label ?? '').includes(input)}
                                             filterSort={(optionA, optionB) =>
                                                 (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())

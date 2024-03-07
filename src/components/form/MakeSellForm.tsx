@@ -221,10 +221,11 @@ const MakeSellForm = () => {
                                             <Avatar shape='square' size={72} icon={<UserOutlined />} src={buyer?.profilePicture} />
                                             <Button style={{ width: "100%", backgroundImage: "linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))", color: "white" }} size='small' >Diamond</Button>
                                         </Flex>
-                                        <Flex vertical gap={1}>
+                                        <Flex vertical  justify='center'>
                                             <h4>Name : {buyer?.name}</h4>
                                             <h4>Email : {buyer?.email}</h4>
                                             <h4>Phone Number : {buyer?.phoneNumber}</h4>
+                                            <h4>Coins : {buyer?.coinsEarned}</h4>
                                             <h4>Coins : {buyer?.coinsEarned}</h4>
                                         </Flex>
                                     </Flex>
