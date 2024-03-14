@@ -14,7 +14,7 @@ const MyModal = ({ children, isModalOpen, setIsModalOpen }: ModalProps) => {
 
   return (
     <>
-      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null} width={"512px"}>
+      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null} width={"512px"} >
         {children}
       </Modal>
     </>

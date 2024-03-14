@@ -5,17 +5,24 @@ import { SetStateAction, useState } from "react";
 import Spinner from "../ui/Spinner";
 import { UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { LuShoppingCart } from "react-icons/lu";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
-const AddToCartModal = () => {
+const AddToCartModal = ({ itemId }: { itemId: string }) => {
     const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
     const { data: buyersData } = useGetAllTradingPartnerQuery({ type: "buyer", select: "name _id email" });
     const { data: singleBuyerData, isLoading: isSingleBuyerDataLoading } = useGetSingleTradingPartnerQuery(buyerId, { skip: !buyerId });
     const selectSupplierOptions = transformedArrayToSelectOptions(buyersData?.data);
     const buyer = singleBuyerData?.data;
-    console.log(selectSupplierOptions);
+    // console.log(selectSupplierOptions);
+    console.log(isSingleBuyerDataLoading);
+
     const onBuyerSelect = (value: string | undefined) => {
         // console.log(value);
         setBuyerId(value);
+    }
+    const handleCartOnClick = () => {
+        toast.success("Added To Cart!")
     }
     return (
         <Flex vertical gap={12}>
@@ -35,6 +42,8 @@ const AddToCartModal = () => {
                 //     (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
                 // }
                 options={selectSupplierOptions}
+                dropdownRender={(menu) => (
+                    <>{menu}<p>Hello</p></>)}
             />
             {singleBuyerData && (
                 (isSingleBuyerDataLoading) ?
@@ -56,9 +65,10 @@ const AddToCartModal = () => {
                                 <h4>Coins : {buyer?.coinsEarned}</h4>
                             </Flex>
                         </Flex>
-                        <Flex vertical justify="center" gap={10}>
-                            <Button onClick={() => handleOnClick("cart")} style={{ borderColor: "orange", color: "orange" }} icon={<LuShoppingCart style={{ color: "orange" }} />}>Add To Cart</Button>
-                            <Button style={{ borderColor: "green", color: "green", width: "100%" }} icon={<ShoppingCartOutlined />}> Sell To This Buyer</Button>
+                        <Flex justify="center" gap={10}>
+                            <Link to={"/sales/carts"}><Button style={{ borderColor: "green", color: "green", width: "100%" }} icon={<ShoppingCartOutlined />}> Go To Carts</Button></Link>
+                            <Button style={{ borderColor: "green", color: "green", width: "100%" }} icon={<ShoppingCartOutlined />}> Checkout </Button>
+                            <Button onClick={() => handleCartOnClick()} style={{ borderColor: "orange", color: "orange" }} icon={<LuShoppingCart style={{ color: "orange" }} />}>Add To Cart</Button>
                         </Flex>
                     </Flex>
             )}

@@ -25,3 +25,8 @@
  * Search functionality
  * 1. when a user select 'customer' and input some keywords, then the keywords instantly will go to the correspondent link with the input word, then in the component, redux will call and api with this input word; 
  */
+
+
+/**
+ * after clicking add to cart button, their will must have two options, select buyer/supplier or add new one
+ */

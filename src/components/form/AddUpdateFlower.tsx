@@ -26,6 +26,7 @@ import { uploadImage } from '../../utils/uploadImage';
 import { BsCloudUpload } from "react-icons/bs";
 import { useGetAllTradingPartnerQuery } from '../../redux/features/buyer/tradingPartnerApi';
 import { transformedArrayToSelectOptions } from '../../utils/transformArrayToSelectOptions';
+import { mainBg } from '../layout/MainLayout';
 
 const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -34,7 +35,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
     const { data: supplierData } = useGetAllTradingPartnerQuery({ searchTerm, type: "supplier", select: "name _id email" });
     // console.log(supplierData);
     // console.log(type);
-    
+
     const [addFlower] = useAddFlowerMutation();
     const [updateFlower] = useUpdateFlowerMutation();
     const [imageUrl, setImageUrl] = useState('');
@@ -46,7 +47,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
 
     const props: UploadProps = {
         name: 'file',
-        listType: "picture-card",
+        listType: "picture",
         beforeUpload: (_file: any) => {
             // Prevent automatic upload
             return false;
@@ -67,7 +68,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
             const newFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl, entryBy: user?._id, company: user?.company };
             addFlower(newFlower).unwrap().then((payload: any) => {
                 toast.success(payload.message);
-                console.log(payload);                
+                console.log(payload);
             }).catch((error: any) => {
                 toast.error(error.message || "Something went wrong!")
             })
@@ -112,88 +113,120 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
                 {(type === "update" || type === "variant") && (!itemId || !data || isRequired) ? <Spinner /> :
                     <div>
                         <AddHeader text={typeTextMap[type]} />
-                        {/* <h2 style={{ textAlign: "center", marginBottom: "10px" }}>{!id && !data && "Add New Flower"}{type === "update" && "Update Flower"}{type === "variant" && "Make Variant"}</h2> */}
                         <Row justify='center' align='middle'>
                             <Col span={24} style={{ width: "100%", padding: "20px" }}>
                                 <Form
                                     layout="vertical"
                                     initialValues={defaultValues}
                                     onFinish={onfinish}
-
                                 >
-                                    <Flex gap={10} justify='space-between'>
-                                        <Form.Item style={{ width: "100%" }} name={"name"} label="Flower Name" rules={[{ required: isRequired, message: 'Please input your flower name!' }]}>
-                                            <Input placeholder='Enter Flower Name' />
-                                        </Form.Item>
-                                        <Form.Item style={{ width: "100%" }} name={"price"} label="Price per piece" rules={[{ required: isRequired, message: 'Please input your flower price!' }]}>
-                                            <Input type='number' placeholder='Enter Price' />
-                                        </Form.Item>
-                                    </Flex>
-                                    <Form.Item style={{ width: "100%" }} label="Upload picture" rules={[{ required: isRequired, message: 'Please upload your flower photo!' }]} >
-                                        <Upload
-                                            {...props}
-                                        >
-                                            <Button type="link" style={{ outline: "none" }} icon={<BsCloudUpload />}>Upload</Button>
-                                        </Upload>
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"quantity"} label="Available quantity" rules={[{ required: isRequired, message: 'Please input your flower quantity!' }]} >
-                                        <Input type='number' placeholder='Enter quantity' />
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"supplier"} label="Select or Add Supplier" rules={[{ required: isRequired, message: 'Please input supplier data!' }]} >
-                                        <Select
-                                            // showSearch
-                                            placeholder="Select a person"
-                                            optionFilterProp="children"
-                                            value={searchTerm}
-                                            defaultValue={defaultValues.supplier}
-                                            // onChange={onChange}
-                                            // onSearch={onSupplierSearch}
-                                            filterOption={(input, option) => (option?.label ?? '').includes(input)}
-                                            filterSort={(optionA, optionB) =>
-                                                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
-                                            }
-                                            options={selectSupplierOptions}
-                                        />
+                                    <Row gutter={10} justify='space-between'>
+                                        <Col sm={{ span: 24 }} md={{ span: 10 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"name"} label="Flower Name" rules={[{ required: isRequired, message: 'Please input your flower name!' }]}>
+                                                <Input placeholder='Enter Flower Name' />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 12 }} md={{ span: 7 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"price"} label="Price per piece" rules={[{ required: isRequired, message: 'Please input your flower price!' }]}>
+                                                <Input type='number' placeholder='Enter Price' />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 12 }} md={{ span: 7 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"quantity"} label="Available quantity" rules={[{ required: isRequired, message: 'Please input your flower quantity!' }]} >
+                                                <Input type='number' placeholder='Enter quantity' />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={10} justify='space-between'>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"supplier"} label="Select or Add Supplier" rules={[{ required: isRequired, message: 'Please input supplier data!' }]} >
+                                                <Select
+                                                    // showSearch
+                                                    placeholder="Select a person"
+                                                    optionFilterProp="children"
+                                                    value={searchTerm}
+                                                    defaultValue={defaultValues.supplier}
+                                                    // onChange={onChange}
+                                                    // onSearch={onSupplierSearch}
+                                                    filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                                    filterSort={(optionA, optionB) =>
+                                                        (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                                    }
+                                                    options={selectSupplierOptions}
+                                                />
 
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"color"} label="Color of the Flower" rules={[{ required: isRequired, message: 'Please input your flower color!' }]}>
-                                        <Input placeholder='Enter color' />
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"bloomDate"} label="Approximate bloom date">
-                                        <Input type={'date' || "text"} placeholder='Enter date' />
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"style"} label="Flower Style">
-                                        <Input placeholder='Style' />
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"arrangement"} label="Flower Arrangement">
-                                        <Input placeholder='Arrangement' />
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"type"} label="Select flower category" rules={[{ required: isRequired, message: 'Please select your flower type!' }]} >
-                                        <Select placeholder="Select Flower Type">
-                                            {
-                                                flowerCategoryType?.map((type) => <Select.Option key={type} value={type}>{type.toUpperCase()}</Select.Option>)
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"size"} label="Select Available Size" rules={[{ required: isRequired, message: 'Please input available flower sizes!' }]} >
-                                        <Select placeholder="Select Size">
-                                            {
-                                                flowerSizes?.map((size) => <Select.Option key={size} value={size}>{size.toUpperCase()}</Select.Option>)
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item style={{ width: "100%" }} name={"fragrance"} label="Fragrance Profile" rules={[{ required: isRequired, message: 'Please input your flower fragrance!' }]}>
-                                        <Select placeholder="Select fragrance">
-                                            {
-                                                flowerFragrances?.map((fragrance) => <Select.Option key={fragrance} value={fragrance}>{fragrance.toUpperCase()}</Select.Option>)
-                                            }
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item style={{ textAlign: "center", width: "100%" }}>
-                                        <Button size='large' type="primary" htmlType="submit">
-                                            {!itemId && !data && "Add Flower"}{type === "update" && "Update Flower"}{type === "variant" && "Make Variant"}
-                                        </Button>
-                                    </Form.Item>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"color"} label="Color of the Flower" rules={[{ required: isRequired, message: 'Please input your flower color!' }]}>
+                                                <Input placeholder='Enter color' />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"bloomDate"} label="Approximate bloom date">
+                                                <Input type={'date' || "text"} placeholder='Enter date' />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={10} justify='space-between'>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"type"} label="Select flower category" rules={[{ required: isRequired, message: 'Please select your flower type!' }]} >
+                                                <Select placeholder="Select Flower Type">
+                                                    {
+                                                        flowerCategoryType?.map((type) => <Select.Option key={type} value={type}>{type.toUpperCase()}</Select.Option>)
+                                                    }
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"size"} label="Select Available Size" rules={[{ required: isRequired, message: 'Please input available flower sizes!' }]} >
+                                                <Select placeholder="Select Size">
+                                                    {
+                                                        flowerSizes?.map((size) => <Select.Option key={size} value={size}>{size.toUpperCase()}</Select.Option>)
+                                                    }
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"fragrance"} label="Fragrance Profile" rules={[{ required: isRequired, message: 'Please input your flower fragrance!' }]}>
+                                                <Select placeholder="Select fragrance">
+                                                    {
+                                                        flowerFragrances?.map((fragrance) => <Select.Option key={fragrance} value={fragrance}>{fragrance.toUpperCase()}</Select.Option>)
+                                                    }
+                                                </Select>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={10} justify='space-between'>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"style"} label="Flower Style">
+                                                <Input placeholder='Style' />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} name={"arrangement"} label="Flower Arrangement">
+                                                <Input placeholder='Arrangement' />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ width: "100%" }} label="Upload picture" rules={[{ required: isRequired, message: 'Please upload your flower photo!' }]} >
+                                                <Upload
+                                                    {...props}
+                                                >
+                                                    <Button  icon={<BsCloudUpload />}>Upload</Button>
+                                                </Upload>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={10} justify='center'>
+                                        <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                                            <Form.Item style={{ textAlign: "center", width: "100%" }}>
+                                                <Button style={{width: "100%", background: mainBg}} size='large' type="primary" htmlType="submit">
+                                                    {!itemId && !data && "Add Flower"}{type === "update" && "Update Flower"}{type === "variant" && "Make Variant"}
+                                                </Button>
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
                                 </Form>
                             </Col>
                         </Row>

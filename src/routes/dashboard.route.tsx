@@ -80,7 +80,7 @@ export const dashboardPaths = [
         icon: <BiPurchaseTag />,
         children: [
             {
-                name: 'Orders',
+                name: 'Purchased Orders',
                 path: 'purchases/orders',
                 element: <SalesOrders />,
             },
