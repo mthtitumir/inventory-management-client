@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Flex, Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col, Flex } from 'antd';
 import AddHeader from "../ui/AddHeader"
 import { useAppSelector } from '../../redux/hooks';
 import { useCurrentUser } from '../../redux/features/auth/authSlice';
@@ -29,115 +29,148 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
   return (
     <div>
       <AddHeader text={type === "Buyer" ? "New Buyer" : "New Supplier"} />
-      <Flex justify='center' align='center'>
-        <Form
-          layout='vertical'
-          onFinish={onFinish}
-          style={{ width: "100%", padding: "20px" }}
-        >
-          <Flex gap={10} justify='space-between'>
-            <Form.Item
-              label="Name"
-              name="name"
-              style={{ width: "100%" }}
-              rules={[{ required: true, message: 'Please enter your name!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Email"
-              name="email"
-              style={{ width: "100%" }}
-              rules={[{ required: true, type: 'email', message: 'Please enter a valid email!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Phone Number"
-              style={{ width: "100%" }}
-              name="phoneNumber"
-              rules={[{ required: true, message: 'Please enter your phone number!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Flex>
-          <Flex gap={10}>
-            <Form.Item
-              label="Business Name"
-              name="businessName"
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Job Title"
-              name="jobTitle"
-            >
-              <Input />
-            </Form.Item>
-          </Flex>
-          <Flex gap={10}>
-            <Form.Item
-              label="Country"
-              name="country"
-              rules={[{ required: true, message: 'Please enter your country!' }]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="City"
-              name="city"
-              rules={[{ required: true, message: 'Please enter your city!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Province"
-              name="province"
-              rules={[{ required: true, message: 'Please enter your province!' }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Zip Code"
-              name="zip"
-              rules={[{ required: true, message: 'Please enter your area zip code!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Flex>
-          <Form.Item
-            label="Detailed Address"
-            name="address"
+      <Row justify='center' align='middle'>
+        <Col span={24} style={{ width: "100%", padding: "20px" }}>
+          <Form
+            layout='vertical'
+            onFinish={onFinish}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Website"
-            name="website"
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Note"
-            name="note"
-          >
-            <Input.TextArea />
-          </Form.Item>
+            <Row gutter={10} justify='space-between'>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  style={{ width: "100%" }}
+                  rules={[{ required: true, message: 'Please enter your name!' }]}
+                >
+                  <Input placeholder="Enter your name" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Email"
+                  name="email"
+                  style={{ width: "100%" }}
+                  rules={[{ required: true, type: 'email', message: 'Please enter a valid email!' }]}
+                >
+                  <Input placeholder="Enter your email" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Phone Number"
+                  style={{ width: "100%" }}
+                  name="phoneNumber"
+                  rules={[{ required: true, message: 'Please enter your phone number!' }]}
+                >
+                  <Input placeholder="Enter your phone number" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={10} justify='space-between'>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Business Name"
+                  name="businessName"
+                >
+                  <Input placeholder="Enter your business name" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Job Title"
+                  name="jobTitle"
+                >
+                  <Input placeholder="Enter your job title" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 8 }}>
+                <Form.Item
+                  label="Website"
+                  name="website"
+                >
+                  <Input placeholder="Enter your website URL" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={10} justify='space-between'>
+              <Col sm={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label="Country"
+                  name="country"
+                  rules={[{ required: true, message: 'Please enter your country!' }]}
+                >
+                  <Input placeholder="Enter your country" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label="City"
+                  name="city"
+                  rules={[{ required: true, message: 'Please enter your city!' }]}
+                >
+                  <Input placeholder="Enter your city" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label="Province"
+                  name="province"
+                  rules={[{ required: true, message: 'Please enter your province!' }]}
+                >
+                  <Input placeholder="Enter your province" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 6 }}>
+                <Form.Item
+                  label="Zip Code"
+                  name="zip"
+                  rules={[{ required: true, message: 'Please enter your area zip code!' }]}
+                >
+                  <Input placeholder="Enter your zip code" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={10} justify='space-between'>
+              <Col sm={{ span: 24 }} md={{ span: 12 }}>
+                <Form.Item
+                  label="Detailed Address"
+                  name="address"
+                >
+                  <Input.TextArea placeholder="Enter your detailed address" />
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 12 }}>
+                <Form.Item
+                  label="Note"
+                  name="note"
+                >
+                  <Input.TextArea placeholder="Enter any additional notes" />
+                </Form.Item>
+              </Col>
+            </Row>
+            {/* Add other form items based on your data model */}
+            <Row gutter={10} justify='end'>
+              <Col sm={{ span: 24 }} md={{ span: 12 }}>
+                <Flex justify='flex-end' gap={10}>
+                  <Form.Item >
+                    <Button >
+                      Cancel
+                    </Button>
+                  </Form.Item>
+                  <Form.Item >
+                    <Button type="primary" htmlType="submit">
+                      Submit
+                    </Button>
+                  </Form.Item>
+                </Flex>
+              </Col>
+            </Row>
+          </Form>
 
-          {/* Add other form items based on your data model */}
-
-          <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Flex>
-    </div>
+        </Col>
+      </Row>
+    </div >
   )
 }
 

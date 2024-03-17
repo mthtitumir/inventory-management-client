@@ -10,6 +10,7 @@ import { ImStatsBars } from "react-icons/im";
 import AddTradingPartner from "../components/form/AddTradingPartner"
 import AddUpdateFlower from "../components/form/AddUpdateFlower"
 import Carts from "../components/sales/Carts"
+import BuyerList from "../components/sales/BuyerList"
 
 export const dashboardPaths = [
     {
@@ -61,7 +62,7 @@ export const dashboardPaths = [
             {
                 name: 'Buyers',
                 path: 'sales/buyers',
-                element: <SalesOrders />,
+                element: <BuyerList />,
             },
             {
                 name: 'Carts',
