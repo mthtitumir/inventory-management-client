@@ -5,4 +5,4 @@ export type TSales = {
     dateOfSale: Date;
     product: string;
     _id: string;
-}
+};

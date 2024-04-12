@@ -1,8 +1,7 @@
-import { Divider } from "antd"
+import { Flex } from "antd";
 import FlowerList from "../../components/inventory/FlowerList"
 import InventoryHeader from "../../components/inventory/InventoryHeader"
 import { useState } from "react";
-// import { useGetAllTradingPartnerQuery, useGetSingleTradingPartnerQuery } from "../../redux/features/buyer/tradingPartnerApi";
 
 const Inventory = () => {
   const [filter, setFilter] = useState({});
@@ -11,12 +10,11 @@ const Inventory = () => {
   // // console.log({data, singleData});
     
   return (
-    <div>
+    <Flex vertical gap={10}>
       <InventoryHeader filter={filter} setFilter={setFilter}/>
-      <Divider />
       <FlowerList filter={filter} setFilter={setFilter} />
-      <Divider />
-    </div>
+      {/* <Divider /> */}
+    </Flex>
   )
 }
 

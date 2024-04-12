@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-// import { SearchOutlined } from '@ant-design/icons';
 import { Flex, Input, Select, Space } from 'antd';
-import { IoIosArrowDown } from "react-icons/io";
-import { FaSearchengin } from "react-icons/fa";
+import { Icon } from '../../icons';
+
 
 const SearchBox: React.FC = () => {
     const [searchIn, setSearchIn] = useState("customers")
@@ -34,13 +33,13 @@ const SearchBox: React.FC = () => {
 
     }
     const searchIcons = (<Flex align='center' gap={2} style={{ width: "" }}>
-        <FaSearchengin size={16} color='maroon' style={{ marginLeft: "5px" }} />
-        <IoIosArrowDown size={16} color="maroon" style={{ marginRight: "-8px" }} />
+        <Icon.Search size={16} color='maroon' style={{ marginLeft: "5px" }} />
+        <Icon.ArrowDown size={16} color="maroon" style={{ marginRight: "-8px" }} />
     </Flex>)
     return (
         <Space.Compact style={{ backgroundColor: "" }}>
-            <Select value={""} onChange={handleChangeSelect} dropdownStyle={{ width: '300px' }} suffixIcon={searchIcons} options={options} />
-            <Input size='middle' style={{ width: "300px" }} placeholder={`Search is ${searchIn} ( / )`} />
+            <Select value={""} onChange={handleChangeSelect} dropdownStyle={{ width: '50%' }} suffixIcon={searchIcons} options={options} />
+            <Input size='middle' style={{ width: "100%" }} placeholder={`Search is ${searchIn} ( / )`} />
         </Space.Compact>
     )
 };

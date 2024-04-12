@@ -16,6 +16,7 @@ import companyReducer from "./features/company/companySlice";
 import flowerReducer from "./features/flower/flowerSlice";
 import salesReducer from "./features/sales/salesSlice";
 import discountReducer from "./features/discount/discountSlice";
+import cartReducer from "./features/cart/cartSlice";
 // import tradingPartnerReducer from "./features/discount/tradingPartnerSlice";
 
 const persistConfig = {
@@ -32,6 +33,7 @@ export const store = configureStore({
     sales: salesReducer,
     discount: discountReducer,
     // tradingPartner: tradingPartnerReducer
+    cart: cartReducer
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({

@@ -1,4 +1,4 @@
-import { Avatar, Flex } from "antd";
+import { Avatar, Col, Flex, Row } from "antd";
 import { MenuOutlined, PlusOutlined, UserAddOutlined } from '@ant-design/icons';
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -32,34 +32,40 @@ const Navbar = () => {
         setIsPopoverOpen(!isPopoverOpen);
     }
     return (
-        <Flex style={{ padding: "0 20px", marginBottom: "", borderBottom: '1px solid #e6f4ff', backgroundColor: "#FFFDD0" }} align={"center"} justify={"space-between"}>
+        <Row style={{ padding: "0 20px", marginBottom: "", borderBottom: '1px solid #e6f4ff', backgroundColor: "#FFFDD0" }} align={"middle"} justify={"space-between"}>
             {/* {LogoNameContent} */}
-            <Flex style={{ padding: "8px 0" }}>
+            <Col xs={{ span: 20 }} md={{ span: 6 }} lg={{ span: 6 }} style={{ padding: "8px 0" }}>
                 <SearchBox />
-            </Flex>
-            <Flex gap={8}>
-                <Flex align="center" gap={8}>
-                    <p>Demo Company</p>
-                    <div onClick={handleAddOnClick}>
-                        <MyPopover child1={openPopIcon} child2={<AddAnything />} />
-                    </div>
+            </Col>
+            <Col xs={{ span: 4 }} md={{ span: 18 }} lg={{ span: 18 }}>
+                <Col xs={0} md={{ span: 20 }} lg={{ span: 20 }}>
+                    <Flex>
+                        <Flex align="center" gap={8}>
+                            <p>Demo Company</p>
+                            <div onClick={handleAddOnClick}>
+                                <MyPopover child1={openPopIcon} child2={<AddAnything />} />
+                            </div>
 
-                </Flex>
-                <Flex align="center" justify="center" gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff", fontWeight: "bold" }}>
-                    <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><FaRegUser size={20} /></Link>
-                    <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoMdNotificationsOutline size={20} /></Link>
-                    <Link to={'/sales/carts'} style={{ color: "black", height: "20px" }}><MdOutlineShoppingCart size={20} /></Link>
-                    <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoSettingsOutline size={20} /></Link>
-                </Flex>
-                <Flex align="center" gap={8}>
-                    <p>Mr. Test User</p>
+                        </Flex>
+                        <Flex align="center" justify="center" gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff", fontWeight: "bold" }}>
+                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><FaRegUser size={20} /></Link>
+                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoMdNotificationsOutline size={20} /></Link>
+                            <Link to={'/sales/carts'} style={{ color: "black", height: "20px" }}><MdOutlineShoppingCart size={20} /></Link>
+                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoSettingsOutline size={20} /></Link>
+                        </Flex>
+                        <Flex align="center" gap={8}>
+                            <p>Mr. Test User</p>
+                        </Flex>
+                    </Flex>
+                </Col>
+                <Flex align="center">
                     <Avatar src={<UserAddOutlined style={{ color: "black" }} />} style={{ border: "1px solid pink" }} />
                 </Flex>
                 {/* <Button href="/login" type="primary" icon={<LoginOutlined />}>Login</Button> */}
                 <MenuOutlined disabled onClick={showDrawer} style={{ padding: '7px', borderRadius: "5px", border: "1px solid gray", width: "", display: "none" }} />
-            </Flex>
+            </Col>
             <MyDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} children1={LogoNameContent} children2={<LeftSidebar />} />
-        </Flex>
+        </Row>
     )
 }
 

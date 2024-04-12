@@ -11,6 +11,7 @@ import AddTradingPartner from "../components/form/AddTradingPartner"
 import AddUpdateFlower from "../components/form/AddUpdateFlower"
 import Carts from "../components/sales/Carts"
 import BuyerList from "../components/sales/BuyerList"
+import SupplierList from "../components/purchases/SupplierList"
 
 export const dashboardPaths = [
     {
@@ -77,18 +78,17 @@ export const dashboardPaths = [
     },
     {
         name: 'Purchases',
-        // path: 'sales-orders',
         icon: <BiPurchaseTag />,
         children: [
             {
-                name: 'Purchased Orders',
+                name: 'Purchases',
                 path: 'purchases/orders',
                 element: <SalesOrders />,
             },
             {
                 name: 'Suppliers',
                 path: 'purchases/suppliers',
-                element: <SalesOrders />,
+                element: <SupplierList />,
             },
             {
                 path: 'purchases/suppliers/add-new-supplier',

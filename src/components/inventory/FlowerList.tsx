@@ -108,7 +108,7 @@ const FlowerList = ({ filter, setFilter }: filterState) => {
 
     return (
         <div>
-            {isLoading ? <Spinner /> : <table style={{ width: "100%" }}>
+            {isLoading ? <Spinner /> : <table style={{ width: "100%", paddingLeft: "20px" }}>
                 <thead style={{ width: "100%", marginBottom: "10px", border: "1px solid rgba(5, 5, 5, 1) ", borderCollapse: "collapse" }}>
                     <tr style={{ textAlign: "left", border: '1px solid red' }}>
                         <th style={flexStyle}></th>
