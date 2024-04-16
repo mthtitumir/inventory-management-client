@@ -37,33 +37,34 @@ const Navbar = () => {
             <Col xs={{ span: 20 }} md={{ span: 6 }} lg={{ span: 6 }} style={{ padding: "8px 0" }}>
                 <SearchBox />
             </Col>
-            <Col xs={{ span: 4 }} md={{ span: 18 }} lg={{ span: 18 }}>
-                <Col xs={0} md={{ span: 20 }} lg={{ span: 20 }}>
-                    <Flex>
-                        <Flex align="center" gap={8}>
-                            <p>Demo Company</p>
-                            <div onClick={handleAddOnClick}>
-                                <MyPopover child1={openPopIcon} child2={<AddAnything />} />
-                            </div>
-
+            <Col xs={{ span: 0 }} md={{ span: 14 }} lg={{ span: 14 }}>
+                <Row justify="end" align="middle">
+                    <Col>
+                        <Flex>
+                            <Flex align="center" gap={8}>
+                                <p>Demo Company</p>
+                                <div onClick={handleAddOnClick}>
+                                    <MyPopover child1={openPopIcon} child2={<AddAnything />} />
+                                </div>
+                            </Flex>
+                            <Flex align="center" justify="center" gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff", fontWeight: "bold" }}>
+                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><FaRegUser size={20} /></Link>
+                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoMdNotificationsOutline size={20} /></Link>
+                                <Link to={'/sales/carts'} style={{ color: "black", height: "20px" }}><MdOutlineShoppingCart size={20} /></Link>
+                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoSettingsOutline size={20} /></Link>
+                            </Flex>
+                            <Flex align="center" gap={8} style={{paddingLeft: "10px"}}>
+                                <p>Mr. Test User</p>
+                            </Flex>
                         </Flex>
-                        <Flex align="center" justify="center" gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff", fontWeight: "bold" }}>
-                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><FaRegUser size={20} /></Link>
-                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoMdNotificationsOutline size={20} /></Link>
-                            <Link to={'/sales/carts'} style={{ color: "black", height: "20px" }}><MdOutlineShoppingCart size={20} /></Link>
-                            <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><IoSettingsOutline size={20} /></Link>
-                        </Flex>
-                        <Flex align="center" gap={8}>
-                            <p>Mr. Test User</p>
-                        </Flex>
-                    </Flex>
-                </Col>
-                <Flex align="center">
-                    <Avatar src={<UserAddOutlined style={{ color: "black" }} />} style={{ border: "1px solid pink" }} />
-                </Flex>
-                {/* <Button href="/login" type="primary" icon={<LoginOutlined />}>Login</Button> */}
-                <MenuOutlined disabled onClick={showDrawer} style={{ padding: '7px', borderRadius: "5px", border: "1px solid gray", width: "", display: "none" }} />
+                    </Col>
+                    {/* <Button href="/login" type="primary" icon={<LoginOutlined />}>Login</Button> */}
+                    {/* <MenuOutlined disabled onClick={showDrawer} style={{ padding: '7px', borderRadius: "5px", border: "1px solid gray", width: "", display: "none" }} /> */}
+                </Row>
             </Col>
+            <Flex>
+                <Avatar src={<UserAddOutlined style={{ color: "black" }} />} style={{ border: "1px solid pink" }} />
+            </Flex>
             <MyDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} children1={LogoNameContent} children2={<LeftSidebar />} />
         </Row>
     )

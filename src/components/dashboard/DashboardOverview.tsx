@@ -1,4 +1,4 @@
-import { Flex } from "antd"
+import { Col, Flex, Row } from "antd"
 import InventorySummaryCard from "./InventorySummaryCard"
 import SalesUpdateCard from "./SalesUpdateCard"
 import FlowerStockCard from "./FlowerStockCard"
@@ -9,32 +9,32 @@ import SalesOrderSummaryCard from "./SalesOrderSummaryCard"
 
 const DashboardOverview = () => {
     return (
-        <Flex vertical gap={16}>
-            <Flex gap={30}>
-                <Flex>
+        <Flex vertical gap={20}  style={{ paddingRight: "" }}>
+            <Row gutter={[20, 20]}>
+                <Col xs={24} md={12}>
                     <SalesUpdateCard />
-                </Flex>
-                <Flex>
+                </Col>
+                <Col xs={24} md={12}>
                     <InventorySummaryCard />
-                </Flex>
-            </Flex>
-            <Flex gap={30}>
-                <Flex>
+                </Col>
+            </Row>
+            <Row gutter={[20, 20]}>
+                <Col xs={24} md={12}>
                     <FlowerStockCard />
-                </Flex>
-                <Flex>
+                </Col>
+                <Col xs={24} md={12}>
                     <BestSellingCard />
-                </Flex>
-            </Flex>
-            <Flex gap={30}>
-                <Flex>
+                </Col>
+            </Row>
+            <Row gutter={[20, 20]}>
+                <Col xs={24} md={10}>
                     <PurchasedUpdateCard />
-                </Flex>
-                <Flex>
+                </Col>
+                <Col xs={24} md={14}>
                     <SalesOrderCard />
-                </Flex>
-            </Flex>
-            <Flex gap={30}>
+                </Col>
+            </Row>
+            <Flex style={{overflowX: "auto"}}>
                 <SalesOrderSummaryCard />
             </Flex>
         </Flex>

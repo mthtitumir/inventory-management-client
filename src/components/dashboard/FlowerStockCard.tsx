@@ -14,8 +14,8 @@ const FlowerStockCard = () => {
     return (
         <div style={testStyle}>
             <p style={{ fontSize: "19px", borderBottom: "1px solid #ebeaf2", padding: "10px 15px", backgroundColor: "#FFFDD0", borderRadius: "10px 10px 0 0" }}>Flower Stock</p>
-            <Flex>
-                <Flex vertical style={{ padding: "20px", fontSize: "17px", borderRight: "1px solid #ebeaf2" }} gap={10}>
+            <Flex justify="space-between">
+                <Flex vertical style={{ padding: "20px", fontSize: "17px", borderRight: "1px solid #ebeaf2", flexGrow: "1" }} gap={10}>
                     <Flex justify="space-between" style={{ paddingBottom: "5px", borderBottom: "1px solid #ebeaf2" }}>
                         <p>Low Stock Items</p>
                         <p style={{ fontSize: "19px" }}>3000</p>

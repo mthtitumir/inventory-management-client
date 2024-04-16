@@ -57,7 +57,7 @@ const SalesOrderCard = () => {
                 <p>Sales Orders</p>
                 <Select suffixIcon={<IoIosArrowDown size={16} color="maroon" />} variant="borderless" onChange={handleChangeSelect} style={{ backgroundColor: "none" }} options={filterOptions} defaultValue={"This Month"} />
             </Flex>
-            <Table dataSource={dataSource} columns={columns} pagination={false} />
+            <Table style={{overflowX: "auto"}} dataSource={dataSource} columns={columns} pagination={false} />
         </div>
     )
 }

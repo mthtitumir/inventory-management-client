@@ -14,12 +14,12 @@ const BestSellingCard = () => {
                 <p>Best Selling Items</p>
                 <Select suffixIcon={<IoIosArrowDown size={16} color="maroon" />} variant="borderless" onChange={handleChangeSelect} style={{ backgroundColor: "none" }} options={filterOptions} defaultValue={"This Month"} />
             </Flex>
-            <Flex style={{ padding: "10px" }} gap={20}>
+            <Flex style={{ padding: "10px", overflowX: "auto" }} gap={20} justify="space-between">
                 {
-                    [80, 42, 73].map((item) => <Flex key={item} vertical align="center" style={{ padding: "20px" }} gap={1}>
+                    [80, 87, 42, 73].map((item) => <Flex key={item} vertical align="center" style={{ padding: "20px" }} gap={1}>
                         <img style={{ width: "80px", borderRadius: "5px" }} src="https://img.freepik.com/premium-photo/pink-rose-flower_303714-329.jpg" />
                         <p>Pink Rose</p>
-                        <p style={{ fontSize: "15px" }}><span style={{ fontSize: "24px", fontWeight: "bold" }}>100</span> pcs</p>
+                        <p style={{ fontSize: "15px" }}><span style={{ fontSize: "24px", fontWeight: "bold" }}>{item}</span> pcs</p>
                     </Flex>)
                 }
             </Flex>
