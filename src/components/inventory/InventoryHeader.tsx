@@ -13,11 +13,11 @@ export type filterState = { filter: Record<string, unknown>, setFilter: React.Di
 
 const InventoryHeader = ({ filter, setFilter }: filterState) => {
     // const [isModalOpen, setIsModalOpen] = useState(false);
-    const bulkDeleteIds = useAppSelector(useBulkDeleteIds);
+    const bulkSelectedIds = useAppSelector(useBulkDeleteIds);
     const [deleteBulkFlowers] = useDeleteBulkFlowersMutation();
 
     const handleBulkDelete = () => {
-        console.log(bulkDeleteIds);
+        // console.log(bulkSelectedIds);
         showDeleteConfirm();
     }
     const showDeleteConfirm = async () => {
@@ -29,7 +29,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                deleteBulkFlowers(bulkDeleteIds).unwrap().then((payload: any) => {
+                deleteBulkFlowers(bulkSelectedIds).unwrap().then((payload: any) => {
                     toast.success(payload.message);
                     setBulkDeleteIds([]);
                 }).catch((error) => {
@@ -54,7 +54,9 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
                 <ResetFilter setFilter={setFilter} />
             </Flex>
             <Col>
-                <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkDeleteIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
+                {/* <Button type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger >Sell</Button> */}
+                <Link to={`/sales/checkout`}><Button style={{ borderColor: "green", color: "green", width: "100%", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} > Sell</Button></Link>
+                <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Link to={"/inventory/items/add-item"}>
                     <Button type="primary" icon={<PlusCircleOutlined />}>
                         Add New Flower

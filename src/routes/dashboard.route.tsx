@@ -12,6 +12,7 @@ import AddUpdateFlower from "../components/form/AddUpdateFlower"
 import Carts from "../components/sales/Carts"
 import BuyerList from "../components/sales/BuyerList"
 import SupplierList from "../components/purchases/SupplierList"
+import Checkout from "../pages/sales/Checkout"
 
 export const dashboardPaths = [
     {
@@ -59,6 +60,11 @@ export const dashboardPaths = [
                 name: 'Orders',
                 path: 'sales/orders',
                 element: <SalesOrders />,
+            },
+            {
+                name: 'Checkout',
+                path: 'sales/checkout',
+                element: <Checkout />,
             },
             {
                 name: 'Buyers',

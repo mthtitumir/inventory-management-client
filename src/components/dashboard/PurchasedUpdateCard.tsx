@@ -14,11 +14,11 @@ const PurchasedUpdateCard = () => {
                 <Select suffixIcon={<IoIosArrowDown size={16} color="maroon" />} variant="borderless" onChange={handleChangeSelect} style={{ backgroundColor: "none" }} options={filterOptions} defaultValue={"This Month"} />
             </Flex>
             <Flex style={{ padding: "10px" }} gap={20} justify="center">
-                <Flex vertical align="center" style={{ padding: "20px", borderRight: "1px solid #ebeaf2" }} gap={1}>
+                <Flex vertical align="center" style={{ padding: "15px", borderRight: "1px solid #ebeaf2" }} gap={1}>
                     <p>Qty. Ordered</p>
                     <p style={{ fontSize: "15px" }}><span style={{ fontSize: "24px", fontWeight: "bold" }}>900</span> pcs</p>
                 </Flex>
-                <Flex vertical align="center" style={{ padding: "20px" }} gap={1}>
+                <Flex vertical align="center" style={{ padding: "15px" }} gap={1}>
                     <p>Total Cost</p>
                     <p style={{ fontSize: "15px" }}><span style={{ fontSize: "24px", fontWeight: "bold" }}>$10000</span></p>
                 </Flex>

@@ -19,18 +19,18 @@ const DashboardOverview = () => {
                 </Col>
             </Row>
             <Row gutter={[20, 20]}>
-                <Col xs={24} md={12}>
+                <Col xs={24} md={13}>
                     <FlowerStockCard />
                 </Col>
-                <Col xs={24} md={12}>
+                <Col xs={24} md={11}>
                     <BestSellingCard />
                 </Col>
             </Row>
             <Row gutter={[20, 20]}>
-                <Col xs={24} md={10}>
+                <Col xs={24} md={9}>
                     <PurchasedUpdateCard />
                 </Col>
-                <Col xs={24} md={14}>
+                <Col xs={24} md={15}>
                     <SalesOrderCard />
                 </Col>
             </Row>

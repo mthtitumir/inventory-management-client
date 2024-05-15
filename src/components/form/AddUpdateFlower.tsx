@@ -28,7 +28,7 @@ import { transformedArrayToSelectOptions } from '../../utils/transformArrayToSel
 import { mainBg } from '../layout/MainLayout';
 
 const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm] = useState('');
     const { itemId } = useParams();
     const { data, isLoading } = useGetSingleFlowerQuery(itemId, { skip: !itemId });
     const { data: supplierData } = useGetAllTradingPartnerQuery({ searchTerm, type: "supplier", select: "name _id email" });

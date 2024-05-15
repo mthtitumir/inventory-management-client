@@ -11,6 +11,13 @@ const flowerApi = baseApi.injectEndpoints({
       }),
       providesTags: ["flower"]
     }),
+    getBulkFlowers: builder.mutation({
+      query: (data) => ({
+        url: "/flowers/bulk",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getSingleFlower: builder.query({
       query: (flowerId :string | undefined)=> ({
         url: `/flowers/${flowerId}`,
@@ -51,4 +58,4 @@ const flowerApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllFlowersQuery, useGetSingleFlowerQuery, useAddFlowerMutation, useUpdateFlowerMutation, useDeleteFlowerMutation, useDeleteBulkFlowersMutation } = flowerApi;
+export const { useGetAllFlowersQuery, useGetBulkFlowersMutation, useGetSingleFlowerQuery, useAddFlowerMutation, useUpdateFlowerMutation, useDeleteFlowerMutation, useDeleteBulkFlowersMutation } = flowerApi;

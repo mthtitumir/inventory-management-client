@@ -1,4 +1,4 @@
-import { Button, Flex, InputNumber } from "antd";
+import { Button, Flex } from "antd";
 import { useGetAllCartQuery } from "../../redux/features/cart/cartApi";
 import AddHeader from "../ui/AddHeader";
 import './cart.css'

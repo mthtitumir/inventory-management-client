@@ -14,7 +14,7 @@ const BestSellingCard = () => {
                 <p>Best Selling Items</p>
                 <Select suffixIcon={<IoIosArrowDown size={16} color="maroon" />} variant="borderless" onChange={handleChangeSelect} style={{ backgroundColor: "none" }} options={filterOptions} defaultValue={"This Month"} />
             </Flex>
-            <Flex style={{ padding: "10px", overflowX: "auto" }} gap={20} justify="space-between">
+            <Flex style={{ padding: "10px", overflowX: "auto" }} gap={0} justify="space-between">
                 {
                     [80, 87, 42, 73].map((item) => <Flex key={item} vertical align="center" style={{ padding: "20px" }} gap={1}>
                         <img style={{ width: "80px", borderRadius: "5px" }} src="https://img.freepik.com/premium-photo/pink-rose-flower_303714-329.jpg" />
