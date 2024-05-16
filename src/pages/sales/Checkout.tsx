@@ -22,7 +22,6 @@ import { useBulkDeleteIds } from '../../redux/features/flower/flowerSlice';
 const Checkout = () => {
     // const product= useParams();
     const { itemId } = useParams();
-    // console.log({ itemId, 19: "from 19" });
     const flowerIds = useAppSelector(useBulkDeleteIds);
     console.log({ flowerIds });
 
@@ -30,6 +29,7 @@ const Checkout = () => {
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
+    const [flowersData, setFlowersData] = useState();
     const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
     const seller: TUser | null = useAppSelector(useCurrentUser);
     const { data, isLoading } = useGetSingleFlowerQuery(itemId);
@@ -135,8 +135,9 @@ const Checkout = () => {
     useEffect(() => {
         const fetchBulkFlowers = async () => {
             try {
-                const flowersData = await getBulkFlowers({ flowerIds }).unwrap();
-                console.log({ flowersData });
+                const flowers = await getBulkFlowers({ flowerIds }).unwrap();
+                console.log({ flowersData: flowers });
+                setFlowersData(flowers);
             } catch (error) {
                 console.error('Failed to fetch bulk flowers:', error);
             }
