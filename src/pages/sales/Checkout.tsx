@@ -23,13 +23,14 @@ const Checkout = () => {
     // const product= useParams();
     const { itemId } = useParams();
     const flowerIds = useAppSelector(useBulkDeleteIds);
-    console.log({ flowerIds });
+    // console.log({ flowerIds });
 
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
-    const [flowersData, setFlowersData] = useState();
+    const [flowersData, setFlowersData] = useState([]);
+    const [flowers, setFlowers] = useState([]);
     const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
     const seller: TUser | null = useAppSelector(useCurrentUser);
     const { data, isLoading } = useGetSingleFlowerQuery(itemId);
@@ -136,8 +137,8 @@ const Checkout = () => {
         const fetchBulkFlowers = async () => {
             try {
                 const flowers = await getBulkFlowers({ flowerIds }).unwrap();
-                console.log({ flowersData: flowers });
-                setFlowersData(flowers);
+                console.log(flowers.data);                
+                setFlowersData(flowers?.data);
             } catch (error) {
                 console.error('Failed to fetch bulk flowers:', error);
             }
@@ -145,13 +146,22 @@ const Checkout = () => {
 
         if (flowerIds && flowerIds.length > 0) {
             fetchBulkFlowers();
+        } else if (data) {
+            setFlowersData([data.data]);
         }
-    }, [flowerIds, getBulkFlowers]);
+    }, [flowerIds, getBulkFlowers, data]);
 
-    if (!data || isLoading) {
+    console.log(flowersData);
+    if (!flowersData) {
         return <Spinner />
     }
-    const { image, name, price, quantity, color, size } = data.data;
+    // if(flowers.length > 0 && !itemId ){
+    //     setFlowersData(flowers);
+    // } else {
+    //     setFlowersData([data?.data]);
+    // }
+
+    // const { image, name, price, quantity, color, size } = data.data;
     // const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
@@ -185,33 +195,37 @@ const Checkout = () => {
                     </Col>
                 </Row>
                 {/* product list  */}
-                <Row style={{ borderBottom: "1px solid #ebeaf2" }}>
-                    <Col span={10} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
-                        <Flex style={{ padding: "5px" }} gap={3} align='center' >
-                            <img style={{ width: "25%" }} src={image} alt="" />
-                            <Flex vertical>
-                                <h4>Name: <i>{name}</i></h4>
-                                <h4>Size: <i>{size}</i></h4>
-                                <h4>Color: <i>{color}</i></h4>
-                            </Flex>
-                        </Flex>
-                    </Col>
-                    <Col span={4} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
-                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
-                            <h4>${price}</h4>
-                        </Flex>
-                    </Col>
-                    <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
-                        <Flex justify='center' align='center' style={{ height: "100%" }}>
-                            <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
-                        </Flex>
-                    </Col>
-                    <Col span={5} style={{ padding: "8px 0" }}>
-                        <Flex justify='center' align='center' style={{ height: " 100% " }}>
-                            <h4>${subTotal}</h4>
-                        </Flex>
-                    </Col>
-                </Row>
+                {
+                flowersData?.map(({ image, name, price, color, size }) => (
+                        <Row style={{ borderBottom: "1px solid #ebeaf2" }}>
+                            <Col span={10} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                                <Flex style={{ padding: "5px" }} gap={3} align='center' >
+                                    <img style={{ width: "25%" }} src={image} alt="" />
+                                    <Flex vertical>
+                                        <h4>Name: <i>{name}</i></h4>
+                                        <h4>Size: <i>{size}</i></h4>
+                                        <h4>Color: <i>{color}</i></h4>
+                                    </Flex>
+                                </Flex>
+                            </Col>
+                            <Col span={4} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                                <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                                    <h4>${price}</h4>
+                                </Flex>
+                            </Col>
+                            <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
+                                <Flex justify='center' align='center' style={{ height: "100%" }}>
+                                    <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
+                                </Flex>
+                            </Col>
+                            <Col span={5} style={{ padding: "8px 0" }}>
+                                <Flex justify='center' align='center' style={{ height: " 100% " }}>
+                                    <h4>${subTotal}</h4>
+                                </Flex>
+                            </Col>
+                        </Row>
+                    ))
+                }
                 {/* customer info and billing  */}
                 <Row>
                     {/* left side customer info box box  */}

@@ -14,7 +14,7 @@ const tradingPartnerApi = baseApi.injectEndpoints({
     }),
 
     getSingleTradingPartner: builder.query({
-      query: (tradingPartnerId :string | undefined)=> ({
+      query: (tradingPartnerId : string | undefined)=> ({
         url: `trading-partners/${tradingPartnerId}`,
         method: "GET"
       })

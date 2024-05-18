@@ -2,8 +2,6 @@
 import { SetStateAction, useState } from 'react'
 import { Avatar, Button, Col, Flex, Form, Input, Row, Select, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useAppSelector } from '../../redux/hooks';
-import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery } from '../../redux/features/flower/flowerApi';
 import { useGetAllDiscountsQuery } from '../../redux/features/discount/discountApi';
 import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
@@ -18,18 +16,16 @@ import { useGetAllTradingPartnerQuery, useGetSingleTradingPartnerQuery } from '.
 import { transformedArrayToSelectOptions } from '../../utils/transformArrayToSelectOptions';
 
 const MakeSellForm = () => {
-    // const product= useParams();
     const { itemId } = useParams();
-    // console.log({ itemId, 19: "from 19" });
-
     const [subTotal, setSubTotal] = useState(0);
     const [code, setCode] = useState("");
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
-    const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
-    const seller: TUser | null = useAppSelector(useCurrentUser);
+    const [discountId, setDiscountId] = useState<SetStateAction<undefined | string>>(undefined);
+    const [buyerId, setBuyerId] = useState(undefined);
+    // const seller: TUser | null = useAppSelector(useCurrentUser);
     const { data, isLoading } = useGetSingleFlowerQuery(itemId);
-    const { data: discountsData } = useGetAllDiscountsQuery(seller?.company);
+    const { data: discountsData } = useGetAllDiscountsQuery("");
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
     // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading
     const [addSales] = useAddSalesMutation();
@@ -39,17 +35,24 @@ const MakeSellForm = () => {
     const discounts = discountsData?.data;
     const buyer = singleBuyerData?.data;
 
-    console.log(singleBuyerData);
+    // console.log(discounts);
     // console.log(data, isLoading);
     const onFinish = (values: any) => {
-        values.quantity = Number(values.quantity);
-        // const salesData = {
-        //     ...values,
-        //     seller: seller?._id,
-        //     dateOfSale: new Date(),
-        //     product
-        // };
-        // console.log(salesData);
+        // values.quantity = Number(values.quantity);
+        const salesData = {
+            ...values,
+            dateOfSale: new Date(),
+            items: [
+                {
+                    product: itemId,
+                    quantity: Number(values.quantity)
+                }
+            ],
+            subTotal: Number(subTotal.toFixed(2)),
+            total: Number((subTotal - discount).toFixed(2)),
+            ...(discountId && { discount: discountId, discountUsingCode: discount })
+        };
+        console.log({ salesData });
 
         // if (values.quantity > quantity || values.quantity === 0) {
         //     toast.error("Available quantity exceeded!")
@@ -63,21 +66,10 @@ const MakeSellForm = () => {
         // }
     };
     const handleDiscount = () => {
-        // first of all check if this customer already reached the maximum redeem time
-        // setDiscountCode(prevCode => {
-        //     console.log({prevCode,code});
-
-        //     if (prevCode !== code) {
-        //         return code;
-        //     }
-        //     return prevCode;
-        // });
-        // console.log(discountCode);
-        // console.log({code, discountCode, data: discountData.data, isDiscountLoading});
-        const inputDiscount = discounts?.find((dis: TDiscount) => dis.code === code);
-        console.log(inputDiscount);
+        const inputDiscount: TDiscount = discounts?.find((dis: TDiscount) => dis.code === code);
+        // console.log(code);
         if (inputDiscount) {
-            const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid, limitPerCustomer } = inputDiscount;
+            const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid } = inputDiscount;
             const currentTime = dayjs().format('HH:mm');
             const timeToCheck = dayjs(currentTime, 'HH:mm');
             const currentDate = dayjs();
@@ -87,6 +79,7 @@ const MakeSellForm = () => {
             const endT = dayjs(endTime, 'HH:mm');
             const couponValidation = (startDate < endDate) && timeToCheck.isAfter(startT) && timeToCheck.isBefore(endT) && (currentDate > startD) && (currentDate < endD) && valid;
             console.log({ couponValidation });
+            //use limitPerCustomer functionality
             if (!couponValidation) {
                 setDiscount(0);
                 toast.error("Invalid discount!");
@@ -105,21 +98,23 @@ const MakeSellForm = () => {
             }
             if (type === "amountOff") {
                 setDiscount(amountOff);
+                setDiscountId(inputDiscount._id);
             } else if (type === "percentOff") {
                 // console.log({subTotal, percentOff});                
                 setDiscount(subTotal * percentOff * 0.01);
+                setDiscountId(inputDiscount._id);
             } else {
                 toast.error('Discount not available!');
             }
         } else {
             toast.error("Invalid Discount!")
         }
-    }
+    };
     const onQuantityChange = (e: any) => {
         setSubTotal(Number(e.target.value) * price);
         setDiscount(0);
-    }
-    const onBuyerSelect = (value: string | undefined) => {
+    };
+    const onBuyerSelect = (value: any) => {
         // console.log(value);
         setBuyerId(value);
     }
@@ -173,12 +168,12 @@ const MakeSellForm = () => {
                     </Col>
                     <Col span={4} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
                         <Flex justify='center' align='center' style={{ height: " 100% " }}>
-                            <h4>${price}</h4>
+                            <h4>${price.toFixed(2)}</h4>
                         </Flex>
                     </Col>
                     <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
                         <Flex justify='center' align='center' style={{ height: "100%" }}>
-                            <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} />
+                            <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} max={quantity} />
                         </Flex>
                     </Col>
                     <Col span={5} style={{ padding: "8px 0" }}>
@@ -219,13 +214,12 @@ const MakeSellForm = () => {
                                         {/* <img src={buyer?.profilePicture ? buyer?.profilePicture : ""} alt="" /> */}
                                         <Flex vertical gap={5} style={{ borderRight: "1px solid #ebeaf2", paddingRight: "10px" }} justify='center' align='center'>
                                             <Avatar shape='square' size={72} icon={<UserOutlined />} src={buyer?.profilePicture} />
-                                            <Button style={{ width: "100%", backgroundImage: "linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))", color: "white" }} size='small' >Diamond</Button>
+                                            <Button style={{ width: "100%", backgroundImage: "linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))", color: "white" }} size='small' >{buyer.level}</Button>
                                         </Flex>
-                                        <Flex vertical  justify='center'>
+                                        <Flex vertical justify='center'>
                                             <h4>Name : {buyer?.name}</h4>
                                             <h4>Email : {buyer?.email}</h4>
                                             <h4>Phone Number : {buyer?.phoneNumber}</h4>
-                                            <h4>Coins : {buyer?.coinsEarned}</h4>
                                             <h4>Coins : {buyer?.coinsEarned}</h4>
                                         </Flex>
                                     </Flex>
@@ -241,30 +235,42 @@ const MakeSellForm = () => {
                                 <Col span={12} style={{ textAlign: "left" }}>
                                     <h4>SubTotal :</h4>
                                     <h4>Discount (Using Coupon):</h4>
-                                    <h4>Discount (Using Points):</h4>
+                                    {/* <h4>Discount (Using Points):</h4> */}
                                     <h4>Total:</h4>
                                 </Col>
                                 <Col span={12} style={{ textAlign: "right" }}>
                                     <h4>${subTotal.toFixed(2)}</h4>
                                     <h4>${discount.toFixed(2)}</h4>
-                                    <h4>$0</h4>
+                                    {/* <h4>$0</h4> */}
                                     <h4>${(subTotal - discount).toFixed(2)}</h4>
                                 </Col>
                             </Row>
                             <MyDivider />
                             {/* coupon apply box  */}
-                            <Flex justify='center' align='center' >
+                            <Flex vertical style={{ marginBottom: "" }}>
+                                <h4 style={{ marginBottom: "5px" }}>Apply discount code or use coins if have</h4>
+                                <Space.Compact style={{ width: "100%" }}>
+                                    {/* <Form.Item
+                                        name="discountCode"
+                                        style={{flexGrow: 1}}
+                                    > */}
+                                    <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
+                                    {/* </Form.Item> */}
+                                    <Button style={{ borderRadius: "1px" }} onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
+                                </Space.Compact>
+                            </Flex>
+                            {/* point using box  */}
+                            {/* <Flex justify='center' align='center' >
                                 <Form.Item
                                     style={{ marginBottom: "10px", width: "100%" }}
                                     name="discountCode"
                                 >
-                                    <h4 style={{ marginBottom: "5px" }}>Apply promo code or discount code if have</h4>
                                     <Space.Compact style={{ width: "100%" }}>
-                                        <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Discount Code (If have)"} />
-                                        <Button style={{ borderRadius: "1px" }} onClick={handleDiscount} type="primary" size='middle'>Apply Code</Button>
+                                        <Input style={{ borderRadius: "1px" }} onChange={(e) => setCode(e.target.value)} type='text' placeholder={"Point Quantity (If have)"} max={buyer?.coinsEarned} />
+                                        <Button style={{ borderRadius: "1px" }} type="primary" size='middle'>Use Coins</Button>
                                     </Space.Compact>
                                 </Form.Item>
-                            </Flex>
+                            </Flex> */}
                             {/* submit button  */}
                             <Flex>
                                 <Form.Item style={{ marginBottom: "10px", textAlign: "center", width: "100%" }}>

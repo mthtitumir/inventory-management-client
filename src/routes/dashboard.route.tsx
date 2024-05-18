@@ -87,7 +87,7 @@ export const dashboardPaths = [
         icon: <BiPurchaseTag />,
         children: [
             {
-                name: 'Purchases',
+                name: 'All Purchase',
                 path: 'purchases/orders',
                 element: <SalesOrders />,
             },
@@ -99,6 +99,22 @@ export const dashboardPaths = [
             {
                 path: 'purchases/suppliers/add-new-supplier',
                 element: <AddTradingPartner type="Supplier" />,
+            },
+        ]
+    },
+    {
+        name: 'Info',
+        icon: <BiPurchaseTag />,
+        children: [
+            {
+                name: 'Coupons',
+                path: 'info/coupons',
+                element: <SalesOrders />,
+            },
+            {
+                name: 'Membership',
+                path: 'info/membership',
+                element: <SalesOrders />,
             },
         ]
     },

@@ -55,7 +55,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
             </Flex>
             <Col>
                 {/* <Button type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger >Sell</Button> */}
-                <Link to={`/sales/checkout`}><Button style={{ borderColor: "green", color: "green", width: "100%", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} > Sell</Button></Link>
+                {/* <Link to={`/sales/checkout`}><Button style={{ borderColor: "green", color: "green", width: "100%", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} > Sell</Button></Link> */}
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Link to={"/inventory/items/add-item"}>
                     <Button type="primary" icon={<PlusCircleOutlined />}>
