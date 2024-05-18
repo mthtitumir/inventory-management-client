@@ -38,32 +38,33 @@ const MakeSellForm = () => {
     // console.log(discounts);
     // console.log(data, isLoading);
     const onFinish = (values: any) => {
-        // values.quantity = Number(values.quantity);
         const salesData = {
-            ...values,
+            buyer: values?.buyer,
             dateOfSale: new Date(),
             items: [
                 {
                     product: itemId,
-                    quantity: Number(values.quantity)
+                    quantity: Number(values?.quantity)
                 }
             ],
             subTotal: Number(subTotal.toFixed(2)),
             total: Number((subTotal - discount).toFixed(2)),
             ...(discountId && { discount: discountId, discountUsingCode: discount })
         };
-        console.log({ salesData });
+        console.log({ salesData, quantity });
 
-        // if (values.quantity > quantity || values.quantity === 0) {
-        //     toast.error("Available quantity exceeded!")
-        // } else {
-        //     addSales(salesData).unwrap().then((payload: any) => {
-        //         toast.success(payload.message);
-        //     }).catch((error: any) => {
-        //         toast.error(error.message || "Something went wrong!")
-        //     })
-        //     setIsModalOpen(false);
-        // }
+        if (values.quantity > quantity || values.quantity === 0) {
+            toast.error("Available quantity exceeded!")
+        } else {
+            addSales(salesData).unwrap().then((payload: any) => {
+                toast.success(payload.message);
+                console.log(payload);
+                
+            }).catch((error: any) => {
+                toast.error(error.message || "Something went wrong!")
+            })
+            // setIsModalOpen(false);
+        }
     };
     const handleDiscount = () => {
         const inputDiscount: TDiscount = discounts?.find((dis: TDiscount) => dis.code === code);
@@ -115,7 +116,6 @@ const MakeSellForm = () => {
         setDiscount(0);
     };
     const onBuyerSelect = (value: any) => {
-        // console.log(value);
         setBuyerId(value);
     }
     if (!data || isLoading) {
@@ -173,12 +173,14 @@ const MakeSellForm = () => {
                     </Col>
                     <Col span={5} style={{ padding: "8px 0", borderRight: "1px solid #ebeaf2" }}>
                         <Flex justify='center' align='center' style={{ height: "100%" }}>
-                            <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} max={quantity} />
+                            <Form.Item name={"quantity"}>
+                                <Input style={{ width: "60%", border: "1px solid #ebeaf2" }} onChange={(e) => onQuantityChange(e)} type='number' placeholder={"Quantity"} max={quantity} />
+                            </Form.Item>
                         </Flex>
                     </Col>
                     <Col span={5} style={{ padding: "8px 0" }}>
                         <Flex justify='center' align='center' style={{ height: " 100% " }}>
-                            <h4>${subTotal}</h4>
+                            <h4>${subTotal.toFixed(2)}</h4>
                         </Flex>
                     </Col>
                 </Row>
