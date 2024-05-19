@@ -35,21 +35,6 @@ const Dashboard = () => {
       </Flex>
       <Flex gap={12} style={{ padding: "0 20px", fontSize: "20px" }}>
         <Tabs style={{ width: "100%" }} defaultActiveKey="1" items={items} />
-        {/* <Col>
-                    <Button onClick={() => setIsModalOpen(true)} type="primary" icon={<PlusCircleOutlined />} size="large">
-                        Add Flower
-                    </Button>
-                </Col>
-                <Col>
-                    <Button onClick={() => setIsDiscountModalOpen(true)} type="primary" icon={<PlusCircleOutlined />} size="large">
-                        Add Discount
-                    </Button>
-                </Col> */}
-        {/* <Col>
-                    <Button type="primary" icon={<PlusCircleOutlined />} size="large">
-                        Sell Flower
-                    </Button>
-                </Col> */}
       </Flex>
       {/* <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower type="add" /></MyModal>
       <MyModal isModalOpen={isDiscountModalOpen} setIsModalOpen={setIsDiscountModalOpen}><AddUpdateDiscount type="add" /></MyModal> */}

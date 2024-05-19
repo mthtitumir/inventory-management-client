@@ -1,14 +1,13 @@
-import React from 'react';
-import { ConfigProvider, Menu } from 'antd';
+import React, { useState } from 'react';
+import { ConfigProvider, Flex, Layout, Menu } from 'antd';
 import { sidebarItemsGenerator } from '../../utils/SidebarItemsGenerator';
 import { dashboardPaths } from '../../routes/dashboard.route';
-import { LogoNameContent } from '../ui/Navbar';
-// const { Sider } = Layout;
+const { Sider } = Layout;
 
 const sidebarItems = sidebarItemsGenerator(dashboardPaths);
 
 const LeftSidebar: React.FC = () => {
-    // const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
 
     return (
         <ConfigProvider
@@ -18,21 +17,24 @@ const LeftSidebar: React.FC = () => {
                         darkItemBg: "none",
                         darkSubMenuItemBg: "none",
                         darkItemSelectedBg: "inherit",
-                        //   itemBg: "#24d613"
-                    }
+                        // itemBg: "#24d613"
+                    },
                 },
             }}
         >
-            <div style={{position: "fixed", height: "100%"}}>
-                {/* <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
-                {/* <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}> */}
-                {/* <div>
-                <h3 style={{ padding: "5px 24px", color: "white" }}>Flora Vista</h3>
-            </div> */}
-                {LogoNameContent}
-                <Menu style={{ backgroundImage: "" }} theme="dark" mode="inline" defaultSelectedKeys={['1']} items={sidebarItems} />
-                {/* </Sider> */}
-            </div>
+            <Sider
+                collapsible collapsed={collapsed} onCollapse={(value: boolean) => setCollapsed(value)}
+                // style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
+                breakpoint="lg"
+                collapsedWidth="0"
+                style={{ height: '100vh', position: 'sticky', top: '0', left: '0' }}
+            >
+                <Flex align="center" justify="center" gap={5} style={{ margin: "10px" }}>
+                    <img style={{ width: "40px" }} src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png" />
+                    <h4 style={{ color: "white", ...(collapsed && { display: "none" }) }}>Flora Vista</h4>
+                </Flex>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={sidebarItems} />
+            </Sider>
         </ConfigProvider>
 
     );
