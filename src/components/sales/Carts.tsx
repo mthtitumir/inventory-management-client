@@ -2,6 +2,7 @@ import { Button, Flex } from "antd";
 import { useGetAllCartQuery } from "../../redux/features/cart/cartApi";
 import AddHeader from "../ui/AddHeader";
 import './cart.css'
+import { TFlower } from "../../types";
 
 const Carts = () => {
   const { data: cartsData, isLoading: cartsLoading } = useGetAllCartQuery({});
@@ -25,7 +26,7 @@ const Carts = () => {
                 <th>Quantity</th>
               </tr>
               {
-                items?.map((item) => <tr>
+                items?.map((item: TFlower) => <tr>
                   <td><img style={{ width: "40px" }} src={item.product.image} /></td>
                   <td>{item.product.name}</td>
                   <td>{item.product.color}</td>

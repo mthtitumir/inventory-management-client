@@ -12,10 +12,8 @@ import { Link } from "react-router-dom";
 export type filterState = { filter: Record<string, unknown>, setFilter: React.Dispatch<React.SetStateAction<object | Record<string, unknown>>> };
 
 const InventoryHeader = ({ filter, setFilter }: filterState) => {
-    // const [isModalOpen, setIsModalOpen] = useState(false);
     const bulkSelectedIds = useAppSelector(useBulkDeleteIds);
     const [deleteBulkFlowers] = useDeleteBulkFlowersMutation();
-
     const handleBulkDelete = () => {
         // console.log(bulkSelectedIds);
         showDeleteConfirm();
@@ -45,7 +43,7 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
         setFilter({ ...filter, searchTerm: e.target.value });
     };
     return (
-        <Flex align={"center"} justify={"space-between"} style={{ borderBottom: "1px solid lightblue", paddingBottom: '10px', marginTop: "10px" }}>
+        <Flex align={"center"} justify={"space-between"} style={{ borderBottom: "1px solid #e6f4ff", padding: '20px', marginTop: "" }}>
             <Col>
                 <h2>Inventory</h2>
             </Col>
@@ -54,8 +52,6 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
                 <ResetFilter setFilter={setFilter} />
             </Flex>
             <Col>
-                {/* <Button type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger >Sell</Button> */}
-                {/* <Link to={`/sales/checkout`}><Button style={{ borderColor: "green", color: "green", width: "100%", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} > Sell</Button></Link> */}
                 <Button onClick={handleBulkDelete} type="default" style={{ marginRight: "8px", display: `${bulkSelectedIds.length > 0 ? "inline" : "none"}` }} danger icon={<DeleteFilled />} >Delete Selected</Button>
                 <Link to={"/inventory/items/add-item"}>
                     <Button type="primary" icon={<PlusCircleOutlined />}>
@@ -63,7 +59,6 @@ const InventoryHeader = ({ filter, setFilter }: filterState) => {
                     </Button>
                 </Link>
             </Col>
-            {/* <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}><AddUpdateFlower setIsModalOpen={setIsModalOpen} id={undefined} type="add" /></MyModal> */}
         </Flex>
     )
 }
