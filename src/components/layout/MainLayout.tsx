@@ -9,7 +9,7 @@ export const negMainBg = "linear-gradient(60deg, #f8002f 10%, #000c14 100%)";
 import { Layout } from 'antd';
 import Navbar from "../ui/Navbar";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const MainLayout = () => {
   return (
@@ -33,7 +33,8 @@ const MainLayout = () => {
             itemMarginBottom: 16
           },
           Layout: {
-            siderBg: mainBg
+            siderBg: mainBg,
+            bodyBg: "#FFFFFF"
           }
         }
       }}
@@ -42,13 +43,8 @@ const MainLayout = () => {
         <LeftSidebar />
         <Layout>
           <Navbar />
-          <Content style={{ }}>
-            <div
-              style={{
-                // padding: 24,
-                // minHeight: 360,
-              }}
-            >
+          <Content>
+            <div>
               <Outlet />
             </div>
           </Content>
@@ -64,17 +60,3 @@ export default MainLayout
 // background-color: #f8002f;
 // background-image: linear-gradient(326deg, #f8002f 0%, #000c14 74%);
 
-
-
-{/* <div>
-        <Row style={{  }}>
-          <Col xs={0} sm={0} md={0} lg={3} style={{ padding: "", backgroundColor: "#f8002f", backgroundImage: "linear-gradient(-60deg, #f8002f 10%, #000c14 100%)" }}>
-            <LeftSidebar />
-          </Col>
-          <Col style={{ border: '', padding: '' }} xs={24} sm={24} md={24} lg={21}>
-            <Navbar />
-            <Outlet />
-          </Col>
-        </Row>
-        <FooterC />
-      </div> */}

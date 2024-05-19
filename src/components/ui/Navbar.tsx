@@ -17,13 +17,14 @@ export const LogoNameContent = (
 )
 
 const Navbar = () => {
+    const menuItemCommonStyles = { outline: "white", color: "black", borderRadius: "5px", padding: "5px", TextAlign: "center" }
     // const openPopIcon = (<CloseOutlined style={{ outline: "white", backgroundImage: negMainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const openPopIcon = (<Icon.PlusOutlined style={{ outline: "white", backgroundImage: isPopoverOpen ? mainBg : negMainBg, color: "white", borderRadius: "5px", padding: "5px", textAlign: "center" }} />);
-    const showDrawer = () => {
-        setIsDrawerOpen(true);
-    };
+    // const showDrawer = () => {
+    //     setIsDrawerOpen(true);
+    // };
     const handleAddOnClick = () => {
         setIsPopoverOpen(!isPopoverOpen);
     }
@@ -37,19 +38,19 @@ const Navbar = () => {
                 <Row justify="end" align="middle">
                     <Col>
                         <Flex>
-                            <Flex align="center" gap={8} style={{paddingRight: "20px"}}>
+                            <Flex align="center" gap={8} style={{ paddingRight: "20px" }}>
                                 <p>Demo Company</p>
                                 <div onClick={handleAddOnClick}>
                                     <MyPopover child1={openPopIcon} child2={<AddAnything />} />
                                 </div>
                             </Flex>
                             <Flex gap={8} style={{ padding: "0 10px", borderRight: "1px solid #e6f4ff", borderLeft: "1px solid #e6f4ff", fontWeight: "bold" }}>
-                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><Icon.RegUser size={20} /></Link>
-                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><Icon.NotificationsOutlined size={20} /></Link>
-                                <Link to={'/sales/carts'} style={{ color: "black", height: "20px" }}><Icon.ShoppingCartOutlined size={20} /></Link>
-                                <Link to={'/inventory/settings'} style={{ color: "black", height: "20px" }}><Icon.SettingsOutlined size={20} /></Link>
+                                <Link to={'/inventory/settings'} style={menuItemCommonStyles}><Icon.RegUser /></Link>
+                                <Link to={'/inventory/settings'} style={menuItemCommonStyles}><Icon.NotificationsOutlined /></Link>
+                                <Link to={'/sales/carts'} style={menuItemCommonStyles}><Icon.ShoppingCartOutlined /></Link>
+                                <Link to={'/inventory/settings'} style={menuItemCommonStyles}><Icon.SettingsOutlined /></Link>
                             </Flex>
-                            <Flex align="center" gap={8} style={{paddingLeft: "10px"}}>
+                            <Flex align="center" gap={8} style={{ paddingLeft: "10px" }}>
                                 <p>Mr. Test User</p>
                             </Flex>
                         </Flex>
@@ -58,9 +59,9 @@ const Navbar = () => {
                     {/* <MenuOutlined disabled onClick={showDrawer} style={{ padding: '7px', borderRadius: "5px", border: "1px solid gray", width: "", display: "none" }} /> */}
                 </Row>
             </Col>
-            <Flex>
+            <Col>
                 <Avatar src={<Icon.UserAddOutlined style={{ color: "black" }} />} style={{ border: "1px solid pink" }} />
-            </Flex>
+            </Col>
             <MyDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} children1={LogoNameContent} children2={<LeftSidebar />} />
         </Row>
     )
