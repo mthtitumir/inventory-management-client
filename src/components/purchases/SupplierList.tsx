@@ -23,7 +23,7 @@ const SupplierList = () => {
         },
       ];
     return (
-        <div>
+        <div style={{padding: "20px"}}>
             <AddHeader text="Supplier List" />
             <Table dataSource={supplierData} columns={columns} style={{padding: ''}} />;
         </div>

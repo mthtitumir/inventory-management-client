@@ -23,7 +23,7 @@ const BuyerList = () => {
         },
       ];
     return (
-        <div>
+        <div style={{padding: "20px"}}>
             <AddHeader text="Buyer List" />
             <Table dataSource={buyerData} columns={columns} style={{padding: ''}} />;
         </div>

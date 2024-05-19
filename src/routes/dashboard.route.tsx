@@ -62,14 +62,14 @@ export const dashboardPaths = [
                 element: <SalesOrders />,
             },
             {
-                name: 'Checkout',
-                path: 'sales/checkout',
-                element: <Checkout />,
-            },
-            {
                 name: 'Buyers',
                 path: 'sales/buyers',
                 element: <BuyerList />,
+            },
+            {
+                name: 'Checkout',
+                path: 'sales/checkout',
+                element: <Checkout />,
             },
             {
                 name: 'Carts',

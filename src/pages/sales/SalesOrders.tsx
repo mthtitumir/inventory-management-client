@@ -14,7 +14,7 @@ const SalesOrders = () => {
   dispatch(setSales(data?.data));
 
   return (
-    <div>
+    <div style={{padding: "20px"}}>
       <SalesOrderHeader filter={filter} setFilter={setFilter} />
       <Divider />
       {!data || isLoading ? <Spinner /> : <SalesTable />}

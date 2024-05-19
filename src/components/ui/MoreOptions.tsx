@@ -1,5 +1,4 @@
 import { DeleteOutlined, EditOutlined, DeleteFilled, ShoppingCartOutlined, CopyOutlined } from '@ant-design/icons';
-import { LuShoppingCart } from "react-icons/lu";
 import { Button, Modal } from 'antd';
 const { confirm } = Modal;
 import { useDeleteFlowerMutation } from '../../redux/features/flower/flowerApi';
@@ -57,7 +56,7 @@ const MoreOptions = ({ id }: { id: string }) => {
             {/* <Button onClick={() => handleOnClick("edit")} icon={<EditOutlined />}> Edit</Button> */}
             <Link to={`/inventory/items/make-item-variant/${id}`}><Button icon={<CopyOutlined />}> Make Variant</Button></Link>
             {/* <Button onClick={() => handleOnClick("variant")} icon={<CopyOutlined />}> Make Variant</Button> */}
-            <Button onClick={() => handleOnClick("cart")} style={{ borderColor: "orange", color: "orange" }} icon={<LuShoppingCart style={{ color: "orange" }} />}>Add To Cart</Button>
+            {/* <Button onClick={() => handleOnClick("cart")} style={{ borderColor: "orange", color: "orange" }} icon={<LuShoppingCart style={{ color: "orange" }} />}>Add To Cart</Button> */}
             <Button onClick={() => handleOnClick("delete")} style={{ borderColor: "red", color: "red" }} icon={<DeleteOutlined style={{ color: "red" }} />}> Delete</Button>
             <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} children={<AddToCartModal itemId={itemId} />} />
         </div>
