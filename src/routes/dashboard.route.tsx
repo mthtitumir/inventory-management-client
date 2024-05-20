@@ -1,24 +1,22 @@
-import { ShoppingCartOutlined } from "@ant-design/icons"
 import Dashboard from "../pages/dashboard/Dashboard"
 import Inventory from "../pages/inventory/Inventory"
 import SalesOrders from "../pages/sales/SalesOrders"
 import MakeSellForm from "../components/form/MakeSellForm"
 import InventorySettings from "../components/inventory/InventorySettings"
 import { IoStorefrontOutline } from "react-icons/io5";
-import { BiHome, BiPurchaseTag } from "react-icons/bi";
 import { ImStatsBars } from "react-icons/im";
 import AddTradingPartner from "../components/form/AddTradingPartner"
 import AddUpdateFlower from "../components/form/AddUpdateFlower"
-import Carts from "../components/sales/Carts"
 import BuyerList from "../components/sales/BuyerList"
 import SupplierList from "../components/purchases/SupplierList"
-import Checkout from "../pages/sales/Checkout"
+import Discounts from "../pages/sales/Discounts"
+import { Icon } from "../icons"
 
 export const dashboardPaths = [
     {
         name: 'Dashboard',
         path: '/',
-        icon: <BiHome />,
+        icon: <Icon.Home />,
         element: <Dashboard />,
     },
     {
@@ -54,7 +52,7 @@ export const dashboardPaths = [
     },
     {
         name: 'Sales',
-        icon: <ShoppingCartOutlined />,
+        icon: <Icon.ShoppingCartOutlined />,
         children: [
             {
                 name: 'Orders',
@@ -67,14 +65,9 @@ export const dashboardPaths = [
                 element: <BuyerList />,
             },
             {
-                name: 'Checkout',
-                path: 'sales/checkout',
-                element: <Checkout />,
-            },
-            {
-                name: 'Carts',
-                path: 'sales/carts',
-                element: <Carts />,
+                name: 'Discounts',
+                path: 'sales/discounts',
+                element: <Discounts />,
             },
             {
                 path: 'sales/buyers/add-new-buyer',
@@ -84,7 +77,7 @@ export const dashboardPaths = [
     },
     {
         name: 'Purchases',
-        icon: <BiPurchaseTag />,
+        icon: <Icon.PurchaseTag />,
         children: [
             {
                 name: 'All Purchase',
@@ -104,17 +97,12 @@ export const dashboardPaths = [
     },
     {
         name: 'Info',
-        icon: <BiPurchaseTag />,
+        icon: <Icon.InfoCircle />,
         children: [
             {
                 name: 'Coupons',
                 path: 'info/coupons',
-                element: <SalesOrders />,
-            },
-            {
-                name: 'Membership',
-                path: 'info/membership',
-                element: <SalesOrders />,
+                element: <Discounts />,
             },
         ]
     },

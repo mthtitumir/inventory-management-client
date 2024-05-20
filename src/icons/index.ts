@@ -4,6 +4,7 @@ import { PlusOutlined, UserAddOutlined } from '@ant-design/icons';
 import { FaRegUser, FaSearchengin } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { BiHome, BiInfoCircle, BiPurchaseTag } from "react-icons/bi";
 
 export const Icon = {
     ArrowDown : IoIosArrowDown,
@@ -15,4 +16,7 @@ export const Icon = {
     SettingsOutlined: IoSettingsOutline,
     ShoppingCartOutlined: MdOutlineShoppingCart,
     RegUser: FaRegUser,
+    Home: BiHome,
+    PurchaseTag: BiPurchaseTag,
+    InfoCircle: BiInfoCircle
 }

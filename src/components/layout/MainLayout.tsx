@@ -8,17 +8,18 @@ export const negMainBg = "linear-gradient(60deg, #f8002f 10%, #000c14 100%)";
 
 import { Layout } from 'antd';
 import Navbar from "../ui/Navbar";
+import { useState } from "react";
 
 const { Content } = Layout;
 
 const MainLayout = () => {
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <ConfigProvider
       theme={{
         token: {
           colorPrimary: "#800000",
           colorPrimaryHover: "#800000",
-
         },
         components: {
           Input: {
@@ -40,9 +41,9 @@ const MainLayout = () => {
       }}
     >
       <Layout style={{ height: '100%' }}>
-        <LeftSidebar />
+        <LeftSidebar collapsed={collapsed} />
         <Layout>
-          <Navbar />
+          <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
           <Content>
             <div>
               <Outlet />

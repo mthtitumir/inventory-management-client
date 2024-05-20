@@ -28,9 +28,7 @@ const SearchBox: React.FC = () => {
         },
     ];
     const handleChangeSelect = (value: string) => {
-        console.log(value);
         setSearchIn(value);
-
     }
     const searchIcons = (<Flex align='center' gap={2} style={{ width: "" }}>
         <Icon.Search size={16} color='maroon' style={{ marginLeft: "5px" }} />
