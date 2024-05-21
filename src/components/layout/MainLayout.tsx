@@ -18,7 +18,7 @@ const MainLayout = () => {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#800000",
+          colorPrimary: "#8a0d04",
           colorPrimaryHover: "#800000",
         },
         components: {

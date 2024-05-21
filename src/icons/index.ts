@@ -1,9 +1,9 @@
-import { IoIosArrowDown, IoMdNotificationsOutline } from "react-icons/io";
+import { IoIosArrowDown, IoMdNotificationsOutline, IoMdClose } from "react-icons/io";
 import { BsCloudUpload } from "react-icons/bs";
-import { PlusOutlined, UserAddOutlined } from '@ant-design/icons';
-import { FaRegUser, FaSearchengin } from "react-icons/fa";
+import { PlusOutlined, UserAddOutlined, MoreOutlined, FilterTwoTone } from '@ant-design/icons';
+import { FaRegUser, FaSearchengin, FaRegEdit } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdOutlineShoppingCart, MdOutlineDeleteOutline } from "react-icons/md";
 import { BiHome, BiInfoCircle, BiPurchaseTag } from "react-icons/bi";
 
 export const Icon = {
@@ -18,5 +18,10 @@ export const Icon = {
     RegUser: FaRegUser,
     Home: BiHome,
     PurchaseTag: BiPurchaseTag,
-    InfoCircle: BiInfoCircle
+    InfoCircle: BiInfoCircle,
+    DeleteOutlined: MdOutlineDeleteOutline,
+    Edit: FaRegEdit,
+    Close: IoMdClose,
+    MoreOutlined,
+    FilterTwo: FilterTwoTone
 }

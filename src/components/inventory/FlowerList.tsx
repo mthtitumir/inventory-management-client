@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setBulkDeleteIds, setFlowers, useFlowers } from "../../redux/features/flower/flowerSlice";
 import { useGetAllFlowersQuery } from "../../redux/features/flower/flowerApi";
 import { TFlower } from "../../types";
-import { MoreOutlined, FilterTwoTone } from '@ant-design/icons';
 import { useState } from "react";
 import MyPopover from "../ui/MyPopover";
 import MoreOptions from "../ui/MoreOptions";
@@ -10,6 +9,8 @@ import { flowerCategoryType, flowerFragrances, flowerPriceRange, flowerSizes } f
 import { Button, Radio, RadioChangeEvent } from "antd";
 import { filterState } from "./InventoryHeader";
 import Spinner from "../ui/Spinner";
+import { Icon } from "../../icons";
+import '../../styles/customTableStyles.css'
 
 const FlowerList = ({ filter, setFilter }: filterState) => {
     const dispatch = useAppDispatch();
@@ -112,11 +113,11 @@ const FlowerList = ({ filter, setFilter }: filterState) => {
                     <th ></th>
                     <th >Image</th>
                     <th >Flower Name</th>
-                    <th >Price <MyPopover child1={<FilterTwoTone />} child2={SelectPriceRangeContent} /></th>
+                    <th >Price <MyPopover child1={<Icon.FilterTwo />} child2={SelectPriceRangeContent} /></th>
                     <th >Quantity</th>
-                    <th >Category <MyPopover child1={<FilterTwoTone />} child2={SelectCategoryTypeContent} /></th>
-                    <th >Fragrance <MyPopover child1={<FilterTwoTone />} child2={SelectFragranceContent} /></th>
-                    <th >Size <MyPopover child1={<FilterTwoTone />} child2={SelectSizeContent} /></th>
+                    <th >Category <MyPopover child1={<Icon.FilterTwo />} child2={SelectCategoryTypeContent} /></th>
+                    <th >Fragrance <MyPopover child1={<Icon.FilterTwo />} child2={SelectFragranceContent} /></th>
+                    <th >Size <MyPopover child1={<Icon.FilterTwo />} child2={SelectSizeContent} /></th>
                     <th >Action</th>
                 </tr>
                 {
@@ -129,7 +130,7 @@ const FlowerList = ({ filter, setFilter }: filterState) => {
                         <td>{flower?.type || "no data"}</td>
                         <td>{flower?.fragrance || "no data"}</td>
                         <td>{flower?.size || "no data"}</td>
-                        <td><MyPopover key={flower?._id} child1={<Button size="small" icon={<MoreOutlined />} onClick={() => handleInfoClick(flower?._id)}>Options</Button>} child2={<MoreOptions id={id} />} /></td>
+                        <td><MyPopover key={flower?._id} child1={<Button size="small" icon={<Icon.MoreOutlined />} onClick={() => handleInfoClick(flower?._id)}>Options</Button>} child2={<MoreOptions id={id} />} /></td>
                     </tr>)
                 }
             </table>}

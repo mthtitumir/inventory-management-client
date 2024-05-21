@@ -31,7 +31,7 @@ const BuyerList = () => {
       <Table
         dataSource={buyerData}
         columns={columns}
-        style={{ padding: "0 20px" }}
+        style={{ padding: "0 20px", marginTop: "20px" }}
         loading={isLoading && !data}
       />
       ;
