@@ -8,10 +8,11 @@ import MyModal from "../../components/ui/MyModal";
 import AddUpdateDiscount from "../../components/form/AddUpdateDiscount";
 
 const Discounts = () => {
-  // const [selectedDiscountId, setSelectedDiscountId] = useState<string | null>(
-  //   null
-  // );
+  const [selectedDiscountId, setSelectedDiscountId] = useState<string | undefined>(
+    undefined
+  );
   const [isAddDiscountModalOpen, setIsAddDiscountModalOpen] = useState(false);
+  const [isEditDiscountModalOpen, setIsEditDiscountModalOpen] = useState(false);
   const { data, isLoading } = useGetAllDiscountsQuery({});
   const discountsData = data?.data;
   const columns: TableColumnsType<TDiscount> = [
@@ -57,7 +58,7 @@ const Discounts = () => {
             icon={<Icon.DeleteOutlined size={20} />}
           />
           <Button
-            onClick={() => console.log(record._id)}
+            onClick={() => handleEditDiscount(record._id)}
             size="middle"
             icon={<Icon.Edit style={{ color: "#1F75FE" }} size={20} />}
           />
@@ -65,6 +66,7 @@ const Discounts = () => {
       ),
     },
   ];
+
   const btn = (
     <>
       <Button
@@ -87,8 +89,14 @@ const Discounts = () => {
       />
     </>
   );
+
   const handleAddNewDiscount = () => {
     setIsAddDiscountModalOpen(true);
+  };
+
+  const handleEditDiscount = (id: string) => {
+    setSelectedDiscountId(id);
+    setIsEditDiscountModalOpen(true);
   };
 
   return (
@@ -102,7 +110,17 @@ const Discounts = () => {
         pagination={false}
         rowKey="_id"
       />
-      ;
+      <MyModal
+        isModalOpen={isEditDiscountModalOpen}
+        setIsModalOpen={setIsEditDiscountModalOpen}
+        children={
+          <AddUpdateDiscount
+            id={selectedDiscountId}
+            type="update"
+            setIsModalOpen={setIsEditDiscountModalOpen}
+          />
+        }
+      />
     </>
   );
 };

@@ -35,11 +35,13 @@ const AddUpdateDiscount = ({
     minOrderQuantity: 0,
     limitPerCustomer: 1,
   });
+  const [isDataLoading, setIsDataLoading] = useState(false);
   const { data, isLoading } = useGetSingleDiscountQuery(id, { skip: !id });
-//   console.log(id, data);
+  //   console.log({ id, data });
 
   const [addDiscount] = useAddDiscountMutation();
   const seller: TUser | null = useAppSelector(useCurrentUser);
+  const [form] = Form.useForm();
 
   const onfinish = (values: any) => {
     const startDate = values?.startDate?.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
@@ -62,8 +64,6 @@ const AddUpdateDiscount = ({
         limitPerCustomer: Number(values?.limitPerCustomer),
         company: seller?.company,
       };
-      console.log(newDiscount);
-      
       addDiscount(newDiscount)
         .unwrap()
         .then((payload: any) => {
@@ -74,31 +74,60 @@ const AddUpdateDiscount = ({
           toast.error(error.message || "Discount adding failed!");
         });
     }
-    // if (id && type === "update") {
-    //     const updatedFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl };
-    //     updateFlower({ flowerId: id, flowerUpdatedData: updatedFlower }).unwrap().then((payload: any) => {
-    //         toast.success(payload.message);
-    //     }).catch((error: any) => {
-    //         toast.error(error.message || "Something went wrong!")
-    //     })
-    // }
+    if (id && type === "update") {
+      const updatedDiscount = {
+        ...values,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        percentOff: Number(values?.percentOff),
+        amountOff: Number(values?.amountOff),
+        minOrderValue: Number(values?.minOrderValue),
+        minOrderQuantity: Number(values?.minOrderQuantity),
+        limitPerCustomer: Number(values?.limitPerCustomer),
+      };
+      console.log(updatedDiscount);
+
+      // const updatedFlower = { ...values, price: Number(values.price), quantity: Number(values.quantity), image: imageUrl };
+      // updateFlower({ flowerId: id, flowerUpdatedData: updatedFlower }).unwrap().then((payload: any) => {
+      //     toast.success(payload.message);
+      // }).catch((error: any) => {
+      //     toast.error(error.message || "Something went wrong!")
+      // })
+    }
     setIsModalOpen(false);
   };
   useEffect(() => {
-    if (id && data) {
-      // sanitize the dates // startDate: dayjs('2024-02-01T00:00:00.000+00:00', 'YYYY/MM/DD'),
-      setDefaultValues(data?.data);
-      setIsRequired(false);
+    if (id) {
+      setIsDataLoading(true);
     }
-  }, [id, data, type, setIsModalOpen]);
-  // console.log(defaultValues);
+  }, [id]);
+  useEffect(() => {
+    if (id && data) {
+      const sanitizedData = {
+        ...data.data,
+        startDate: dayjs(data.data.startDate),
+        endDate: dayjs(data.data.endDate),
+        startTime: dayjs(data.data.startTime, "HH:mm"),
+        endTime: dayjs(data.data.endTime, "HH:mm"),
+      };
+      console.log({ sanitizedData });
+
+      setDefaultValues(sanitizedData);
+      setIsRequired(false);
+      form.setFieldsValue(sanitizedData);
+      setIsDataLoading(false);
+    }
+  }, [id, data, type, form]);
+  //   console.log(defaultValues);
   // console.log(isLoading);
 
-  return isLoading || (isRequired && type === "update") ? (
+  return isLoading || isDataLoading || (isRequired && type === "update") ? (
     <Spinner />
   ) : (
     <>
-      {type === "update" && (!id || !data || isRequired) ? (
+      {type === "update" && (!id || isDataLoading || !data || isRequired) ? (
         <Spinner />
       ) : (
         <>
@@ -107,6 +136,7 @@ const AddUpdateDiscount = ({
             {type === "update" && "Update Discount"}
           </h2>
           <Form
+            form={form}
             layout="horizontal"
             initialValues={defaultValues}
             onFinish={onfinish}

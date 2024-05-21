@@ -11,6 +11,7 @@ import BuyerList from "../components/sales/BuyerList"
 import SupplierList from "../components/purchases/SupplierList"
 import Discounts from "../pages/sales/Discounts"
 import { Icon } from "../icons"
+import Employees from "../pages/company/Employees"
 
 export const dashboardPaths = [
     {
@@ -96,13 +97,18 @@ export const dashboardPaths = [
         ]
     },
     {
-        name: 'Info',
+        name: 'Company Info',
         icon: <Icon.InfoCircle />,
         children: [
             {
-                name: 'Coupons',
+                name: 'Discounts',
                 path: 'info/coupons',
                 element: <Discounts />,
+            },
+            {
+                name: 'Employees',
+                path: 'info/employees',
+                element: <Employees />,
             },
         ]
     },
