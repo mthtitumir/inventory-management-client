@@ -64,7 +64,8 @@ const Login = () => {
             className="login-form-button"
           >
             Log in
-          </Button>
+          </Button> <br />
+          Or <a href="/register">register now!</a>
         </Form.Item>
       </Form>
     </Row>

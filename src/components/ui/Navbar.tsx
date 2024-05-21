@@ -23,7 +23,7 @@ export const LogoNameContent = (
       style={{ width: "40px" }}
       src="https://i.ibb.co/XZGDHvv/floral-vista-logo.png"
     />
-    <h4 style={{ color: "white" }}>Flora Vista</h4>
+    <h4 style={{ color: "black" }}>Flora Vista</h4>
   </Flex>
 );
 

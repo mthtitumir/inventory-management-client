@@ -14,6 +14,7 @@ import { MdDriveFileRenameOutline, MdOutlinePhoneInTalk, MdOutlineLocationOn, Md
 import { LiaMedalSolid, LiaCitySolid } from "react-icons/lia";
 import { useAddCompanyMutation } from '../../redux/features/company/companyApi';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
+import { LogoNameContent } from '../../components/ui/Navbar';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +75,7 @@ const Register = () => {
           <p style={{fontSize: "18px", textAlign: "right"}}>Already have an account? <a href="/login">Sign In</a></p>
         </div>
         <div style={{ width: "50%", margin: "10px auto" }}>
-          <img width={150} src="https://www.zoho.com/inventory/images/inventory-logo-new.svg" alt="" />
+          {LogoNameContent}
           <h3>Start your full-featured Free Trial for 14 days</h3>
         </div>
 
