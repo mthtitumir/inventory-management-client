@@ -12,6 +12,7 @@ import SupplierList from "../components/purchases/SupplierList"
 import Discounts from "../pages/sales/Discounts"
 import { Icon } from "../icons"
 import Employees from "../pages/company/Employees"
+import CompanyProfile from "../pages/company/CompanyProfile"
 
 export const dashboardPaths = [
     {
@@ -104,6 +105,11 @@ export const dashboardPaths = [
                 name: 'Employees',
                 path: 'info/employees',
                 element: <Employees />,
+            },
+            {
+                name: 'Profile',
+                path: 'info/profile',
+                element: <CompanyProfile />,
             },
         ]
     },

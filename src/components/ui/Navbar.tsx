@@ -9,6 +9,8 @@ import AddAnything from "../form/AddAnything";
 import MyPopover from "./MyPopover";
 import { Icon } from "../../icons";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { useGetMyCompanyQuery } from "../../redux/features/company/companyApi";
+import { useGetMeQuery } from "../../redux/features/user/userApi";
 
 export const LogoNameContent = (
   <Flex
@@ -55,12 +57,13 @@ const Navbar = ({
     />
   );
 
-  // const showDrawer = () => {
-  //     setIsDrawerOpen(true);
-  // };
   const handleAddOnClick = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
+  const {data} = useGetMyCompanyQuery(undefined);
+  const {data:userData} = useGetMeQuery(undefined);
+  const companyData = data?.data;
+  const user = userData?.data;
   return (
     <Row
       style={{
@@ -103,7 +106,7 @@ const Navbar = ({
           <Col>
             <Flex>
               <Flex align="center" gap={8} style={{ paddingRight: "20px" }}>
-                <p>Demo Company</p>
+                <p>{companyData?.name}</p>
                 <div onClick={handleAddOnClick}>
                   <MyPopover child1={openPopIcon} child2={<AddAnything />} />
                 </div>
@@ -131,7 +134,7 @@ const Navbar = ({
                 </Link>
               </Flex>
               <Flex align="center" gap={8} style={{ paddingLeft: "10px" }}>
-                <p>Mr. Test User</p>
+                <p>{user?.name}</p>
               </Flex>
             </Flex>
           </Col>

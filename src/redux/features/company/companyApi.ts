@@ -14,8 +14,8 @@ const companyApi = baseApi.injectEndpoints({
     }),
 
     getMyCompany: builder.query({
-      query: (discountCode: string | undefined) => ({
-        url: `/companies/${discountCode}`,
+      query: () => ({
+        url: `/companies`,
         method: "GET",
       }),
     }),
