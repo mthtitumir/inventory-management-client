@@ -1,4 +1,5 @@
 import { baseApi } from "../../api/baseApi";
+import { TUser } from "../auth/authSlice";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +16,15 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
+      providesTags: ["user"]
+    }),
+    updateUser: builder.mutation({
+      query: ({id, updatedUserData}: {id: string, updatedUserData: Partial<TUser>}) => ({
+        url: `/users/${id}`,
+        method: "GET",
+        body: updatedUserData,
+      }),
+      invalidatesTags: ["user"]
     }),
   }),
 });
