@@ -51,14 +51,14 @@ const MakeSellForm = () => {
             total: Number((subTotal - discount).toFixed(2)),
             ...(discountId && { discount: discountId, discountUsingCode: discount })
         };
-        console.log({ salesData, quantity });
+        // console.log({ salesData, quantity });
 
         if (values.quantity > quantity || values.quantity === 0) {
             toast.error("Available quantity exceeded!")
         } else {
             addSales(salesData).unwrap().then((payload: any) => {
                 toast.success(payload.message);
-                console.log(payload);
+                // console.log(payload);
                 
             }).catch((error: any) => {
                 toast.error(error.message || "Something went wrong!")
@@ -68,7 +68,7 @@ const MakeSellForm = () => {
     };
     const handleDiscount = () => {
         const inputDiscount: TDiscount = discounts?.find((dis: TDiscount) => dis.code === code);
-        // console.log(code);
+        // console.log({code, inputDiscount});
         if (inputDiscount) {
             const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid } = inputDiscount;
             const currentTime = dayjs().format('HH:mm');
@@ -79,7 +79,7 @@ const MakeSellForm = () => {
             const endD = dayjs(endDate);
             const endT = dayjs(endTime, 'HH:mm');
             const couponValidation = (startDate < endDate) && timeToCheck.isAfter(startT) && timeToCheck.isBefore(endT) && (currentDate > startD) && (currentDate < endD) && valid;
-            console.log({ couponValidation });
+            // console.log({ couponValidation });
             //use limitPerCustomer functionality
             if (!couponValidation) {
                 setDiscount(0);
@@ -90,7 +90,6 @@ const MakeSellForm = () => {
                 setDiscount(0);
                 toast.error(`You have to spent an amount off ${minOrderValue}`);
                 return;
-                // console.log(discount);
             }
             if (minOrderQuantity > 0 && minOrderQuantity > quantity) {
                 setDiscount(0);
@@ -100,10 +99,12 @@ const MakeSellForm = () => {
             if (type === "amountOff") {
                 setDiscount(amountOff);
                 setDiscountId(inputDiscount._id);
+                toast.success("Coupon applied!");
             } else if (type === "percentOff") {
                 // console.log({subTotal, percentOff});                
                 setDiscount(subTotal * percentOff * 0.01);
                 setDiscountId(inputDiscount._id);
+                toast.success("Coupon applied!");
             } else {
                 toast.error('Discount not available!');
             }
