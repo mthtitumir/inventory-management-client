@@ -6,10 +6,19 @@ import { verifyToken } from "../utils/verifyToken";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const token = useAppSelector(useCurrentToken);
-  const user = verifyToken(token as string);
-  if (!token || !user) {
+
+  let user;
+
+  if (token) {
+    user = verifyToken(token);
+  }
+  if (!token) {
     return <Navigate to="/login" replace={true} />;
   }
+  if (!user) {
+    return <Navigate to="/login" replace={true} />;
+  }
+
   return children;
 };
 
