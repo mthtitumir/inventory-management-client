@@ -1,9 +1,9 @@
 import { IoIosArrowDown, IoMdNotificationsOutline, IoMdClose } from "react-icons/io";
 import { BsCloudUpload } from "react-icons/bs";
-import { PlusOutlined, UserAddOutlined, MoreOutlined, FilterTwoTone } from '@ant-design/icons';
+import { PlusOutlined, UserAddOutlined, MoreOutlined, FilterTwoTone, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { FaRegUser, FaSearchengin, FaRegEdit } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdOutlineShoppingCart, MdOutlineDeleteOutline } from "react-icons/md";
+import { MdOutlineShoppingCart, MdOutlineDeleteOutline, MdDriveFileRenameOutline } from "react-icons/md";
 import { BiHome, BiInfoCircle, BiPurchaseTag } from "react-icons/bi";
 
 export const Icon = {
@@ -23,5 +23,8 @@ export const Icon = {
     Edit: FaRegEdit,
     Close: IoMdClose,
     MoreOutlined,
-    FilterTwo: FilterTwoTone
+    FilterTwo: FilterTwoTone,
+    MailOutlined,
+    LockOutlined,
+    RenameOutlined: MdDriveFileRenameOutline
 }

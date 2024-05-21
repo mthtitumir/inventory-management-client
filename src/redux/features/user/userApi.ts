@@ -9,6 +9,7 @@ const userApi = baseApi.injectEndpoints({
         method: "POST",
         body: userInfo,
       }),
+      invalidatesTags: ["user"]
     }),
     getAllUser: builder.query({
       query: (params) => ({
@@ -21,12 +22,20 @@ const userApi = baseApi.injectEndpoints({
     updateUser: builder.mutation({
       query: ({id, updatedUserData}: {id: string, updatedUserData: Partial<TUser>}) => ({
         url: `/users/${id}`,
-        method: "GET",
+        method: "PATCH",
         body: updatedUserData,
+      }),
+      invalidatesTags: ["user"]
+    }),
+
+    deleteUser: builder.mutation({
+      query: ({id}: {id: string}) => ({
+        url: `/users/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["user"]
     }),
   }),
 });
 
-export const { useCreateUserMutation, useGetAllUserQuery } = userApi;
+export const { useCreateUserMutation, useGetAllUserQuery, useUpdateUserMutation, useDeleteUserMutation } = userApi;

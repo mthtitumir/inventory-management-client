@@ -81,11 +81,6 @@ export const dashboardPaths = [
         icon: <Icon.PurchaseTag />,
         children: [
             {
-                name: 'All Purchase',
-                path: 'purchases/orders',
-                element: <SalesOrders />,
-            },
-            {
                 name: 'Suppliers',
                 path: 'purchases/suppliers',
                 element: <SupplierList />,
