@@ -111,7 +111,7 @@ const AddUpdateFlower = ({ type }: { type: "add" | "update" | "variant" }) => {
             <>
                 {(type === "update" || type === "variant") && (!itemId || !data || isRequired) ? <Spinner /> :
                     <div>
-                        <AddHeader text={typeTextMap[type]} />
+                        <AddHeader text={typeTextMap[type]} children={<></>} />
                         <Row justify='center' align='middle'>
                             <Col span={24} style={{ width: "100%", padding: "20px" }}>
                                 <Form

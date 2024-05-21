@@ -1,15 +1,15 @@
 import { Avatar, Button, Flex, Select } from "antd";
 import { useGetAllTradingPartnerQuery, useGetSingleTradingPartnerQuery } from "../../redux/features/buyer/tradingPartnerApi";
 import { transformedArrayToSelectOptions } from "../../utils/transformArrayToSelectOptions";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import Spinner from "../ui/Spinner";
 import { UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { LuShoppingCart } from "react-icons/lu";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const AddToCartModal = ({ itemId }: { itemId: string }) => {
-    const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
+const AddToCartModal = () => {
+    const [buyerId, setBuyerId] = useState<string | undefined>(undefined);
     const { data: buyersData } = useGetAllTradingPartnerQuery({ type: "buyer", select: "name _id email" });
     const { data: singleBuyerData, isLoading: isSingleBuyerDataLoading } = useGetSingleTradingPartnerQuery(buyerId, { skip: !buyerId });
     const selectSupplierOptions = transformedArrayToSelectOptions(buyersData?.data);

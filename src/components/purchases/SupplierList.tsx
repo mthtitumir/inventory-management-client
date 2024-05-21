@@ -24,7 +24,7 @@ const SupplierList = () => {
       ];
     return (
         <div style={{padding: "20px"}}>
-            <AddHeader text="Supplier List" />
+            <AddHeader text="Supplier List" children={<></>} />
             <Table dataSource={supplierData} columns={columns} style={{padding: ''}} />;
         </div>
     )

@@ -27,7 +27,7 @@ const BuyerList = () => {
   ];
   return (
     <>
-      <AddHeader key={"123"} text="Buyer List" />
+      <AddHeader key={"123"} text="Buyer List" children={<></>} />
       <Table
         dataSource={buyerData}
         columns={columns}

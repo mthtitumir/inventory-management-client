@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar, Button, Col, Flex, Form, Input, Row, Select, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useAppSelector } from '../../redux/hooks';
 import { TUser, useCurrentUser } from '../../redux/features/auth/authSlice';
 import { useGetSingleFlowerQuery, useGetBulkFlowersMutation } from '../../redux/features/flower/flowerApi';
 import { useGetAllDiscountsQuery } from '../../redux/features/discount/discountApi';
-import { useAddSalesMutation } from '../../redux/features/sales/salesApi';
 import toast from 'react-hot-toast';
 import { TDiscount } from '../../types';
 import dayjs from 'dayjs';
@@ -30,10 +29,10 @@ const Checkout = () => {
     // const [discountCode, setDiscountCode] = useState(code);
     const [discount, setDiscount] = useState(0);
     const [flowersData, setFlowersData] = useState([]);
-    const [flowers, setFlowers] = useState([]);
-    const [buyerId, setBuyerId] = useState<SetStateAction<undefined | string>>(undefined);
+    // const [flowers, setFlowers] = useState([]);
+    const [buyerId, setBuyerId] = useState<string | undefined>(undefined);
     const seller: TUser | null = useAppSelector(useCurrentUser);
-    const { data, isLoading } = useGetSingleFlowerQuery(itemId);
+    const { data } = useGetSingleFlowerQuery(itemId);
     const { data: discountsData } = useGetAllDiscountsQuery(seller?.company);
     const [getBulkFlowers] = useGetBulkFlowersMutation();
     // const flowersData = getBulkFlowers({ flowerIds });
@@ -41,7 +40,7 @@ const Checkout = () => {
 
     // const { data: discountData, isLoading: isDiscountLoading } = useGetSingleDiscountQuery(discountCode);
     // console.log({company: seller?.company, discountsData, isDiscountsDataLoading}); |, isLoading: isDiscountsDataLoading
-    const [addSales] = useAddSalesMutation();
+    // const [addSales] = useAddSalesMutation();
     const { data: buyersData } = useGetAllTradingPartnerQuery({ type: "buyer", select: "name _id email" });
     const { data: singleBuyerData, isLoading: isSingleBuyerDataLoading } = useGetSingleTradingPartnerQuery(buyerId, { skip: !buyerId });
     const selectSupplierOptions = transformedArrayToSelectOptions(buyersData?.data);
@@ -86,7 +85,7 @@ const Checkout = () => {
         const inputDiscount = discounts?.find((dis: TDiscount) => dis.code === code);
         console.log(inputDiscount);
         if (inputDiscount) {
-            const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid, limitPerCustomer } = inputDiscount;
+            const { type, startDate, endDate, startTime, endTime, percentOff, amountOff, minOrderValue, minOrderQuantity, valid } = inputDiscount;
             const currentTime = dayjs().format('HH:mm');
             const timeToCheck = dayjs(currentTime, 'HH:mm');
             const currentDate = dayjs();
@@ -147,7 +146,7 @@ const Checkout = () => {
         if (flowerIds && flowerIds.length > 0) {
             fetchBulkFlowers();
         } else if (data) {
-            setFlowersData([data.data]);
+            setFlowersData(data.data);
         }
     }, [flowerIds, getBulkFlowers, data]);
 
@@ -161,11 +160,11 @@ const Checkout = () => {
     //     setFlowersData([data?.data]);
     // }
 
-    // const { image, name, price, quantity, color, size } = data.data;
+    const { price, quantity } = data.data; //temporary for type error solve
     // const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
-            <AddHeader text='Checkout' />
+            <AddHeader text='Checkout' children={<></>} />
             <Form
                 layout='vertical'
                 onFinish={onFinish}

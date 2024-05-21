@@ -28,7 +28,7 @@ const AddTradingPartner = ({ type }: { type: "Buyer" | "Supplier" }) => {
   };
   return (
     <div>
-      <AddHeader text={type === "Buyer" ? "New Buyer" : "New Supplier"} />
+      <AddHeader text={type === "Buyer" ? "New Buyer" : "New Supplier"} children={<></>} />
       <Row justify='center' align='middle'>
         <Col span={24} style={{ width: "100%", padding: "20px" }}>
           <Form

@@ -125,7 +125,7 @@ const MakeSellForm = () => {
     // const { image, name, price, quantity, color, type, size, fragrance, arrangement } = data.data;
     return (
         <div>
-            <AddHeader text='Checkout' />
+            <AddHeader text='Checkout' children={<></>} />
             <Form
                 layout='vertical'
                 onFinish={onFinish}
