@@ -11,7 +11,7 @@ import AddToCartModal from '../sales/AddToCartModal';
 
 const MoreOptions = ({ id }: { id: string }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [itemId, setItemId] = useState("");
+    // const [itemId, setItemId] = useState("");
     // const [isSellModalOpen, setIsSellModalOpen] = useState(false);
     // const [isVariantModalOpen, setIsVariantModalOpen] = useState(false);
     const [deleteFlower] = useDeleteFlowerMutation();
@@ -21,7 +21,7 @@ const MoreOptions = ({ id }: { id: string }) => {
             showDeleteConfirm();
         } else if (actionType === "cart") {
             setIsModalOpen(true);
-            setItemId(id);
+            // setItemId(id);
         }
     }
 
@@ -58,7 +58,7 @@ const MoreOptions = ({ id }: { id: string }) => {
             {/* <Button onClick={() => handleOnClick("variant")} icon={<CopyOutlined />}> Make Variant</Button> */}
             {/* <Button onClick={() => handleOnClick("cart")} style={{ borderColor: "orange", color: "orange" }} icon={<LuShoppingCart style={{ color: "orange" }} />}>Add To Cart</Button> */}
             <Button onClick={() => handleOnClick("delete")} style={{ borderColor: "red", color: "red" }} icon={<DeleteOutlined style={{ color: "red" }} />}> Delete</Button>
-            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} children={<AddToCartModal itemId={itemId} />} />
+            <MyModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} children={<AddToCartModal />} />
         </div>
     )
 }
