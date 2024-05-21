@@ -1,6 +1,6 @@
 ## Credentials (Login)
 ### email: admin1@email.com | password: admin2023
-### Live Link: https://flower-management-server-two.vercel.app
+### Live Link: https://flower-management-client-iota.vercel.app
 ### LocalHost Link: http://localhost:5173
 Run On Local Environment:
 1. Clone The Repo
