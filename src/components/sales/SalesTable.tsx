@@ -1,11 +1,11 @@
 import { Table } from "antd";
 import moment from "moment";
-import { useGetAllSalesQuery } from "../../redux/features/sales/salesApi";
-import Spinner from "../ui/Spinner";
+import { TSales } from "../../types";
+import { useAppSelector } from "../../redux/hooks";
+import { useSales } from "../../redux/features/sales/salesSlice";
 
 const SalesTable = () => {
-  const { data, isLoading } = useGetAllSalesQuery({});
-  console.log(data);
+  const dataSource: TSales[] | [] = useAppSelector(useSales);
 
   const columns = [
     {
@@ -35,12 +35,9 @@ const SalesTable = () => {
       render: (dateOfSale: string) => moment(dateOfSale).fromNow(),
     },
   ];
-  if (isLoading || !data) {
-    return <Spinner />
-  }
   return (
     <div>
-      <Table dataSource={data?.data} columns={columns} />
+      <Table dataSource={dataSource} columns={columns} loading={!dataSource} />
     </div>
   )
 }
