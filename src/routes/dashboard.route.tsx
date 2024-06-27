@@ -17,7 +17,7 @@ import CompanyProfile from "../pages/company/CompanyProfile"
 export const dashboardPaths = [
     {
         name: 'Dashboard',
-        path: '/',
+        path: 'main',
         icon: <Icon.Home />,
         element: <Dashboard />,
     },
@@ -96,11 +96,6 @@ export const dashboardPaths = [
         name: 'Company Info',
         icon: <Icon.InfoCircle />,
         children: [
-            {
-                name: 'Discounts',
-                path: 'info/coupons',
-                element: <Discounts />,
-            },
             {
                 name: 'Employees',
                 path: 'info/employees',

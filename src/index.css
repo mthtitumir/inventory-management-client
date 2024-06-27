@@ -1,11 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap');
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Josefin Sans', sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.c-auto {
+  @apply container mx-auto;
 }
 
+.border-main {
+  @apply border border-[#383838];
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Josefin Sans", sans-serif;
+}
 
 /* colors */
 /* beige- #F5F5DC */
