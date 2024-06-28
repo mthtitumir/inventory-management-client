@@ -12,8 +12,8 @@ const SectionTwo = () => {
         <div className="flex justify-center items-center gap-10">
           {data?.map((d, index) => (
             <div key={index}>
-              <h1 className="text-6xl text-sky-500">{d.number}+</h1>
-              <p className="text-center">{d.name}</p>
+              <h1 className="text-6xl text-sky-900">{d.number}<sup>+</sup></h1>
+              <p className="text-center">{d.name.toUpperCase()}</p>
             </div>
           ))}
         </div>

@@ -27,19 +27,17 @@ const SectionFour = () => {
             </div>
             <div className="flex flex-col gap-3 w-1/2">
               <div className="w-[80%]">
-                <button className="w-full bg-sky-600 border-main rounded-sm py-2 px-4 text-white text-center text-md">
-                  Try Demo Version
+                <button className="w-full bg-gradient-to-r from-[#0A192F] to-sky-800 text-slate-100 rounded-md py-3 px-5 text-center text-lg">
+                  TRY DEMO VERSION
                 </button>
               </div>
               <div className="text-right">
-                {/* <a className="w-full" href="/register"> */}
                 <button
                   onClick={() => navigate("/register")}
-                  className="w-[80%] bg-sky-600 border-main rounded-sm py-2 px-4 text-white text-center text-md"
+                  className="w-[80%] bg-gradient-to-r from-sky-800 to-[#0A192F] text-slate-100 rounded-md py-3 px-5 text-center text-lg"
                 >
-                  Sign Up - It's Free
+                  SIGN UP - IT'S FREE
                 </button>
-                {/* </a> */}
               </div>
             </div>
           </div>
