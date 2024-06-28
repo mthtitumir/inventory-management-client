@@ -1,6 +1,6 @@
 const HeroSection = () => {
   return (
-    <div className="bg-sky-100">
+    <div className="bg-sky-200">
       <div className="container mx-auto flex items-center">
         <div className="w-1/2 flex align-center justify-center">
           <div className="flex flex-col gap-8">

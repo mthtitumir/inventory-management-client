@@ -10,6 +10,11 @@
   @apply border border-[#383838];
 }
 
+.custom-box-shadow {
+  @apply shadow-md; 
+  box-shadow: inset 0px 0px 0.5em 0px rgba(128, 128, 128, 0.5), 0px 0px 0.5em 0px rgba(128, 128, 128, 0.5);
+}
+
 * {
   margin: 0;
   padding: 0;
